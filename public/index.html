@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradingView Backtest - XAU/USD Platform</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <!-- Lightweight Charts (Fallback local hoặc unpkg) -->
+  <script src="/static/vendor/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+
+  <!-- Header Bar -->
+  <header>
+    <div class="brand-section">
+      <span class="logo-badge">XAU/USD</span>
+      <div>
+        <div class="symbol-name">Gold / US Dollar Spot</div>
+        <div class="symbol-desc">Nền Tảng Kiểm Thử Chiến Lược Kỹ Thuật</div>
+      </div>
+    </div>
+
+    <!-- Timeframe Switcher -->
+    <div class="timeframe-group" id="timeframe-group">
+      <button class="tf-btn" data-tf="M1">M1</button>
+      <button class="tf-btn" data-tf="M5">M5</button>
+      <button class="tf-btn active" data-tf="M15">M15</button>
+      <button class="tf-btn" data-tf="M30">M30</button>
+      <button class="tf-btn" data-tf="H1">H1</button>
+      <button class="tf-btn" data-tf="H4">H4</button>
+      <button class="tf-btn" data-tf="D1">D1</button>
+    </div>
+
+    <div class="header-right">
+      <button class="header-btn" id="btn-toggle-replay" title="Bật/Tắt chế độ Tua Nến về quá khứ">
+        <span>🔄</span> Tua Nến (Replay)
+      </button>
+      <button class="header-btn" id="btn-toggle-dual" title="Bật/Tắt chế độ 2 Biểu đồ đa khung thời gian">
+        <span>🪟</span> 2 Biểu Đồ
+      </button>
+      <span class="data-badge" id="data-range-badge">Đang kết nối database...</span>
+    </div>
+  </header>
+
+  <!-- Workspace Container -->
+  <div class="workspace">
+    
+    <!-- Chart Area -->
+    <div class="chart-area" id="chart-area-main">
+      <!-- Crosshair Legend / OHLCV Tooltip -->
+      <div class="chart-legend" id="chart-legend">
+        <div class="legend-item"><span class="legend-label">O:</span><span class="legend-val" id="leg-open">-</span></div>
+        <div class="legend-item"><span class="legend-label">H:</span><span class="legend-val" id="leg-high">-</span></div>
+        <div class="legend-item"><span class="legend-label">L:</span><span class="legend-val" id="leg-low">-</span></div>
+        <div class="legend-item"><span class="legend-label">C:</span><span class="legend-val" id="leg-close">-</span></div>
+        <div class="legend-item"><span class="legend-label">Vol:</span><span class="legend-val" id="leg-vol">-</span></div>
+        <div class="legend-item"><span class="legend-label">Diff:</span><span class="legend-val" id="leg-diff">-</span></div>
+      </div>
+
+      <!-- Charts Grid (Single or Dual) -->
+      <div class="charts-grid" id="charts-grid">
+        <!-- Chart 1 (Main) -->
+        <div class="chart-wrapper-box" id="chart-box-1">
+          <div class="chart-sub-header" id="chart-sub-header-1" style="display: none;">
+            <span>Biểu đồ chính: <span class="chart-sub-badge" id="chart-1-tf">M15</span></span>
+            <span id="chart-1-bar-count">Dữ liệu nến</span>
+          </div>
+          <div id="chart-container" style="flex:1; width:100%; position:relative;"></div>
+        </div>
+
+        <!-- Chart 2 (Secondary MTF) -->
+        <div class="chart-wrapper-box hidden" id="chart-box-2">
+          <div class="chart-sub-header">
+            <span>Biểu đồ phụ: <span class="chart-sub-badge" id="chart-2-tf">H1</span></span>
+            <div style="display: flex; gap: 4px;" id="chart-2-tf-group">
+              <button class="tf-btn" data-tf="M5">M5</button>
+              <button class="tf-btn" data-tf="M15">M15</button>
+              <button class="tf-btn active" data-tf="H1">H1</button>
+              <button class="tf-btn" data-tf="D1">D1</button>
+            </div>
+          </div>
+          <div id="chart-container-2" style="flex:1; width:100%; position:relative;"></div>
+        </div>
+      </div>
+
+      <!-- Floating Replay Toolbar -->
+      <div class="replay-toolbar" id="replay-toolbar">
+        <span class="replay-badge">🔄 REPLAY</span>
+        <button class="replay-btn active" id="btn-replay-cut" title="Click vào một cây nến bất kỳ trên biểu đồ để cắt nến">📍 Cắt</button>
+        <button class="replay-btn" id="btn-replay-step" title="Tua tới 1 nến (Forward 1 bar)">⏭️</button>
+        <button class="replay-btn primary" id="btn-replay-play" title="Phát tự động / Tạm dừng">▶️</button>
+        <select class="replay-speed-select" id="replay-speed-select" title="Tốc độ tua nến">
+          <option value="1000">1x (1.0s)</option>
+          <option value="500" selected>2x (0.5s)</option>
+          <option value="200">5x (0.2s)</option>
+          <option value="100">10x (0.1s)</option>
+          <option value="2000">0.5x (2.0s)</option>
+        </select>
+        <span class="replay-time-display" id="replay-time-display" title="Mốc thời gian đang tua">--:--:--</span>
+        <button class="replay-close-btn" id="btn-replay-exit" title="Thoát chế độ Tua Nến">✕</button>
+      </div>
+
+      <!-- Loading Overlay -->
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loading-text">Đang tải dữ liệu nến...</div>
+      </div>
+    </div>
+
+    <!-- Right Control & Backtest Panel -->
+    <div class="side-panel">
+      <!-- Tabs Navigation -->
+      <div class="panel-tabs">
+        <button class="panel-tab active" data-tab="tab-strategy">⚙️ Cấu Hình Chiến Lược</button>
+        <button class="panel-tab" data-tab="tab-results">📊 Kết Quả & Báo Cáo</button>
+      </div>
+
+      <!-- Tab 1: Cấu hình chiến lược & Backtest -->
+      <div class="tab-content active" id="tab-strategy">
+        <form id="backtest-form" onsubmit="event.preventDefault(); runBacktest();">
+          
+          <div class="form-group">
+            <label for="strategy-select">Chiến Lược Giao Dịch</label>
+            <select id="strategy-select" class="form-control">
+              <!-- Sẽ load tự động từ API /api/strategies -->
+            </select>
+          </div>
+
+          <div id="strategy-params-container">
+            <!-- Dynamic parameter inputs -->
+          </div>
+
+          <div style="border-top: 1px solid var(--border-color); margin: 16px 0 14px 0;"></div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="initial-capital">Vốn Ban Đầu ($)</label>
+              <input type="number" id="initial-capital" class="form-control" value="10000" min="100" step="100">
+            </div>
+            <div class="form-group">
+              <label for="lot-size">Khối Lượng (Lot)</label>
+              <input type="number" id="lot-size" class="form-control" value="0.1" min="0.01" step="0.01">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="stop-loss">Cắt Lỗ SL (Points)</label>
+              <input type="number" id="stop-loss" class="form-control" value="200" min="0" step="10" placeholder="0 = Không đặt">
+            </div>
+            <div class="form-group">
+              <label for="take-profit">Chốt Lời TP (Points)</label>
+              <input type="number" id="take-profit" class="form-control" value="400" min="0" step="10" placeholder="0 = Không đặt">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="spread-points">Spread (Points)</label>
+              <input type="number" id="spread-points" class="form-control" value="20" min="0" step="5">
+            </div>
+            <div class="form-group">
+              <label for="commission">Phí Hoa Hồng ($/Lot)</label>
+              <input type="number" id="commission" class="form-control" value="5" min="0" step="0.5">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="candles-limit">Phạm Vi Nến Phân Tích</label>
+            <select id="candles-limit" class="form-control">
+              <option value="500">500 nến gần nhất</option>
+              <option value="1000" selected>1,000 nến gần nhất</option>
+              <option value="2000">2,000 nến gần nhất</option>
+              <option value="5000">5,000 nến gần nhất</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+            <input type="checkbox" id="allow-short" checked style="accent-color: var(--color-blue); width: 16px; height: 16px;">
+            <label for="allow-short" style="margin-bottom: 0; cursor: pointer; color: var(--text-main);">Cho phép mở vị thế Bán (Short)</label>
+          </div>
+
+          <button type="submit" class="btn-primary" id="btn-run-backtest" style="margin-top: 16px;">
+            <span>🚀 Chạy Backtest Ngay</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Tab 2: Kết quả & Báo cáo -->
+      <div class="tab-content" id="tab-results">
+        <div id="results-empty" style="text-align: center; color: var(--text-muted); padding: 40px 10px;">
+          <div style="font-size: 32px; margin-bottom: 12px;">📊</div>
+          Chưa có dữ liệu kiểm thử.<br>Hãy cấu hình và nhấn <b>"Chạy Backtest Ngay"</b>.
+        </div>
+
+        <div id="results-content" style="display: none;">
+          <!-- Metrics Overview -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-title">Lợi Nhuận Ròng (Net PnL)</div>
+              <div class="metric-value" id="m-net-pnl">$0.00</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-title">Tỷ Suất Lợi Nhuận</div>
+              <div class="metric-value" id="m-return-pct">0.00%</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-title">Tỷ Lệ Thắng (Win Rate)</div>
+              <div class="metric-value" id="m-win-rate">0.00%</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-title">Profit Factor</div>
+              <div class="metric-value" id="m-profit-factor">0.00</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-title">Số Lệnh (Thắng / Thua)</div>
+              <div class="metric-value" id="m-trades-ratio">0 / 0</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-title">Sụt Giảm Tối Đa (Max DD)</div>
+              <div class="metric-value" id="m-max-dd" style="color: var(--color-red);">$0.00 (0%)</div>
+            </div>
+          </div>
+
+          <!-- Equity Curve -->
+          <div class="equity-container">
+            <div style="font-size: 11px; color: var(--text-muted); padding: 6px 10px; border-bottom: 1px solid var(--border-color);">
+              Đường Cong Tăng Trưởng Vốn (Equity Curve)
+            </div>
+            <div id="equity-chart" style="width: 100%; height: 105px;"></div>
+          </div>
+
+          <!-- Trades List -->
+          <div class="trades-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h4>Nhật Ký Các Giao Dịch</h4>
+              <button id="btn-clear-markers" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; padding: 2px 6px; border-radius: 4px; cursor: pointer;">
+                Xóa Markers trên Chart
+              </button>
+            </div>
+            <div class="trades-table-wrapper">
+              <table class="trades-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Loại</th>
+                    <th>Vào</th>
+                    <th>Thoát</th>
+                    <th>PnL ($)</th>
+                    <th>Lý do</th>
+                  </tr>
+                </thead>
+                <tbody id="trades-tbody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/static/chart.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

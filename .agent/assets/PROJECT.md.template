@@ -1,0 +1,33 @@
+# PROJECT.md
+
+> File bối cảnh tĩnh của dự án. Đọc file này đầu tiên khi bắt đầu bất kỳ phiên làm việc nào.
+
+## Dự án làm gì
+<mô tả ngắn 2-3 câu>
+
+## Stack kỹ thuật
+- Ngôn ngữ:
+- Framework:
+- Database (nếu có):
+- Thư viện chính:
+
+## Cấu trúc thư mục chính
+```
+<liệt kê thư mục/file quan trọng và vai trò của chúng>
+```
+
+## Quy ước code
+- Đặt tên: 
+- Format/lint:
+- Cách xử lý lỗi:
+- Cách viết test:
+
+## Cách chạy / build / test
+```bash
+# build
+# run
+# test
+```
+
+## Yêu cầu hiện tại (spec đang làm)
+<được điền ở bước Planning — mô tả yêu cầu, scope, acceptance criteria tổng thể>

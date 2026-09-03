@@ -1,0 +1,20 @@
+# Database files (local storage >100MB)
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini

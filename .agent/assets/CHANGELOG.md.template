@@ -1,0 +1,11 @@
+# CHANGELOG.md
+
+> Nhật ký những gì THỰC SỰ đã làm (không phải dự định). Ghi ngay sau khi code/test xong một phần, mới nhất lên đầu.
+
+## <ngày giờ> - T0x <tên task>
+- File đã đổi: `path/to/file.py` (+xx/-yy dòng), ...
+- Đã làm: <tóm tắt ngắn>
+- Đã test bằng: <lệnh/cách test> → kết quả: pass/fail, chi tiết nếu fail
+- Ghi chú/rủi ro còn lại (nếu có):
+
+<!-- Thêm mục mới ở trên, mới nhất lên đầu -->

@@ -1,0 +1,12 @@
+# DECISIONS.md
+
+> Ghi lại các quyết định kỹ thuật quan trọng và LÝ DO — để phiên sau không vô tình đảo ngược một quyết định đã cân nhắc kỹ.
+
+## <ngày> - <tên quyết định ngắn gọn>
+- Bối cảnh: <vì sao cần quyết định>
+- Các phương án đã xét: A / B / C
+- Đã chọn: <phương án>
+- Lý do:
+- Đánh đổi (trade-off) đã chấp nhận:
+
+<!-- Thêm mục mới ở trên, mới nhất lên đầu -->

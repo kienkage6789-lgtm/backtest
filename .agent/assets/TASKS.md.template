@@ -1,0 +1,25 @@
+# TASKS.md
+
+> Cập nhật trạng thái NGAY khi thay đổi, không đợi cuối buổi.
+> Trạng thái: todo | doing | blocked | review | done
+
+### [ ] T01 - <tên task>
+- Mô tả:
+- File liên quan:
+- Acceptance criteria:
+  - [ ]
+  - [ ]
+- Phụ thuộc: không
+- Trạng thái: todo
+
+### [ ] T02 - <tên task>
+- Mô tả:
+- File liên quan:
+- Acceptance criteria:
+  - [ ]
+- Phụ thuộc: T01
+- Trạng thái: todo
+
+---
+## Ghi chú tồn đọng / việc phát sinh chưa xếp vào task nào
+-
