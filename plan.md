@@ -56,6 +56,7 @@ strategy("My Strategy", overlay=true)
 longCondition = crossover(sma(close, 14), sma(close, 28))
 if (longCondition)
     strategy.entry("Long", strategy.long)
+```
 
 Về sau phát triển parser riêng hoặc dùng thư viện như expr-eval, mathjs.
 
@@ -99,8 +100,59 @@ Nếu chỉ backtest cá nhân: bỏ qua phần multi-user, tập trung vào too
 Kết luận
 Xây dựng nền tảng backtest giống TradingView là một dự án lớn nhưng có thể triển khai theo từng bước như trên. Hãy bắt đầu với MVP, sau đó mở rộng dần tính năng và tối ưu hiệu năng.
 
-Tài liệu tham khảo được tạo ngày 2026-09-03
+---
 
-text
+## 6. Hiện trạng triển khai thực tế của dự án (2026-09-04)
 
-Bạn có thể copy nội dung trên vào file có đuôi `.md` (ví dụ `tradingview-backtest-guide.md`) để dùng làm tài liệu dự án. Nếu cần bổ sung phần nào chi tiết hơn (ví dụ code mẫu engine, thiết kế database), mình có thể hỗ trợ thêm.
+Hệ thống đã hoàn thiện toàn bộ các tính năng MVP cốt lõi và hệ sinh thái phân tích kỹ thuật chuyên sâu:
+1. **Dữ liệu & Database**: SQLite3 `data/XAUUSD.db` với 1,831,773 nến M1 vàng (2016 - 2026), resample động đa khung thời gian (M1..D1), query < 15ms.
+2. **Backtest Engine**: Khớp lệnh bar-by-bar không lookahead, spread đối xứng Long/Short, commission 2 chiều, SL/TP chính xác, 4 chiến lược mẫu (SMA, RSI, MACD, Donchian).
+3. **Bar Replay & Multi-Timeframe**: Tua nến bar-by-bar, cắt nến quá khứ, chế độ 2 biểu đồ (Dual Chart) song song đồng bộ.
+4. **Drawing Tools Core v2**: 39 công cụ vẽ / 41 metadata entries, 8 danh mục, Property Dialog 5 tab với snapshot rollback, Favorites bar.
+5. **Drawing Alerts Engine**: Giám sát giá/thời gian thời gian thực cho 13 types, phân định `inside` dựa trên giá đóng cửa `candle.close`, `touch` toàn nến, interval overlap, ray 3 hướng, crossline điều kiện kép.
+6. **Persistence**: LocalStorage key `drawings:XAUUSD:layout` và transactional backup `drawings:XAUUSD:layout:backup`, export/import JSON.
+
+### Hướng dẫn thiết lập môi trường chuẩn (.venv)
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m unittest discover tests -v
+node --test tests/test_drawings.test.js
+```
+
+## 7. Kế hoạch phát triển tiếp theo — T48 Chart-first UI & Drawer Polish
+
+### Mục tiêu
+
+Tiếp tục tối ưu giao diện theo hướng chart-first và tiệm cận TradingView: biểu đồ là khu vực trung tâm, drawer chỉ xuất hiện khi người dùng cần cấu hình hoặc xem báo cáo.
+
+### Phạm vi thực hiện
+
+- Thêm nút mở panel nổi khi drawer đang đóng và badge báo có kết quả backtest mới.
+- Tối ưu animation mở/đóng drawer, bảo đảm chart và Dual Chart resize đúng sau transition.
+- Cho phép kéo thay đổi chiều rộng drawer trên desktop; giữ giới hạn an toàn trên tablet/mobile.
+- Cho phép thu gọn từng section trong tab Kết quả & Báo cáo.
+- Cải thiện equity curve, bảng giao dịch, empty/loading/error state và khả năng export CSV/JSON.
+- Chuẩn hóa tooltip, focus state, keyboard navigation và shortcut cho drawing tools.
+- Kiểm tra responsive tại 375, 768, 1024, 1280 và 1920px.
+
+### Acceptance criteria
+
+- Chart chiếm tối đa diện tích khi drawer đóng.
+- Drawer mở/đóng mượt, không che hoặc chặn sai thao tác.
+- Dual Chart, zoom, pan, crosshair và drawing tools vẫn hoạt động sau resize.
+- Chuyển tab không làm mất dữ liệu cấu hình hoặc kết quả backtest.
+- Báo cáo có thể thu gọn/mở rộng; bảng giao dịch có vùng scroll riêng.
+- Keyboard navigation và ARIA state phản ánh đúng trạng thái UI.
+- Không duplicate ID, không lỗi JavaScript runtime nghiêm trọng.
+- Toàn bộ test tự động và Browser QA desktop/tablet/mobile đều PASS với output thực tế.
+
+### Thứ tự triển khai
+
+1. Chart resize và drawer width.
+2. Nút mở drawer nổi và badge kết quả.
+3. Collapsible sections trong báo cáo.
+4. Export báo cáo.
+5. Accessibility, responsive và visual polish.
+6. Regression test và Browser QA.

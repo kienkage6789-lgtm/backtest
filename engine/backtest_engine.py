@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from engine.strategies import StrategyRegistry
 
+REQUIRED_BACKTEST_COLS = {'time', 'open', 'high', 'low', 'close'}
+
 class BacktestEngine:
     def __init__(
         self,
@@ -11,40 +13,51 @@ class BacktestEngine:
         stop_loss_points: float = 0.0,   # Điểm giá (1.00 USD = 100 points)
         take_profit_points: float = 0.0,
         spread_points: float = 20.0,     # 20 points = 0.20 USD
-        commission_per_lot: float = 5.0, # 5 USD / lot
+        commission_per_lot: float = 5.0, # 5 USD / lot (mỗi chiều 2.5 USD hoặc 5 USD / round-turn)
         allow_short: bool = True
     ):
         self.initial_capital = float(initial_capital)
         self.lot_size = float(lot_size)
         self.contract_size = float(contract_size)
-        self.stop_loss_val = float(stop_loss_points) / 100.0   # Chuyển điểm thành USD giá vàng
+        self.stop_loss_val = float(stop_loss_points) / 100.0   # Chuyển points thành USD
         self.take_profit_val = float(take_profit_points) / 100.0
         self.spread_val = float(spread_points) / 100.0
-        self.commission = float(commission_per_lot) * self.lot_size
+        # Commission cho 1 chiều (entry hoặc exit)
+        self.commission_per_side = float(commission_per_lot) * self.lot_size
         self.allow_short = bool(allow_short)
 
     def run(self, df: pd.DataFrame, strategy_id: str, strategy_params: dict):
         """
-        Thực thi backtest trên DataFrame nến.
-        df bắt buộc có: 'time', 'open', 'high', 'low', 'close'
+        Thực thi backtest mô phỏng khớp lệnh:
+        - df bắt buộc có các cột: 'time', 'open', 'high', 'low', 'close'
+        - Loại bỏ Lookahead Bias: Tín hiệu sinh tại nến N chỉ khớp tại nến N+1 theo giá Open.
+        - Spread và Commission đối xứng cho cả Long và Short.
+        - Forced close cuối kỳ cập nhật đầy đủ balance, equity curve, MDD, markers, trade record.
         """
-        if df.empty or len(df) < 2:
-            raise ValueError("Không đủ dữ liệu nến để thực hiện backtest.")
+        if df is None or not isinstance(df, pd.DataFrame) or df.empty:
+            raise ValueError("Dữ liệu nến truyền vào bị rỗng.")
 
-        # Sinh tín hiệu từ chiến lược
+        missing_cols = REQUIRED_BACKTEST_COLS - set(df.columns)
+        if missing_cols:
+            raise ValueError(f"Dữ liệu nến thiếu các cột bắt buộc: {missing_cols}")
+
+        if len(df) < 2:
+            raise ValueError("Không đủ dữ liệu nến (tối thiểu 2 nến) để thực hiện backtest.")
+
+        # Sinh tín hiệu từ chiến lược (có kiểm tra strategy_id và validate params)
         df_signals = StrategyRegistry.generate_signals(df, strategy_id, strategy_params)
 
         balance = self.initial_capital
-        position = None # None, hoặc dict chứa thông tin vị thế
+        position = None  # None hoặc dict chứa thông tin vị thế đang mở
         trades = []
         equity_curve = []
         chart_markers = []
 
-        timestamps = (pd.to_datetime(df_signals['time']).astype('int64') // 10**9).tolist()
-        opens = df_signals['open'].tolist()
-        highs = df_signals['high'].tolist()
-        lows = df_signals['low'].tolist()
-        closes = df_signals['close'].tolist()
+        timestamps = (pd.to_datetime(df_signals['time']).astype('datetime64[s]').astype('int64')).tolist()
+        opens = pd.to_numeric(df_signals['open'], errors='coerce').fillna(0).tolist()
+        highs = pd.to_numeric(df_signals['high'], errors='coerce').fillna(0).tolist()
+        lows = pd.to_numeric(df_signals['low'], errors='coerce').fillna(0).tolist()
+        closes = pd.to_numeric(df_signals['close'], errors='coerce').fillna(0).tolist()
         signals = df_signals['signal'].tolist()
         time_strs = df_signals['time'].tolist()
 
@@ -52,17 +65,133 @@ class BacktestEngine:
         max_drawdown = 0.0
         max_drawdown_pct = 0.0
 
-        for i in range(len(df_signals)):
+        n_bars = len(df_signals)
+
+        for i in range(n_bars):
             t = timestamps[i]
             t_str = time_strs[i]
             o, h, l, c = opens[i], highs[i], lows[i], closes[i]
-            sig = signals[i]
 
-            # 1. Kiểm tra vị thế đang mở (SL / TP)
+            # Tín hiệu được sinh từ cây nến trước (N-1) khớp ở cây nến này (N) tại giá Open
+            prev_sig = signals[i - 1] if i > 0 else 0
+
+            # -----------------------------------------------------------------
+            # 1. Khớp lệnh tại Open của nến i dựa trên tín hiệu ở nến i-1 (No Lookahead)
+            # -----------------------------------------------------------------
+            if i > 0 and prev_sig != 0:
+                # 1a. Xử lý đóng lệnh do tín hiệu đảo chiều
+                if position is not None:
+                    if position['type'] == 'LONG' and prev_sig == -1:
+                        # Bán Long tại giá Open (Bid)
+                        exit_price = o
+                        gross_pnl = (exit_price - position['entry_price']) * self.lot_size * self.contract_size
+                        net_pnl = gross_pnl - (self.commission_per_side * 2)
+                        balance += net_pnl
+
+                        trades.append({
+                            "trade_id": len(trades) + 1,
+                            "type": "BUY",
+                            "entry_time": position['entry_time_str'],
+                            "entry_timestamp": position['entry_timestamp'],
+                            "entry_price": round(position['entry_price'], 3),
+                            "exit_time": t_str,
+                            "exit_timestamp": t,
+                            "exit_price": round(exit_price, 3),
+                            "pnl": round(net_pnl, 2),
+                            "return_pct": round((net_pnl / self.initial_capital) * 100, 2),
+                            "exit_reason": "Signal Reversal"
+                        })
+                        chart_markers.append({
+                            "time": t,
+                            "position": "aboveBar",
+                            "color": "#089981" if net_pnl >= 0 else "#f23645",
+                            "shape": "circle",
+                            "text": f"EXIT {'+' if net_pnl >= 0 else ''}${net_pnl:.1f}"
+                        })
+                        position = None
+
+                    elif position['type'] == 'SHORT' and prev_sig == 1:
+                        # Mua lại Short tại giá Open + Spread (Ask)
+                        exit_bid = o
+                        exit_price = exit_bid + self.spread_val
+                        gross_pnl = (position['entry_price'] - exit_price) * self.lot_size * self.contract_size
+                        net_pnl = gross_pnl - (self.commission_per_side * 2)
+                        balance += net_pnl
+
+                        trades.append({
+                            "trade_id": len(trades) + 1,
+                            "type": "SELL",
+                            "entry_time": position['entry_time_str'],
+                            "entry_timestamp": position['entry_timestamp'],
+                            "entry_price": round(position['entry_price'], 3),
+                            "exit_time": t_str,
+                            "exit_timestamp": t,
+                            "exit_price": round(exit_price, 3),
+                            "pnl": round(net_pnl, 2),
+                            "return_pct": round((net_pnl / self.initial_capital) * 100, 2),
+                            "exit_reason": "Signal Reversal"
+                        })
+                        chart_markers.append({
+                            "time": t,
+                            "position": "belowBar",
+                            "color": "#089981" if net_pnl >= 0 else "#f23645",
+                            "shape": "circle",
+                            "text": f"EXIT {'+' if net_pnl >= 0 else ''}${net_pnl:.1f}"
+                        })
+                        position = None
+
+                # 1b. Vào lệnh mới tại Open nếu đang flat
+                if position is None:
+                    if prev_sig == 1:
+                        # Mua Long: khớp tại Open + Spread (Ask)
+                        entry_p = o + self.spread_val
+                        sl_p = entry_p - self.stop_loss_val if self.stop_loss_val > 0 else 0.0
+                        tp_p = entry_p + self.take_profit_val if self.take_profit_val > 0 else 0.0
+                        position = {
+                            "type": "LONG",
+                            "entry_price": entry_p,
+                            "entry_timestamp": t,
+                            "entry_time_str": t_str,
+                            "sl_price": sl_p,
+                            "tp_price": tp_p
+                        }
+                        chart_markers.append({
+                            "time": t,
+                            "position": "belowBar",
+                            "color": "#2962ff",
+                            "shape": "arrowUp",
+                            "text": f"BUY @ {entry_p:.2f}"
+                        })
+
+                    elif prev_sig == -1 and self.allow_short:
+                        # Bán Short: khớp tại Open (Bid)
+                        entry_p = o
+                        sl_p = entry_p + self.stop_loss_val if self.stop_loss_val > 0 else 0.0
+                        tp_p = entry_p - self.take_profit_val if self.take_profit_val > 0 else 0.0
+                        position = {
+                            "type": "SHORT",
+                            "entry_price": entry_p,
+                            "entry_timestamp": t,
+                            "entry_time_str": t_str,
+                            "sl_price": sl_p,
+                            "tp_price": tp_p
+                        }
+                        chart_markers.append({
+                            "time": t,
+                            "position": "aboveBar",
+                            "color": "#e91e63",
+                            "shape": "arrowDown",
+                            "text": f"SELL @ {entry_p:.2f}"
+                        })
+
+            # -----------------------------------------------------------------
+            # 2. Kiểm tra Stop Loss / Take Profit trong thân nến i
+            # -----------------------------------------------------------------
             if position is not None:
                 closed = False
                 exit_price = 0.0
                 exit_reason = ""
+                marker_pos = "aboveBar"
 
                 if position['type'] == 'LONG':
                     # Kiểm tra SL trước (bảo thủ)
@@ -70,24 +199,19 @@ class BacktestEngine:
                         exit_price = position['sl_price']
                         exit_reason = "Stop Loss"
                         closed = True
+                        marker_pos = "aboveBar"
                     elif self.take_profit_val > 0 and h >= position['tp_price']:
                         exit_price = position['tp_price']
                         exit_reason = "Take Profit"
                         closed = True
-                    # Kiểm tra tín hiệu đảo chiều
-                    elif sig == -1:
-                        exit_price = c
-                        exit_reason = "Signal Reversal"
-                        closed = True
+                        marker_pos = "aboveBar"
 
                     if closed:
-                        # Tính PnL cho Long
-                        # Mua tại entry_price (đã cộng spread lúc vào), bán tại exit_price
                         gross_pnl = (exit_price - position['entry_price']) * self.lot_size * self.contract_size
-                        net_pnl = gross_pnl - (self.commission * 2)
+                        net_pnl = gross_pnl - (self.commission_per_side * 2)
                         balance += net_pnl
-                        
-                        trade_record = {
+
+                        trades.append({
                             "trade_id": len(trades) + 1,
                             "type": "BUY",
                             "entry_time": position['entry_time_str'],
@@ -99,40 +223,38 @@ class BacktestEngine:
                             "pnl": round(net_pnl, 2),
                             "return_pct": round((net_pnl / self.initial_capital) * 100, 2),
                             "exit_reason": exit_reason
-                        }
-                        trades.append(trade_record)
-
-                        # Marker đóng lệnh
+                        })
                         chart_markers.append({
                             "time": t,
-                            "position": "aboveBar",
+                            "position": marker_pos,
                             "color": "#089981" if net_pnl >= 0 else "#f23645",
                             "shape": "circle",
                             "text": f"EXIT {'+' if net_pnl >= 0 else ''}${net_pnl:.1f}"
                         })
-
                         position = None
 
                 elif position['type'] == 'SHORT':
-                    if self.stop_loss_val > 0 and h >= position['sl_price']:
+                    # Short thoát bằng lệnh Mua (Ask = Bid + Spread)
+                    # Trigger Stop Loss theo giá Ask: High + spread >= sl_price
+                    # Quy ước ưu tiên: nếu nến chạm cả SL và TP, ưu tiên SL trước (bảo thủ)
+                    if self.stop_loss_val > 0 and (h + self.spread_val) >= position['sl_price']:
                         exit_price = position['sl_price']
                         exit_reason = "Stop Loss"
                         closed = True
-                    elif self.take_profit_val > 0 and l <= position['tp_price']:
+                        marker_pos = "belowBar"
+                    # Trigger Take Profit theo giá Ask: Low + spread <= tp_price
+                    elif self.take_profit_val > 0 and (l + self.spread_val) <= position['tp_price']:
                         exit_price = position['tp_price']
                         exit_reason = "Take Profit"
                         closed = True
-                    elif sig == 1:
-                        exit_price = c
-                        exit_reason = "Signal Reversal"
-                        closed = True
+                        marker_pos = "belowBar"
 
                     if closed:
                         gross_pnl = (position['entry_price'] - exit_price) * self.lot_size * self.contract_size
-                        net_pnl = gross_pnl - (self.commission * 2)
+                        net_pnl = gross_pnl - (self.commission_per_side * 2)
                         balance += net_pnl
 
-                        trade_record = {
+                        trades.append({
                             "trade_id": len(trades) + 1,
                             "type": "SELL",
                             "entry_time": position['entry_time_str'],
@@ -144,101 +266,68 @@ class BacktestEngine:
                             "pnl": round(net_pnl, 2),
                             "return_pct": round((net_pnl / self.initial_capital) * 100, 2),
                             "exit_reason": exit_reason
-                        }
-                        trades.append(trade_record)
-
+                        })
                         chart_markers.append({
                             "time": t,
-                            "position": "belowBar",
+                            "position": marker_pos,
                             "color": "#089981" if net_pnl >= 0 else "#f23645",
                             "shape": "circle",
                             "text": f"EXIT {'+' if net_pnl >= 0 else ''}${net_pnl:.1f}"
                         })
-
                         position = None
 
-            # 2. Vào lệnh mới nếu đang flat
-            if position is None:
-                if sig == 1:
-                    # Mua Long: Giá khớp = giá đóng cửa + spread
-                    entry_p = c + self.spread_val
-                    sl_p = entry_p - self.stop_loss_val if self.stop_loss_val > 0 else 0.0
-                    tp_p = entry_p + self.take_profit_val if self.take_profit_val > 0 else 0.0
-                    position = {
-                        "type": "LONG",
-                        "entry_price": entry_p,
-                        "entry_timestamp": t,
-                        "entry_time_str": t_str,
-                        "sl_price": sl_p,
-                        "tp_price": tp_p
-                    }
-                    chart_markers.append({
-                        "time": t,
-                        "position": "belowBar",
-                        "color": "#2962ff",
-                        "shape": "arrowUp",
-                        "text": f"BUY @ {entry_p:.2f}"
-                    })
-
-                elif sig == -1 and self.allow_short:
-                    # Bán Short: Giá khớp = giá đóng cửa
-                    entry_p = c
-                    sl_p = entry_p + self.stop_loss_val if self.stop_loss_val > 0 else 0.0
-                    tp_p = entry_p - self.take_profit_val if self.take_profit_val > 0 else 0.0
-                    position = {
-                        "type": "SHORT",
-                        "entry_price": entry_p,
-                        "entry_timestamp": t,
-                        "entry_time_str": t_str,
-                        "sl_price": sl_p,
-                        "tp_price": tp_p
-                    }
-                    chart_markers.append({
-                        "time": t,
-                        "position": "aboveBar",
-                        "color": "#e91e63",
-                        "shape": "arrowDown",
-                        "text": f"SELL @ {entry_p:.2f}"
-                    })
-
-            # 3. Tính toán Equity hiện tại
+            # -----------------------------------------------------------------
+            # 3. Tính toán Floating PnL & Equity hiện tại
+            # -----------------------------------------------------------------
             floating_pnl = 0.0
             if position is not None:
                 if position['type'] == 'LONG':
-                    floating_pnl = (c - position['entry_price']) * self.lot_size * self.contract_size - (self.commission * 2)
+                    # Long đóng tại Close (Bid)
+                    floating_gross = (c - position['entry_price']) * self.lot_size * self.contract_size
                 else:
-                    floating_pnl = (position['entry_price'] - c) * self.lot_size * self.contract_size - (self.commission * 2)
+                    # Short đóng tại Close + Spread (Ask)
+                    floating_gross = (position['entry_price'] - (c + self.spread_val)) * self.lot_size * self.contract_size
+                floating_pnl = floating_gross - (self.commission_per_side * 2)
 
             current_equity = balance + floating_pnl
             if current_equity > peak_equity:
                 peak_equity = current_equity
-            
+
             dd = peak_equity - current_equity
-            dd_pct = (dd / peak_equity) * 100 if peak_equity > 0 else 0.0
+            dd_pct = (dd / peak_equity * 100) if peak_equity > 0 else 0.0
             if dd > max_drawdown:
                 max_drawdown = dd
             if dd_pct > max_drawdown_pct:
                 max_drawdown_pct = dd_pct
 
-            # Chỉ lưu 1 điểm equity cho mỗi 5-10 nến hoặc nến có giao dịch để đồ thị mượt nhẹ
-            if i % 5 == 0 or i == len(df_signals) - 1 or position is not None:
+            # Lưu điểm equity định kỳ hoặc khi có vị thế
+            if i % 5 == 0 or i == n_bars - 1 or position is not None:
                 equity_curve.append({
                     "time": t,
                     "equity": round(current_equity, 2),
                     "balance": round(balance, 2)
                 })
 
-        # Đóng vị thế còn dang dở ở nến cuối
+        # ---------------------------------------------------------------------
+        # 4. Forced Close vị thế còn mở ở nến cuối kỳ backtest
+        # ---------------------------------------------------------------------
         if position is not None:
             last_c = closes[-1]
             last_t = timestamps[-1]
             last_t_str = time_strs[-1]
+
             if position['type'] == 'LONG':
-                pnl = (last_c - position['entry_price']) * self.lot_size * self.contract_size - (self.commission * 2)
+                exit_price = last_c
+                gross_pnl = (exit_price - position['entry_price']) * self.lot_size * self.contract_size
+                marker_pos = "aboveBar"
             else:
-                pnl = (position['entry_price'] - last_c) * self.lot_size * self.contract_size - (self.commission * 2)
-            
-            balance += pnl
+                exit_price = last_c + self.spread_val
+                gross_pnl = (position['entry_price'] - exit_price) * self.lot_size * self.contract_size
+                marker_pos = "belowBar"
+
+            net_pnl = gross_pnl - (self.commission_per_side * 2)
+            balance += net_pnl
+
             trades.append({
                 "trade_id": len(trades) + 1,
                 "type": "BUY" if position['type'] == 'LONG' else "SELL",
@@ -247,13 +336,42 @@ class BacktestEngine:
                 "entry_price": round(position['entry_price'], 3),
                 "exit_time": last_t_str,
                 "exit_timestamp": last_t,
-                "exit_price": round(last_c, 3),
-                "pnl": round(pnl, 2),
-                "return_pct": round((pnl / self.initial_capital) * 100, 2),
+                "exit_price": round(exit_price, 3),
+                "pnl": round(net_pnl, 2),
+                "return_pct": round((net_pnl / self.initial_capital) * 100, 2),
                 "exit_reason": "End of Backtest"
             })
 
-        # Tính toán các chỉ số thống kê
+            chart_markers.append({
+                "time": last_t,
+                "position": marker_pos,
+                "color": "#089981" if net_pnl >= 0 else "#f23645",
+                "shape": "circle",
+                "text": f"EXIT {'+' if net_pnl >= 0 else ''}${net_pnl:.1f}"
+            })
+
+            # Cập nhật Peak, Drawdown và Equity Curve sau khi đóng vị thế cuối
+            final_equity = balance
+            if final_equity > peak_equity:
+                peak_equity = final_equity
+
+            final_dd = peak_equity - final_equity
+            final_dd_pct = (final_dd / peak_equity * 100) if peak_equity > 0 else 0.0
+            if final_dd > max_drawdown:
+                max_drawdown = final_dd
+            if final_dd_pct > max_drawdown_pct:
+                max_drawdown_pct = final_dd_pct
+
+            # Đảm bảo điểm cuối cùng của equity curve phản ánh đúng balance đã chốt
+            equity_curve.append({
+                "time": last_t,
+                "equity": round(final_equity, 2),
+                "balance": round(balance, 2)
+            })
+
+        # ---------------------------------------------------------------------
+        # 5. Thống kê hiệu suất tổng kết
+        # ---------------------------------------------------------------------
         total_trades = len(trades)
         winning_trades = [tr for tr in trades if tr['pnl'] > 0]
         losing_trades = [tr for tr in trades if tr['pnl'] < 0]

@@ -152,6 +152,8 @@ def run_backtest(req: BacktestRequest):
             "markers": result["markers"]
         }
 
+    except HTTPException:
+        raise
     except ValueError as ve:
         raise HTTPException(status_code=400, detail=str(ve))
     except Exception as e:

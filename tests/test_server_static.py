@@ -26,7 +26,9 @@ class TestServerStatic(unittest.TestCase):
         self.assertEqual(res_chart.status_code, 200)
         res_app = self.client.get("/static/app.js")
         self.assertEqual(res_app.status_code, 200)
-        print("[PASS] style.css, chart.js, app.js served correctly")
+        res_drawings = self.client.get("/static/drawings.js")
+        self.assertEqual(res_drawings.status_code, 200)
+        print("[PASS] style.css, chart.js, app.js, drawings.js served correctly")
 
 if __name__ == '__main__':
     unittest.main()

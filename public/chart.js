@@ -3,13 +3,53 @@
 class TradingChart {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
+        this.containerId = containerId;
         this.chart = null;
         this.candleSeries = null;
         this.volumeSeries = null;
         this.currentTimeframe = 'M15';
         this.currentCandles = [];
+        this.drawingManager = null;
         this.initChart();
         this.setupResizeObserver();
+        this.initDrawingManager();
+        if (typeof window !== 'undefined') {
+            if (this.containerId === 'chart-container') {
+                window.tradingChart = this;
+            } else if (this.containerId === 'chart-container-2') {
+                window.secondaryChart = this;
+            }
+        }
+    }
+
+    initDrawingManager() {
+        if (window.DrawingManager && this.container) {
+            this.drawingManager = new window.DrawingManager(this, this.container, {
+                symbol: 'XAUUSD',
+                timeframe: this.currentTimeframe,
+                storageKeySuffix: this.containerId === 'chart-container-2' ? 'secondary' : 'main',
+                onStateChange: (state) => {
+                    if (window.onDrawingStateChange) {
+                        window.onDrawingStateChange(state, this);
+                    }
+                },
+                onAlertTriggered: (alertData) => {
+                    if (window.onDrawingAlertTriggered) {
+                        window.onDrawingAlertTriggered(alertData, this);
+                    }
+                },
+                onOpenProperties: (drawing) => {
+                    if (window.onDrawingOpenProperties) {
+                        window.onDrawingOpenProperties(drawing, this);
+                    }
+                },
+                onContextMenu: (drawing, event) => {
+                    if (window.onDrawingContextMenu) {
+                        window.onDrawingContextMenu(drawing, event, this);
+                    }
+                }
+            });
+        }
     }
 
     initChart() {
@@ -96,12 +136,32 @@ class TradingChart {
     }
 
     setupResizeObserver() {
-        const resizeObserver = new ResizeObserver(entries => {
+        this.resizeObserver = new ResizeObserver(entries => {
             if (entries.length === 0 || !entries[0].contentRect) return;
             const { width, height } = entries[0].contentRect;
-            this.chart.applyOptions({ width, height });
+            if (this.chart) {
+                this.chart.applyOptions({ width, height });
+            }
+            if (this.drawingManager) {
+                this.drawingManager.requestRender();
+            }
         });
-        resizeObserver.observe(this.container);
+        if (this.container) {
+            this.resizeObserver.observe(this.container);
+        }
+    }
+
+    handleResize() {
+        if (!this.container) return;
+        const rect = this.container.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+            if (this.chart) {
+                this.chart.applyOptions({ width: rect.width, height: rect.height });
+            }
+            if (this.drawingManager) {
+                this.drawingManager.requestRender();
+            }
+        }
     }
 
     setupCrosshairLegend() {
@@ -181,6 +241,9 @@ class TradingChart {
         this.volumeSeries.setData(volumeData);
         this.updateLegendFromLastBar();
         this.chart.timeScale().fitContent();
+        if (this.drawingManager) {
+            this.drawingManager.requestRender();
+        }
     }
 
     setMarkers(markers) {
@@ -226,6 +289,10 @@ class TradingChart {
             color: candle.close >= candle.open ? 'rgba(8, 153, 129, 0.45)' : 'rgba(242, 54, 69, 0.45)',
         });
         this.renderLegend(candle.open, candle.high, candle.low, candle.close, candle.volume);
+        if (this.drawingManager) {
+            this.drawingManager.requestRender();
+            this.drawingManager.checkAlerts(candle);
+        }
     }
 
     subscribeClick(callback) {
@@ -240,6 +307,24 @@ class TradingChart {
                 });
             });
         }
+    }
+
+    destroy() {
+        if (this.drawingManager) {
+            this.drawingManager.destroy();
+            this.drawingManager = null;
+        }
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+            this.resizeObserver = null;
+        }
+        if (this.chart) {
+            this.chart.remove();
+            this.chart = null;
+            this.candleSeries = null;
+            this.volumeSeries = null;
+        }
+        this.currentCandles = [];
     }
 }
 

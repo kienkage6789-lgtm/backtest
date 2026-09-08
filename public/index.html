@@ -38,15 +38,324 @@
       <button class="header-btn" id="btn-toggle-dual" title="Bật/Tắt chế độ 2 Biểu đồ đa khung thời gian">
         <span>🪟</span> 2 Biểu Đồ
       </button>
+      <button class="header-btn" id="btn-toggle-strategy" title="Mở/Đóng Bảng Cấu Hình Chiến Lược" aria-label="Cấu hình chiến lược">
+        <span>⚙️</span> Cấu Hình
+      </button>
+      <button class="header-btn" id="btn-toggle-results" title="Mở/Đóng Bảng Kết Quả & Báo Cáo" aria-label="Kết quả và báo cáo">
+        <span>📊</span> Báo Cáo
+      </button>
       <span class="data-badge" id="data-range-badge">Đang kết nối database...</span>
     </div>
   </header>
 
   <!-- Workspace Container -->
   <div class="workspace">
-    
+
+    <!-- Left Drawing Toolbar -->
+    <div class="drawing-toolbar" id="drawing-toolbar">
+      <!-- 1. Cursor Group -->
+      <div class="tool-group" data-category="cursor">
+        <button class="draw-tool-btn active main-btn" data-tool="cursor" title="Con trỏ & Chọn (Esc)"><span class="tool-icon">↖️</span></button>
+        <button class="tool-arrow-btn" title="Mở nhóm Con trỏ">▾</button>
+        <div class="tool-flyout-menu">
+          <div class="flyout-item active" data-tool="cursor"><span class="tool-icon">↖️</span> <span class="tool-name">Chọn & Di chuyển</span> <span class="tool-fav-toggle" title="Ghim yêu thích">★</span></div>
+          <div class="flyout-item" data-tool="eraser"><span class="tool-icon">🧹</span> <span class="tool-name">Tẩy nét vẽ</span> <span class="tool-fav-toggle" title="Ghim yêu thích">★</span></div>
+        </div>
+      </div>
+
+      <!-- 2. Trend Tools Group -->
+      <div class="tool-group" data-category="trend">
+        <button class="draw-tool-btn main-btn" data-tool="trendline" title="Đường Xu Hướng (Trendline)"><span class="tool-icon">╱</span></button>
+        <button class="tool-arrow-btn" title="Mở nhóm Đường xu hướng">▾</button>
+        <div class="tool-flyout-menu">
+          <div class="flyout-item" data-tool="trendline"><span class="tool-icon">╱</span> <span class="tool-name">Đường xu hướng</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="ray"><span class="tool-icon">↗️</span> <span class="tool-name">Tia kéo dài (Ray)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="extended"><span class="tool-icon">↔️</span> <span class="tool-name">Đường kéo dài 2 phía</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="info_line"><span class="tool-icon">ℹ️</span> <span class="tool-name">Đường thông số (Info Line)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="trend_angle"><span class="tool-icon">∠</span> <span class="tool-name">Góc xu hướng (Trend Angle)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="horizontal"><span class="tool-icon">─</span> <span class="tool-name">Đường ngang (Horizontal)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="horizontal_ray"><span class="tool-icon">⟶</span> <span class="tool-name">Tia ngang (Horizontal Ray)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="vertical"><span class="tool-icon">│</span> <span class="tool-name">Đường dọc (Vertical)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="crossline"><span class="tool-icon">┼</span> <span class="tool-name">Chữ thập (Crossline)</span> <span class="tool-fav-toggle">★</span></div>
+        </div>
+      </div>
+
+      <!-- 3. Channels & Pitchfork Group -->
+      <div class="tool-group" data-category="channels">
+        <button class="draw-tool-btn main-btn" data-tool="channel" title="Kênh Song Song (Parallel Channel)"><span class="tool-icon">⫽</span></button>
+        <button class="tool-arrow-btn" title="Mở nhóm Kênh & Pitchfork">▾</button>
+        <div class="tool-flyout-menu">
+          <div class="flyout-item" data-tool="channel"><span class="tool-icon">⫽</span> <span class="tool-name">Kênh song song</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="regression_trend"><span class="tool-icon">📈</span> <span class="tool-name">Kênh hồi quy (OLS)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="pitchfork"><span class="tool-icon">ψ</span> <span class="tool-name">Andrews Pitchfork</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="schiff_pitchfork"><span class="tool-icon">⑂</span> <span class="tool-name">Schiff Pitchfork</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="mod_schiff_pitchfork"><span class="tool-icon">⑃</span> <span class="tool-name">Modified Schiff</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="inside_pitchfork"><span class="tool-icon">⑄</span> <span class="tool-name">Inside Pitchfork</span> <span class="tool-fav-toggle">★</span></div>
+        </div>
+      </div>
+
+      <!-- 4. Fib & Gann Group -->
+      <div class="tool-group" data-category="fib">
+        <button class="draw-tool-btn main-btn" data-tool="fib_retracement" title="Fibonacci Thoái lui (Fib Retracement)"><span class="tool-icon">≋</span></button>
+        <button class="tool-arrow-btn" title="Mở nhóm Fibonacci & Gann">▾</button>
+        <div class="tool-flyout-menu">
+          <div class="flyout-item" data-tool="fib_retracement"><span class="tool-icon">≋</span> <span class="tool-name">Fibonacci Thoái lui</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="fib_extension"><span class="tool-icon">⤨</span> <span class="tool-name">Fibonacci Mở rộng</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="fib_timezone"><span class="tool-icon">⏱️</span> <span class="tool-name">Fibonacci Time Zone</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="gann_box"><span class="tool-icon">⊞</span> <span class="tool-name">Hộp Gann (Gann Box)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="gann_fan"><span class="tool-icon">🪭</span> <span class="tool-name">Quạt Gann (Gann Fan)</span> <span class="tool-fav-toggle">★</span></div>
+        </div>
+      </div>
+
+      <!-- 5. Shapes & Brush Group -->
+      <div class="tool-group" data-category="shapes">
+        <button class="draw-tool-btn main-btn" data-tool="rectangle" title="Hình Chữ Nhật (Rectangle)"><span class="tool-icon">▭</span></button>
+        <button class="tool-arrow-btn" title="Mở nhóm Hình học & Cọ vẽ">▾</button>
+        <div class="tool-flyout-menu">
+          <div class="flyout-item" data-tool="rectangle"><span class="tool-icon">▭</span> <span class="tool-name">Hình chữ nhật</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="circle"><span class="tool-icon">⭕</span> <span class="tool-name">Hình tròn</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="triangle"><span class="tool-icon">△</span> <span class="tool-name">Hình tam giác</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="polyline"><span class="tool-icon">〰️</span> <span class="tool-name">Đường gấp khúc (Polyline)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="brush"><span class="tool-icon">🖌️</span> <span class="tool-name">Cọ vẽ tự do (Brush)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="highlighter"><span class="tool-icon">🖍️</span> <span class="tool-name">Dạ quang (Highlighter)</span> <span class="tool-fav-toggle">★</span></div>
+        </div>
+      </div>
+
+      <!-- 6. Patterns Group -->
+      <div class="tool-group" data-category="patterns">
+        <button class="draw-tool-btn main-btn" data-tool="abcd" title="Mẫu hình ABCD"><span class="tool-icon">🔤</span></button>
+        <button class="tool-arrow-btn" title="Mở nhóm Mẫu hình kỹ thuật">▾</button>
+        <div class="tool-flyout-menu">
+          <div class="flyout-item" data-tool="abcd"><span class="tool-icon">🔤</span> <span class="tool-name">Mẫu hình ABCD</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="head_shoulders"><span class="tool-icon">👤</span> <span class="tool-name">Vai Đầu Vai</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="elliott_wave_15"><span class="tool-icon">5️⃣</span> <span class="tool-name">Sóng Elliott Đẩy (1-5)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="elliott_wave_abc"><span class="tool-icon">🔠</span> <span class="tool-name">Sóng Elliott Chỉnh (A-B-C)</span> <span class="tool-fav-toggle">★</span></div>
+        </div>
+      </div>
+
+      <!-- 7. Forecast & Measurement Group -->
+      <div class="tool-group" data-category="forecast">
+        <button class="draw-tool-btn main-btn" data-tool="long_position" title="Vị thế Mua (Long Position)"><span class="tool-icon">🟢</span></button>
+        <button class="tool-arrow-btn" title="Mở nhóm Dự báo & Đo lường">▾</button>
+        <div class="tool-flyout-menu">
+          <div class="flyout-item" data-tool="long_position"><span class="tool-icon">🟢</span> <span class="tool-name">Vị thế Mua (Long)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="short_position"><span class="tool-icon">🔴</span> <span class="tool-name">Vị thế Bán (Short)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="date_price_range"><span class="tool-icon">⤧</span> <span class="tool-name">Vùng Giá & Thời gian</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="ruler"><span class="tool-icon">📏</span> <span class="tool-name">Thước đo (Ruler)</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="price_range"><span class="tool-icon">↕️</span> <span class="tool-name">Khoảng giá</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="date_range"><span class="tool-icon">↔</span> <span class="tool-name">Khoảng thời gian</span> <span class="tool-fav-toggle">★</span></div>
+        </div>
+      </div>
+
+      <!-- 8. Annotations Group -->
+      <div class="tool-group" data-category="annotations">
+        <button class="draw-tool-btn main-btn" data-tool="text" title="Ghi Chú Văn Bản (Text)"><span class="tool-icon">📝</span></button>
+        <button class="tool-arrow-btn" title="Mở nhóm Ghi chú & Nhãn">▾</button>
+        <div class="tool-flyout-menu">
+          <div class="flyout-item" data-tool="text"><span class="tool-icon">📝</span> <span class="tool-name">Ghi chú văn bản</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="callout"><span class="tool-icon">💬</span> <span class="tool-name">Bong bóng chú thích</span> <span class="tool-fav-toggle">★</span></div>
+          <div class="flyout-item" data-tool="arrow"><span class="tool-icon">➔</span> <span class="tool-name">Mũi tên</span> <span class="tool-fav-toggle">★</span></div>
+        </div>
+      </div>
+
+      <div class="tool-sep"></div>
+
+      <!-- Utilities -->
+      <button class="draw-tool-btn" id="btn-draw-magnet" title="Bám Nến Tự Động (Magnet Snap - Off / Yếu / Mạnh)"><span class="tool-icon" id="magnet-icon">🧲</span></button>
+      <button class="draw-tool-btn" id="btn-draw-keep-mode" title="Giữ chế độ vẽ (Keep in Drawing Mode)"><span class="tool-icon">✏️</span></button>
+      <button class="draw-tool-btn" id="btn-draw-lock-all" title="Khóa/Mở khóa tất cả nét vẽ"><span class="tool-icon">🔓</span></button>
+      <button class="draw-tool-btn" id="btn-draw-hide-all" title="Ẩn/Hiện tất cả nét vẽ"><span class="tool-icon">👁️</span></button>
+      <div class="tool-sep"></div>
+      <button class="draw-tool-btn" id="btn-draw-undo" title="Hoàn Tác (Ctrl+Z)" disabled><span class="tool-icon">↩️</span></button>
+      <button class="draw-tool-btn" id="btn-draw-redo" title="Làm Lại (Ctrl+Y)" disabled><span class="tool-icon">↪️</span></button>
+      <button class="draw-tool-btn" id="btn-draw-delete" title="Xóa Nét Vẽ Đang Chọn (Delete)" disabled><span class="tool-icon">🗑️</span></button>
+      <button class="draw-tool-btn" id="btn-draw-clear" title="Xóa Tất Cả Nét Vẽ"><span class="tool-icon">🧹</span></button>
+      <button class="draw-tool-btn" id="btn-draw-export" title="Xuất Drawings ra JSON"><span class="tool-icon">💾</span></button>
+      <button class="draw-tool-btn" id="btn-draw-import" title="Nhập Drawings từ JSON"><span class="tool-icon">📂</span></button>
+    </div>
+
+    <!-- Floating Draggable Favorites Bar -->
+    <div class="drawing-favorites-bar" id="drawing-favorites-bar" style="display: none;">
+      <span class="fav-drag-handle" title="Kéo rê thanh yêu thích">⠿</span>
+      <div class="fav-tools-list" id="fav-tools-list"></div>
+      <button class="fav-close-btn" id="btn-fav-close" title="Ẩn thanh yêu thích">✕</button>
+    </div>
+
     <!-- Chart Area -->
     <div class="chart-area" id="chart-area-main">
+      <!-- Floating Drawing Style Bar -->
+      <div class="drawing-style-bar" id="drawing-style-bar" style="display: none;">
+        <span class="style-bar-title" id="style-bar-title">Nét vẽ</span>
+        <div class="style-bar-item">
+          <label title="Màu đường viền">Màu:</label>
+          <input type="color" id="style-color-picker" value="#2962ff">
+        </div>
+        <div class="style-bar-item">
+          <label title="Độ dày nét vẽ">Dày:</label>
+          <select id="style-width-select">
+            <option value="1">1px</option>
+            <option value="2" selected>2px</option>
+            <option value="3">3px</option>
+            <option value="4">4px</option>
+          </select>
+        </div>
+        <div class="style-bar-item">
+          <label title="Kiểu nét vẽ">Kiểu:</label>
+          <select id="style-line-select">
+            <option value="solid" selected>Liền</option>
+            <option value="dashed">Đứt</option>
+            <option value="dotted">Chấm</option>
+          </select>
+        </div>
+        <div class="style-bar-item" id="style-fill-container">
+          <label title="Màu phủ">Nền:</label>
+          <input type="color" id="style-fill-picker" value="#2962ff">
+        </div>
+        <button class="style-bar-btn" id="btn-style-props" title="Mở bảng cài đặt đầy đủ (Settings)">⚙️</button>
+        <button class="style-bar-btn" id="btn-style-lock" title="Khóa nét vẽ (Không cho sửa/xóa)">🔓</button>
+        <button class="style-bar-btn" id="btn-style-hide" title="Ẩn nét vẽ">👁️</button>
+        <button class="style-bar-btn danger" id="btn-style-delete" title="Xóa nét vẽ">🗑️</button>
+        <button class="style-bar-btn" id="btn-style-close" title="Đóng thanh định dạng">✕</button>
+      </div>
+
+      <!-- Drawing Property Dialog Modal -->
+      <div class="property-dialog-overlay" id="property-dialog-overlay" style="display: none;">
+        <div class="property-dialog" id="drawing-property-dialog">
+          <div class="dialog-header">
+            <span class="dialog-title" id="dialog-tool-title">⚙️ Cài đặt công cụ</span>
+            <button class="dialog-close-btn" id="btn-dialog-close">✕</button>
+          </div>
+          <div class="dialog-tabs">
+            <button class="dialog-tab active" data-tab="style">Định dạng (Style)</button>
+            <button class="dialog-tab" data-tab="coordinates">Tọa độ (Coordinates)</button>
+            <button class="dialog-tab" data-tab="visibility">Hiển thị (Visibility)</button>
+            <button class="dialog-tab" data-tab="statistics">Thống kê (Stats)</button>
+            <button class="dialog-tab" data-tab="text">Ghi chú (Text)</button>
+          </div>
+          <div class="dialog-body">
+            <!-- Tab 1: Style -->
+            <div class="tab-content active" id="tab-style">
+              <div class="form-row">
+                <label>Màu đường viền:</label>
+                <div class="color-input-wrap">
+                  <input type="color" id="prop-color" value="#2962ff">
+                  <span class="color-hex" id="prop-color-hex">#2962ff</span>
+                </div>
+              </div>
+              <div class="form-row">
+                <label>Độ dày nét:</label>
+                <select id="prop-width">
+                  <option value="1">1px</option>
+                  <option value="2">2px</option>
+                  <option value="3">3px</option>
+                  <option value="4">4px</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>Kiểu nét:</label>
+                <select id="prop-line-style">
+                  <option value="solid">Nét liền (Solid)</option>
+                  <option value="dashed">Nét đứt (Dashed)</option>
+                  <option value="dotted">Nét chấm (Dotted)</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>Độ mờ đục (Opacity):</label>
+                <input type="range" id="prop-opacity" min="0.1" max="1" step="0.05" value="1">
+                <span id="prop-opacity-val">100%</span>
+              </div>
+              <div class="form-row" id="row-prop-fill">
+                <label>Màu phủ nền:</label>
+                <div class="color-input-wrap">
+                  <input type="color" id="prop-fill-color" value="#2962ff">
+                  <span class="color-hex" id="prop-fill-hex">#2962ff</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 2: Coordinates -->
+            <div class="tab-content" id="tab-coordinates">
+              <p class="tab-tip">Nhập trực tiếp mức giá và thời gian để định vị chính xác:</p>
+              <div id="prop-coordinates-container"></div>
+            </div>
+
+            <!-- Tab 3: Visibility -->
+            <div class="tab-content" id="tab-visibility">
+              <div class="form-row checkbox-row">
+                <label><input type="checkbox" id="prop-vis-all" checked> Hiển thị trên mọi khung thời gian</label>
+              </div>
+              <div class="timeframe-checkbox-grid" id="prop-tf-grid">
+                <label><input type="checkbox" value="M1" class="prop-tf-item"> M1</label>
+                <label><input type="checkbox" value="M5" class="prop-tf-item"> M5</label>
+                <label><input type="checkbox" value="M15" class="prop-tf-item"> M15</label>
+                <label><input type="checkbox" value="M30" class="prop-tf-item"> M30</label>
+                <label><input type="checkbox" value="H1" class="prop-tf-item"> H1</label>
+                <label><input type="checkbox" value="H4" class="prop-tf-item"> H4</label>
+                <label><input type="checkbox" value="D1" class="prop-tf-item"> D1</label>
+              </div>
+            </div>
+
+            <!-- Tab 4: Statistics -->
+            <div class="tab-content" id="tab-statistics">
+              <div class="form-row checkbox-row">
+                <label><input type="checkbox" id="prop-stats-show" checked> Hiển thị huy hiệu thông số</label>
+              </div>
+              <div class="stats-info-box" id="prop-stats-details">
+                <p class="tab-tip">Thông số được tự động tính toán thời gian thực theo khoảng cách giá và nến.</p>
+              </div>
+            </div>
+
+            <!-- Tab 5: Text -->
+            <div class="tab-content" id="tab-text">
+              <div class="form-row">
+                <label>Nội dung ghi chú:</label>
+                <textarea id="prop-text-content" rows="3" placeholder="Nhập ghi chú..."></textarea>
+              </div>
+              <div class="form-row">
+                <label>Màu chữ:</label>
+                <input type="color" id="prop-text-color" value="#ffffff">
+              </div>
+              <div class="form-row">
+                <label>Kích cỡ chữ:</label>
+                <select id="prop-font-size">
+                  <option value="11">11px</option>
+                  <option value="12">12px</option>
+                  <option value="14" selected>14px</option>
+                  <option value="16">16px</option>
+                  <option value="20">20px</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="dialog-footer">
+            <button class="btn-dialog-secondary" id="btn-dialog-cancel">Hủy</button>
+            <button class="btn-dialog-primary" id="btn-dialog-save">Lưu áp dụng</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right-click Custom Context Menu -->
+      <div class="drawing-context-menu" id="drawing-context-menu" style="display: none;">
+        <div class="ctx-item" data-action="settings"><span class="ctx-icon">⚙️</span> Cài đặt (Settings...) <span class="ctx-hotkey">DblClick</span></div>
+        <div class="ctx-item" data-action="duplicate"><span class="ctx-icon">📋</span> Tạo bản sao (Duplicate) <span class="ctx-hotkey">Ctrl+D</span></div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item" data-action="toggle-lock"><span class="ctx-icon">🔒</span> Khóa / Mở khóa</div>
+        <div class="ctx-item" data-action="toggle-hide"><span class="ctx-icon">👁️</span> Ẩn nét vẽ</div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item" data-action="bring-front"><span class="ctx-icon">⬆️</span> Đưa lên trên (Bring to Front)</div>
+        <div class="ctx-item" data-action="send-back"><span class="ctx-icon">⬇️</span> Đưa xuống dưới (Send to Back)</div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item" data-action="add-alert"><span class="ctx-icon">🔔</span> Bật/Tắt cảnh báo giá</div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item danger" data-action="delete"><span class="ctx-icon">🗑️</span> Xóa nét vẽ <span class="ctx-hotkey">Del</span></div>
+      </div>
+
+      <!-- Alert Toast Notification -->
+      <div class="drawing-alert-toast" id="drawing-alert-toast" style="display: none;">
+        <span class="toast-icon">🔔</span>
+        <span class="toast-msg" id="toast-msg">Giá nến vừa chạm đường cảnh báo!</span>
+      </div>
+
       <!-- Crosshair Legend / OHLCV Tooltip -->
       <div class="chart-legend" id="chart-legend">
         <div class="legend-item"><span class="legend-label">O:</span><span class="legend-val" id="leg-open">-</span></div>
@@ -107,16 +416,20 @@
       </div>
     </div>
 
-    <!-- Right Control & Backtest Panel -->
-    <div class="side-panel">
+    <!-- Mobile Drawer Backdrop Overlay -->
+    <div class="drawer-backdrop" id="drawer-backdrop" style="display: none;"></div>
+
+    <!-- Right Drawer: Control & Backtest Panel -->
+    <div class="side-panel collapsed" id="side-panel" aria-label="Bảng điều khiển chiến lược và báo cáo">
       <!-- Tabs Navigation -->
-      <div class="panel-tabs">
-        <button class="panel-tab active" data-tab="tab-strategy">⚙️ Cấu Hình Chiến Lược</button>
-        <button class="panel-tab" data-tab="tab-results">📊 Kết Quả & Báo Cáo</button>
+      <div class="panel-tabs" role="tablist">
+        <button class="panel-tab active" data-tab="tab-strategy" id="tab-btn-strategy" role="tab" aria-selected="true" aria-controls="tab-strategy" aria-label="Cấu hình chiến lược">⚙️ Cấu Hình</button>
+        <button class="panel-tab" data-tab="tab-results" id="tab-btn-results" role="tab" aria-selected="false" aria-controls="tab-results" aria-label="Kết quả và báo cáo">📊 Báo Cáo</button>
+        <button class="panel-close-btn" id="btn-close-drawer" title="Đóng bảng điều khiển (Esc)" aria-label="Đóng bảng điều khiển">✕</button>
       </div>
 
       <!-- Tab 1: Cấu hình chiến lược & Backtest -->
-      <div class="tab-content active" id="tab-strategy">
+      <div class="tab-content active" id="tab-strategy" role="tabpanel" aria-labelledby="tab-btn-strategy">
         <form id="backtest-form" onsubmit="event.preventDefault(); runBacktest();">
           
           <div class="form-group">
@@ -187,7 +500,7 @@
       </div>
 
       <!-- Tab 2: Kết quả & Báo cáo -->
-      <div class="tab-content" id="tab-results">
+      <div class="tab-content" id="tab-results" role="tabpanel" aria-labelledby="tab-btn-results">
         <div id="results-empty" style="text-align: center; color: var(--text-muted); padding: 40px 10px;">
           <div style="font-size: 32px; margin-bottom: 12px;">📊</div>
           Chưa có dữ liệu kiểm thử.<br>Hãy cấu hình và nhấn <b>"Chạy Backtest Ngay"</b>.
@@ -263,6 +576,7 @@
     </div>
   </div>
 
+  <script src="/static/drawings.js"></script>
   <script src="/static/chart.js"></script>
   <script src="/static/app.js"></script>
 </body>
