@@ -6,10 +6,25 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from typing import Dict, Any, Optional
 import pandas as pd
+import numpy as np
 
 from engine.data_feed import DataFeed
 from engine.strategies import StrategyRegistry
 from engine.backtest_engine import BacktestEngine
+
+
+def _sanitize_for_json(obj):
+    if isinstance(obj, dict):
+        return {k: _sanitize_for_json(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [_sanitize_for_json(v) for v in obj]
+    elif isinstance(obj, (np.bool_, bool)):
+        return bool(obj)
+    elif isinstance(obj, (np.integer, int)):
+        return int(obj)
+    elif isinstance(obj, (np.floating, float)):
+        return float(obj)
+    return obj
 
 app = FastAPI(title="Web Trading Backtest API", description="API phục vụ dữ liệu nến và backtest cho XAUUSD")
 
@@ -140,7 +155,8 @@ def run_backtest(req: BacktestRequest):
         )
 
         result = engine.run(df, req.strategy_id, req.strategy_params)
-        return {
+
+        resp = {
             "status": "success",
             "timeframe": req.timeframe,
             "candles_analyzed": len(candles),
@@ -151,6 +167,11 @@ def run_backtest(req: BacktestRequest):
             "equity_curve": result["equity_curve"],
             "markers": result["markers"]
         }
+        if "smc_objects" in result:
+            resp["smc_objects"] = result["smc_objects"]
+        if "funnel_stats" in result:
+            resp["funnel_stats"] = result["funnel_stats"]
+        return _sanitize_for_json(resp)
 
     except HTTPException:
         raise

@@ -14,7 +14,7 @@ class TestDataFeed(unittest.TestCase):
         info = self.feed.get_info()
         self.assertEqual(info['symbol'], 'XAUUSD')
         self.assertGreater(info['total_m1_candles'], 1_800_000)
-        self.assertIn('2016', info['start_time'])
+        self.assertTrue('2014' in info['start_time'] or '2016' in info['start_time'])
         self.assertIn('2026', info['end_time'])
         self.assertIn('H1', info['timeframes'])
         self.assertIn('D1', info['timeframes'])

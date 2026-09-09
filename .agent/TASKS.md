@@ -3,6 +3,18 @@
 > Cập nhật trạng thái NGAY khi thay đổi, không đợi cuối buổi.
 > Trạng thái: todo | doing | blocked | review | done
 
+### [x] M01 - SMC Trading System Milestone 1 (Swing Foundation)
+- Mô tả: Bổ sung module SMC lõi độc lập: package `smc/`, data models (`SwingPoint`), data contract (`normalize_ohlcv`), swing detector không repaint (`detect_swings`) hỗ trợ `confirmed_at` lag, phân loại cấu trúc HH/HL/LH/LL, cô lập `mode="swing"` vs `mode="internal"`.
+- File liên quan: `smc/__init__.py`, `smc/models.py`, `smc/data_contract.py`, `smc/structure/__init__.py`, `smc/structure/swings.py`, `tests/test_smc_swings.py`
+- Acceptance criteria:
+  - [x] Data contract `normalize_ohlcv` chuẩn hóa OHLCV từ DataFeed (dict list / DF) thành DatetimeIndex UTC và cột volume.
+  - [x] Swing detector `detect_swings` xác định pivot high/low không repaint, có cờ `confirmed_at = i + right_strength`.
+  - [x] Phân loại chính xác HH, HL, LH, LL trên chuỗi sóng synthetic.
+  - [x] Độc lập 2 chế độ `swing` và `internal`.
+  - [x] 8/8 SMC Swings unit tests PASS 100% + 44/44 Python tests PASS + 67/67 Node tests PASS.
+- Phụ thuộc: T01 - T49
+- Trạng thái: done
+
 ### [x] T01 - Khảo sát Database & Dựng Data API Service
 - Mô tả: Kiểm tra cấu trúc SQLite `data/XAUUSD.db`, lập chỉ mục (index trên `time` nếu cần) để query theo khoảng thời gian siêu tốc, viết script / API đọc nến và resample từ M1 sang M5, M15, H1, D1.
 - File liên quan: `data/XAUUSD.db`, `engine/data_feed.py`, `server.py`, `tests/test_data.py`, `tests/test_api.py`
@@ -560,3 +572,53 @@
 - Phụ thuộc: T47
 - Trạng thái: done
 
+## Ghi chú phiên làm việc kế tiếp — SMC QC follow-up 2026-09-08
+
+Ưu tiên xử lý các điểm còn lại sau QC walkthrough SMC:
+
+- [ ] **P1 — Structure-leg validation cho Strong OB:** bổ sung metadata/ràng buộc structure leg; chỉ liên kết FVG cùng hướng, cùng mode và cùng displacement leg với OB. Không cho phép structure event ngược hướng chen giữa.
+- [ ] **P2 — Deferred FVG trong `OrderBlockTracker`:** sửa luồng `require_fvg=True` để event chưa có FVG không bị ghi `_seen_keys` rồi mất vĩnh viễn; thêm pending-event hoặc cơ chế retry khi FVG được xác nhận sau đó.
+- [ ] **P2 — Bổ sung regression tests:** kiểm tra `mitigated_at > source_event_index`, FVG khác structure leg không nâng quality, late FVG với `require_fvg=True`, và batch/tracker parity cho các case này.
+- [ ] **P2 — Chốt semantics strategy:** quyết định `require_ob` mặc định là bắt buộc hay tùy chọn; nếu là confluence bắt buộc thì expose `require_ob`, `ob_lookback`, `sl_anchor` trong metadata/UI của `StrategyRegistry` và bảo đảm `require_ob` chỉ chấp nhận OB hợp lệ theo policy.
+- [ ] **P2 — Rà lại active-block cap:** xác nhận việc `max_active_blocks` loại các OB còn valid khỏi `get_active_blocks()` là policy mong muốn; nếu không, tách giới hạn xử lý khỏi danh sách trạng thái đầy đủ.
+- [ ] Chạy lại full Python 129 tests, Node drawing 67 tests, compileall và cập nhật walkthrough/QC report sau khi sửa.
+
+## Roadmap phát triển tiếp theo theo SMC plan
+
+Sau khi đóng các issue QC của OB, triển khai theo thứ tự sau; không nhảy thẳng sang Breaker Block hay các biến thể nâng cao:
+
+### Milestone tiếp theo — Liquidity Pool & Liquidity Sweep
+
+- [ ] Tạo model `LiquidityPool` và `LiquiditySweep` có `mode`, `direction`, source swing, `confirmed_at`, `created_at`, `swept_at`, validity và serialization.
+- [ ] Detect equal highs/equal lows bằng tolerance cấu hình theo phần trăm giá hoặc pip; hỗ trợ batch và incremental tracker.
+- [ ] Detect sweep bằng wick vượt liquidity pool rồi close quay lại vùng; phân biệt bullish/bearish sweep và không nhầm với BOS/CHoCH.
+- [ ] Bảo đảm zero-lookahead: chỉ công bố pool sau pivot confirmation và chỉ công bố sweep sau khi nến sweep đóng cửa.
+- [ ] Bổ sung test đối xứng, tolerance, wick-only, close vượt hẳn, ambiguous candle, invalidation, batch/incremental parity và replay cutoff.
+
+### Milestone kế tiếp — Context
+
+- [ ] Xây `KillZone/SessionFilter`: timezone rõ ràng, session cấu hình được, quy tắc DST, closed-candle only và lý do reject.
+- [ ] Xây HTF bias adapter: chạy structure trên HTF, ánh xạ bias về LTF theo timestamp/as-of bar, tuyệt đối không dùng bias tương lai.
+- [ ] Bổ sung test timezone, biên session, ngày không có dữ liệu, gaps và mapping HTF/LTF.
+
+### Milestone kế tiếp — Confluence Engine
+
+- [ ] Chuẩn hóa các tín hiệu: HTF bias, BOS/CHoCH, OB, FVG, liquidity sweep, Kill Zone và context.
+- [ ] Implement hai policy: `AND` cứng và weighted scoring; mỗi setup phải có score, threshold, direction, reason codes và source metadata.
+- [ ] Tạo `TradeSetup` độc lập với strategy; deduplicate theo event/zone, xử lý conflict bullish/bearish và không tự mutate input.
+- [ ] Chốt rõ Strong OB/FVG cùng structure leg trước khi dùng quality score trong confluence.
+
+### Milestone kế tiếp — Risk, Entry & Backtest Adapter
+
+- [ ] Chốt entry policy: market/limit/retest, thời điểm đặt lệnh và expiry.
+- [ ] Chốt SL/TP: SL ngoài OB hoặc swing, buffer theo spread/ATR; TP theo RR hoặc liquidity/structure target.
+- [ ] Bổ sung risk-per-trade, position sizing, spread, commission và metadata source setup vào trade record.
+- [ ] Adapter signal phải giữ nguyên contract BacktestEngine: signal bar N chỉ khớp từ Open bar N+1.
+
+### Milestone kế tiếp — Replay, UI và Validation
+
+- [ ] Tích hợp incremental trackers vào Replay/Live path; batch và replay phải cho kết quả tương đương.
+- [ ] API/UI overlay cho liquidity pools, sweep markers, Kill Zone, HTF bias, setup score và lý do reject.
+- [ ] Bổ sung integration test end-to-end: Sweep → CHoCH → OB/FVG → Confluence → Entry → SL/TP.
+- [ ] Chạy backtest in-sample/out-of-sample, walk-forward, sensitivity và kiểm tra overfit trước khi tối ưu tham số.
+- [ ] Chỉ sau khi toàn bộ v1 được verify bằng dữ liệu và chart mới xem xét Breaker Block, Mitigation Block và Propulsion Block.

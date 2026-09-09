@@ -2,6 +2,54 @@
 
 > Nhật ký các thay đổi thực tế đã làm, theo thời gian.
 
+## 2026-09-08 - Tối ưu O(1) Rolling State Machine cho SwingDetectorState (Performance Refinement)
+- **File đã đổi**: `smc/structure/swings.py`, `tests/test_smc_swings.py`, `.agent/CHANGELOG.md`, `walkthrough.md`.
+- **Đã làm**:
+  - **[P1] Refactor `SwingDetectorState.update()` sang O(1) per bar**:
+    - Thay thế cơ chế quét lại toàn bộ lịch sử $O(N^2)$ bằng thuật toán Cửa sổ Trượt (Rolling Window Buffer) độ dài cố định $W = \text{left\_strength} + \text{right\_strength} + 1$.
+    - Đánh giá pivot high/low cho nến ứng viên tại vị trí $i = \text{bar\_index} - \text{right\_strength}$ trên duy nhất cửa sổ $W$ nến trong bộ nhớ rolling.
+    - Duy trì state `_prev_high` và `_prev_low` để phân loại HH/HL/LH/LL tức thì.
+    - **Benchmark Hiệu Năng**: Xử lý 1.000 nến liên tục từng bước giảm từ **~7.75 giây xuống còn 11.26ms** (nhanh gấp ~500 lần, đáp ứng hoàn hảo cho Bar Replay và Streaming dữ liệu thật).
+  - **[P2] Runtime Mode Validation**: Thêm kiểm tra `mode in {"swing", "internal"}` cho cả `detect_swings` và `SwingDetectorState`, ném `ValueError` nếu `mode` không hợp lệ.
+  - **Test Suite**: Thêm `test_15_invalid_mode_validation` và `test_16_stateful_detector_performance_benchmark` -> Nâng tổng số test SMC Swings lên **16/16 tests PASS 100%** (16/16 SMC + 52/52 Python Total + 67/67 Node Total).
+
+## 2026-09-08 - Bổ thể & Tối ưu Post-QC cho SMC Milestone 1 (P1 & P2 Refinements)
+- **File đã đổi**: `smc/models.py`, `smc/data_contract.py`, `smc/structure/swings.py`, `tests/test_smc_swings.py`, `.agent/TASKS.md`, `.agent/CHANGELOG.md`.
+- **Đã nâng cấp**:
+  - **[P1] Validation Strength (> 0)**: `detect_swings` và `SwingDetectorState` bắt buộc `strength > 0`, `left_strength > 0`, `right_strength > 0`; ném `ValueError` nếu $\le 0$.
+  - **[P1] State Incremental Detector (`SwingDetectorState`) & Core Anti-Lookahead Enforcement**:
+    - Triển khai class `SwingDetectorState` nạp nến từng bước (`update(candle)`), chỉ giải phóng swing point khi vừa chạm đúng nến xác nhận (`confirmed_at == current_bar_index`).
+    - Bổ sung tham số `current_bar_index` và `only_confirmed` trong `detect_swings` để thực thi triệt để ở tầng core API.
+  - **[P2] Thuộc tính `mode` trên `SwingPoint`**: Thêm trường `mode: Literal["swing", "internal"]` trên `SwingPoint` dataclass và serialize vào `to_dict()`.
+  - **[P2] Strict OHLC Geometry Validation & Repair Flag**:
+    - `normalize_ohlcv(data, repair_invalid_ohlc=False)` mặc định ném `ValueError` nếu phát hiện nến có `high < max(open, close)` hoặc `low > min(open, close)` hoặc chứa NaN/Infinity.
+    - Chỉ tự động clamp high/low khi truyền `repair_invalid_ohlc=True`.
+    - Hỗ trợ ép kiểu mượt mà cho Unix timestamp dạng chuỗi (ví dụ `"1700000000"`).
+  - **[P2] Mở rộng Coverage Test Suite**:
+    - Bổ sung 6 unit tests mới nâng tổng số test suite SMC Swings lên **14/14 tests PASS 100%** (14/14 SMC + 50/50 Python Total + 67/67 Node Total).
+
+- **File đã tạo**: `smc/__init__.py`, `smc/models.py`, `smc/data_contract.py`, `smc/structure/__init__.py`, `smc/structure/swings.py`, `tests/test_smc_swings.py`.
+- **Đã làm**:
+  - **Data Contract (`smc/data_contract.py`)**: Xây dựng hàm `normalize_ohlcv` chuyển đổi dữ liệu OHLCV từ `DataFeed` (dict list hoặc DataFrame) thành `pd.DatetimeIndex` chuẩn UTC, chuẩn hóa cột `volume` (từ `tick_volume`), tạo cột chỉ số `bar_index` (0..N-1) phục vụ truy xuất mảng siêu tốc, tự động clamp `high` và `low` bao trùm `open`/`close`.
+  - **Data Models (`smc/models.py`)**: Đăng ký dataclass `SwingPoint` với đầy đủ các thuộc tính `index`, `time`, `price`, `kind`, `strength`, `confirmed_at`, `confirmed_time`, `classification`, `broken`, `broken_at` và hàm chuyển đổi `to_dict()`. Đăng ký khung model `StructureEvent` phục vụ Milestone 2.
+  - **Swing Structure Detector (`smc/structure/swings.py`)**:
+    - Triển khai `detect_swings` tìm kiếm Pivot High và Pivot Low đối xứng trên cửa sổ $[i - left\_strength, i + right\_strength]$.
+    - Đặt cờ xác nhận `confirmed_at = i + right_strength`, loại bỏ hoàn toàn repaint/lookahead trong quá trình backtest/replay (cung cấp helper `get_confirmed_swings_at_bar`).
+    - Phân loại cấu trúc chuỗi (Sequential Classification): `HH` (Higher High), `LH` (Lower High), `HL` (Higher Low), `LL` (Lower Low).
+    - Hỗ trợ cô lập 2 chế độ độc lập: `mode="swing"` (strength 50) và `mode="internal"` (strength 5).
+- **Đã test bằng**:
+  - `python -m unittest tests/test_smc_swings.py -v`: **8/8 unit tests PASS 100%** (Kiểm tra normalization, dict list input, validation error, swing detection & confirmation lag, HH/HL/LH/LL classification, mode independence, flat/empty edge cases, `to_dict` serialization).
+  - `python -m unittest discover tests -v`: **44/44 Python tests PASS 100%**.
+  - `node --test tests/test_drawings.test.js`: **67/67 Node tests PASS 100%**.
+
+## 2026-09-08 - Sửa Unit Test Assertion cho start_time trong DB
+- **File đã đổi**: `tests/test_data.py`, `tests/test_api.py`, `.agent/CHANGELOG.md`
+- **Đã làm**:
+  - Cập nhật phép thử `start_time` trong `test_data.py` và `test_api.py` để chấp nhận cả mốc năm `2014` (mốc khởi đầu thực tế của cơ sở dữ liệu `data/XAUUSD.db` từ `2014-01-14`) thay vì chỉ nhận `2016`.
+- **Đã test bằng**:
+  - `python -m unittest discover tests -v`: **36/36 tests PASS 100%**.
+  - `node --test tests/test_drawings.test.js`: **67/67 tests PASS 100%**.
+
 ## 2026-09-05 - Hoàn thành Task T49: Sửa Lỗi Vẽ Vô Hạn Tương Lai & Tự Động Đồng Bộ Tọa Độ Khi Kéo Trục Giá / Thời Gian
 
 - **File đã đổi**: `public/drawings.js`, `public/chart.js`, `tests/test_drawings.test.js`, `tests/verify_drawing_future_qa.js` (mới), `.agent/TASKS.md`, `.agent/DECISIONS.md`, `.agent/CHANGELOG.md`, `walkthrough.md`.

@@ -400,9 +400,17 @@ class BacktestEngine:
             "gross_loss": round(gross_loss, 2),
         }
 
-        return {
+        result = {
             "metrics": metrics,
             "trades": trades,
             "equity_curve": equity_curve,
             "markers": chart_markers
         }
+
+        if hasattr(df_signals, 'attrs'):
+            if 'smc_chart_objects' in df_signals.attrs:
+                result['smc_objects'] = df_signals.attrs['smc_chart_objects']
+            if 'smc_funnel_stats' in df_signals.attrs:
+                result['funnel_stats'] = df_signals.attrs['smc_funnel_stats']
+
+        return result

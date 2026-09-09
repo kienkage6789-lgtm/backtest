@@ -15,7 +15,7 @@ class TestServerAPI(unittest.TestCase):
         self.assertIn("start_time", data)
         self.assertIn("end_time", data)
         self.assertGreater(data["total_m1_candles"], 1_800_000)
-        self.assertIn("2016", data["start_time"])
+        self.assertTrue("2014" in data["start_time"] or "2016" in data["start_time"])
         print("\n[PASS] /api/info returned valid JSON with real DB counts")
 
     def test_02_api_candles_multi_timeframe(self):
@@ -94,6 +94,35 @@ class TestServerAPI(unittest.TestCase):
         self.assertIn("markers", data)
         metrics = data["metrics"]
         print(f"[PASS] /api/backtest executed: {metrics['total_trades']} trades, WinRate={metrics['win_rate']}%, MDD={metrics['max_drawdown_pct']}%")
+
+    def test_07_api_backtest_smc_payload(self):
+        payload = {
+            "timeframe": "H1",
+            "limit": 200,
+            "strategy_id": "smc_confluence",
+            "strategy_params": {
+                "swing_strength": 5,
+                "internal_strength": 2,
+                "bias_timing": "pre_candle"
+            },
+            "initial_capital": 10000.0,
+            "lot_size": 0.1,
+            "stop_loss_points": 200.0,
+            "take_profit_points": 400.0,
+            "spread_points": 20.0,
+            "commission_per_lot": 5.0,
+            "allow_short": True
+        }
+        response = self.client.post("/api/backtest", json=payload)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["status"], "success")
+        self.assertIn("smc_objects", data)
+        self.assertIn("funnel_stats", data)
+        self.assertIn("order_blocks", data["smc_objects"])
+        self.assertIn("fvgs", data["smc_objects"])
+        self.assertIn("total_bars", data["funnel_stats"])
+        print(f"[PASS] /api/backtest returned SMC objects: {len(data['smc_objects']['order_blocks'])} OBs, {len(data['smc_objects']['fvgs'])} FVGs")
 
 if __name__ == '__main__':
     unittest.main()

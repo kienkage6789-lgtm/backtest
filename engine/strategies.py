@@ -55,7 +55,7 @@ def _parse_float(val, name):
         raise ValueError(f"Tham số '{name}' không hợp lệ: {val}") from e
 
 class StrategyRegistry:
-    SUPPORTED_STRATEGIES = {"sma_crossover", "rsi_reversal", "macd_crossover", "donchian_breakout"}
+    SUPPORTED_STRATEGIES = {"sma_crossover", "rsi_reversal", "macd_crossover", "donchian_breakout", "smc_confluence"}
 
     @staticmethod
     def get_available_strategies():
@@ -95,6 +95,22 @@ class StrategyRegistry:
                 "description": "Mua khi giá vượt đỉnh N nến trước, Bán khi giá thủng đáy N nến trước.",
                 "params": [
                     {"name": "lookback", "label": "Lookback Period", "type": "int", "default": 20, "min": 5, "max": 100},
+                ]
+            },
+            {
+                "id": "smc_confluence",
+                "name": "SMC Confluence (Smart Money Concepts)",
+                "description": "Giao dịch đồng pha xu hướng Swing lớn với tín hiệu đảo chiều Internal CHoCH và kiểm tra vùng FVG.",
+                "params": [
+                    {"name": "swing_strength", "label": "Swing Strength (HTF)", "type": "int", "default": 5, "min": 2, "max": 50},
+                    {"name": "internal_strength", "label": "Internal Strength (LTF)", "type": "int", "default": 2, "min": 1, "max": 20},
+                    {"name": "bias_timing", "label": "Swing Bias Timing", "type": "string", "default": "pre_candle", "options": ["pre_candle", "post_candle"]},
+                    {"name": "choch_fvg_window", "label": "CHoCH FVG Search Window", "type": "int", "default": 5, "min": 1, "max": 20},
+                    {"name": "max_ranked_fvgs", "label": "Max Ranked FVGs (m_maxRanked)", "type": "int", "default": 3, "min": 1, "max": 10},
+                    {"name": "min_fvg_score", "label": "Min FVG Score", "type": "float", "default": 0.0, "min": 0.0, "max": 100.0},
+                    {"name": "order_type", "label": "Order Type", "type": "string", "default": "limit", "options": ["limit", "market"]},
+                    {"name": "limit_expiry_bars", "label": "Limit Expiry Bars", "type": "int", "default": 15, "min": 1, "max": 50},
+                    {"name": "rr_ratio", "label": "Risk / Reward Ratio", "type": "float", "default": 2.0, "min": 0.5, "max": 10.0},
                 ]
             }
         ]
@@ -193,6 +209,46 @@ class StrategyRegistry:
                     signals[i] = 1
                 elif close.iloc[i] < lower.iloc[i] and close.iloc[i-1] >= lower.iloc[i-1]:
                     signals[i] = -1
+
+        elif strategy_id == "smc_confluence":
+            from smc.strategy import run_smc_strategy, SMCStrategyConfig
+            swing_str = _parse_int(params.get("swing_strength", 5), "swing_strength")
+            internal_str = _parse_int(params.get("internal_strength", 2), "internal_strength")
+            bias_timing = str(params.get("bias_timing", "pre_candle"))
+            if bias_timing not in {"pre_candle", "post_candle"}:
+                raise ValueError(f"bias_timing không hợp lệ: '{bias_timing}'. Yêu cầu 'pre_candle' hoặc 'post_candle'.")
+            choch_window = _parse_int(params.get("choch_fvg_window", 5), "choch_fvg_window")
+            max_ranked = _parse_int(params.get("max_ranked_fvgs", 3), "max_ranked_fvgs")
+            min_score = _parse_float(params.get("min_fvg_score", 0.0), "min_fvg_score")
+            order_type = str(params.get("order_type", "limit"))
+            if order_type not in {"limit", "market"}:
+                raise ValueError(f"order_type không hợp lệ: '{order_type}'. Yêu cầu 'limit' hoặc 'market'.")
+            limit_expiry = _parse_int(params.get("limit_expiry_bars", 15), "limit_expiry_bars")
+            rr = _parse_float(params.get("rr_ratio", 2.0), "rr_ratio")
+            require_ob = bool(params.get("require_ob", False))
+            ob_lookback = _parse_int(params.get("ob_lookback", 20), "ob_lookback")
+            sl_anchor = str(params.get("sl_anchor", "ob"))
+            if sl_anchor not in {"ob", "fvg"}:
+                raise ValueError(f"sl_anchor không hợp lệ: '{sl_anchor}'. Yêu cầu 'ob' hoặc 'fvg'.")
+
+            cfg = SMCStrategyConfig(
+                swing_strength=swing_str,
+                internal_strength=internal_str,
+                bias_timing=bias_timing,
+                choch_fvg_window=choch_window,
+                max_ranked_fvgs=max_ranked,
+                min_fvg_score=min_score,
+                require_ob=require_ob,
+                ob_lookback=ob_lookback,
+                sl_anchor=sl_anchor,
+                order_type=order_type,
+                limit_expiry_bars=limit_expiry,
+                rr_ratio=rr
+            )
+            res = run_smc_strategy(df, cfg)
+            signals = res.signals.to_numpy()
+            df.attrs['smc_chart_objects'] = res.chart_objects
+            df.attrs['smc_funnel_stats'] = res.funnel_stats.to_dict()
 
         df['signal'] = signals
         return df
