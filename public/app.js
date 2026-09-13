@@ -10,6 +10,11 @@ let secondaryTf = 'H1';
 let isDualMode = false;
 let availableStrategies = [];
 
+// Replay viewport: keep the current candle plus at most 4,999 candles behind it.
+// The backend timeline is capped to the same size so replay does not request or
+// serialize an unnecessarily large payload.
+const REPLAY_WINDOW_BARS = 5000;
+
 // ==========================================
 // 1. REPLAY MANAGER (Quản lý Tua Nến)
 // ==========================================
@@ -22,6 +27,8 @@ class ReplayManager {
         this.currentTimestamp = null;
         this.futureQueue = [];
         this.futureQueueSec = [];
+        this.visibleCandles = [];
+        this.visibleCandlesSec = [];
         this.speedMs = 500;
         this.timer = null;
 
@@ -82,25 +89,32 @@ class ReplayManager {
     }
 
     enableCutMode() {
+        if (window.smcReplayController && window.smcReplayController.isActive) {
+            window.smcReplayController.exitReplay();
+        }
         this.pause();
         this.isCuttingMode = true;
-        this.toolbar.classList.add('active');
-        this.cutBtn.classList.add('active');
+        this.toolbar?.classList.add('active');
+        this.cutBtn?.classList.add('active');
         document.getElementById('btn-toggle-replay')?.classList.add('active');
         document.getElementById('chart-container')?.classList.add('cut-cursor');
-        this.timeDisplay.textContent = '📍 Click vào nến để tua';
-        this.timeDisplay.style.color = 'var(--accent-gold)';
+        if (this.timeDisplay) {
+            this.timeDisplay.textContent = '📍 Click vào nến để tua';
+            this.timeDisplay.style.color = 'var(--accent-gold)';
+        }
     }
 
     async startReplay(cutTime) {
         this.isCuttingMode = false;
-        this.cutBtn.classList.remove('active');
+        this.cutBtn?.classList.remove('active');
         document.getElementById('chart-container')?.classList.remove('cut-cursor');
-        this.timeDisplay.style.color = 'var(--text-main)';
+        if (this.timeDisplay) {
+            this.timeDisplay.style.color = 'var(--text-main)';
+        }
 
         showLoading('Đang tua nến về thời điểm đã chọn...');
         try {
-            const res = await fetch(`/api/replay/init?timeframe=${currentTf}&cut_time=${cutTime}&history_limit=1000&future_limit=1500`);
+            const res = await fetch(`/api/replay/init?timeframe=${currentTf}&cut_time=${cutTime}&history_limit=${REPLAY_WINDOW_BARS}&future_limit=${REPLAY_WINDOW_BARS}`);
             if (!res.ok) throw new Error('Lỗi khởi tạo Replay');
             const data = await res.json();
 
@@ -111,12 +125,13 @@ class ReplayManager {
 
             this.isActive = true;
             this.futureQueue = data.future || [];
-            
+            this.visibleCandles = (data.history || []).slice(-REPLAY_WINDOW_BARS);
+
             const lastBar = data.history[data.history.length - 1];
             this.currentReplayTime = lastBar.datetime_str;
             this.currentTimestamp = lastBar.time;
 
-            tradingChart.setCandles(data.history);
+            tradingChart.setCandles(this.visibleCandles);
             this.timeDisplay.textContent = this.currentReplayTime;
 
             // Cập nhật Replay filter cho DrawingManager
@@ -145,10 +160,11 @@ class ReplayManager {
 
     async syncSecondaryChart(cutTime) {
         try {
-            const res = await fetch(`/api/replay/init?timeframe=${secondaryTf}&cut_time=${cutTime}&history_limit=1000&future_limit=1500`);
+            const res = await fetch(`/api/replay/init?timeframe=${secondaryTf}&cut_time=${cutTime}&history_limit=${REPLAY_WINDOW_BARS}&future_limit=${REPLAY_WINDOW_BARS}`);
             if (res.ok) {
                 const data = await res.json();
-                secondaryChart.setCandles(data.history);
+                this.visibleCandlesSec = (data.history || []).slice(-REPLAY_WINDOW_BARS);
+                secondaryChart.setCandles(this.visibleCandlesSec);
                 this.futureQueueSec = data.future || [];
             }
         } catch (e) {
@@ -166,7 +182,11 @@ class ReplayManager {
         }
 
         const nextBar = this.futureQueue.shift();
-        tradingChart.updateBar(nextBar);
+        this.visibleCandles.push(nextBar);
+        if (this.visibleCandles.length > REPLAY_WINDOW_BARS) {
+            this.visibleCandles.shift();
+        }
+        tradingChart.setCandles(this.visibleCandles);
 
         this.currentReplayTime = nextBar.datetime_str;
         this.currentTimestamp = nextBar.time;
@@ -180,7 +200,11 @@ class ReplayManager {
         // Tiến nến Chart phụ nếu đến hạn (tiến TOÀN BỘ các nến có time <= nến chính)
         if (isDualMode && secondaryChart && this.futureQueueSec.length > 0) {
             while (this.futureQueueSec.length > 0 && this.futureQueueSec[0].time <= nextBar.time) {
-                secondaryChart.updateBar(this.futureQueueSec.shift());
+                this.visibleCandlesSec.push(this.futureQueueSec.shift());
+                if (this.visibleCandlesSec.length > REPLAY_WINDOW_BARS) {
+                    this.visibleCandlesSec.shift();
+                }
+                secondaryChart.setCandles(this.visibleCandlesSec);
             }
             if (secondaryChart.drawingManager) {
                 secondaryChart.drawingManager.currentReplayTime = this.currentTimestamp;
@@ -208,7 +232,7 @@ class ReplayManager {
         }
 
         this.isPlaying = true;
-        this.playBtn.innerHTML = '⏸️';
+        if (this.playBtn) this.playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
         this.playBtn.title = 'Tạm dừng';
         this.timer = setInterval(() => {
             this.stepForward();
@@ -222,7 +246,7 @@ class ReplayManager {
             this.timer = null;
         }
         if (this.playBtn) {
-            this.playBtn.innerHTML = '▶️';
+            this.playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
             this.playBtn.title = 'Phát tự động';
         }
     }
@@ -234,9 +258,11 @@ class ReplayManager {
         this.currentReplayTime = null;
         this.futureQueue = [];
         this.futureQueueSec = [];
+        this.visibleCandles = [];
+        this.visibleCandlesSec = [];
 
-        this.toolbar.classList.remove('active');
-        this.cutBtn.classList.remove('active');
+        this.toolbar?.classList.remove('active');
+        this.cutBtn?.classList.remove('active');
         document.getElementById('btn-toggle-replay')?.classList.remove('active');
         document.getElementById('chart-container')?.classList.remove('cut-cursor');
 
@@ -268,7 +294,7 @@ class ReplayManager {
             if (!res.ok) throw new Error('Lỗi chuyển khung trong Replay');
             const data = await res.json();
             
-            tradingChart.setCandles(data.history);
+            tradingChart.setCandles(data.history, true);
             this.futureQueue = data.future || [];
             if (data.history.length > 0) {
                 const lastBar = data.history[data.history.length - 1];
@@ -288,7 +314,935 @@ class ReplayManager {
     }
 }
 
+// ==========================================
+// SMC STRATEGY REPLAY CONTROLLER
+// Tua từng nến trực quan cho chiến lược SMC (Wave1, Confluence, S01, S05, S09)
+// ==========================================
+
+const SMC_DIAGNOSTIC_DESCRIPTIONS = {
+    'HTF_BIAS_CONFLICT': 'Xung đột xu hướng HTF Bias (Setup đi ngược cấu trúc khung lớn HTF)',
+    'OUTSIDE_SILVER_BULLET_WINDOW': 'Ngoài khung giờ Silver Bullet (Chỉ giao dịch 03:00-04:00, 10:00-11:00, 14:00-15:00 NY)',
+    'INSUFFICIENT_DISPLACEMENT': 'Displacement không đạt (Nến phá vỡ xung lực quá nhỏ hoặc không đóng nến vượt đỉnh/đáy)',
+    'NO_QUALIFIED_FVG': 'Không có FVG hợp lệ (Khoảng cách nến 1-3 không đủ rộng hoặc đã bị fill)',
+    'NO_QUALIFIED_ORDER_BLOCK': 'Không có Order Block hợp lệ (Khối lệnh không đạt tiêu chí xác nhận)',
+    'NO_LIQUIDITY_SWEEP': 'Chưa có Liquidity Sweep (Chưa quét thanh khoản đỉnh/đáy đối lập)',
+    'SWEEP_WRONG_DIRECTION': 'Quét thanh khoản sai hướng (Quét Buy-side nhưng tìm Sell hoặc ngược lại)',
+    'RISK_REWARD_TOO_LOW': 'Tỷ lệ R:R quá thấp (Tỷ lệ Lợi nhuận/Rủi ro nhỏ hơn ngưỡng tối thiểu)',
+    'RISK_REWARD_CALC_FAILED': 'Không tính được tỷ lệ R:R (SL/TP bị nghịch hoặc khoảng cách không hợp lệ)',
+    'INVALID_PRICE_ORDER': 'Thứ tự giá không hợp lệ (Buy: SL >= Entry hoặc TP <= Entry; Sell: SL <= Entry hoặc TP >= Entry)',
+    'OB_RETEST_TIMEOUT': 'Quá hạn retest Order Block (Giá không quay lại kiểm định OB trong số nến cho phép)',
+    'OB_INVALIDATED_BEFORE_RETEST': 'Order Block bị xuyên thủng trước khi retest (Giá đã phá vỡ hoàn toàn vùng OB)',
+    'FVG_FILLED_BEFORE_ENTRY': 'FVG đã bị lấp đầy trước khi khớp lệnh (Khoảng trống giá đã bị đóng kín hoàn toàn)',
+    'CONFLUENCE_DIRECTION_CONFLICT': 'Xung đột hướng giữa các Module (Có module BUY và module khác SELL đồng thời)',
+    'INSUFFICIENT_CONFLUENCE_SCORE': 'Không đủ điểm đồng pha (Số module đồng thuận thấp hơn ngưỡng yêu cầu)',
+    'COOLDOWN_ACTIVE': 'Đang trong thời gian giãn cách (Cooldown - Tránh vào lệnh dồn dập sau tín hiệu trước)',
+    'MAX_POSITIONS_REACHED': 'Đã đạt số vị thế mở tối đa (Portfolio đã đầy vị thế cùng lúc)',
+    'SELECTOR_PREFERENCE_LOSER': 'Module khác được ưu tiên hơn (Bộ chọn tín hiệu chọn Module có điểm số cao hơn)',
+    'PORTFOLIO_MARGIN_INSUFFICIENT': 'Ký quỹ không đủ (Tài khoản không đủ tiền ký quỹ mở thêm vị thế)',
+    'EXECUTION_SLIPPAGE_EXCEEDED': 'Trượt giá vượt mức cho phép (Chênh lệch giá khớp thực tế vượt ngưỡng an toàn)',
+    'ORDER_CANCELLED_UNFILLED': 'Lệnh chờ bị hủy do không khớp (Hết thời hạn chờ khớp Limit/Stop)',
+    'UNSPECIFIED_REJECTION': 'Lý do loại khác / Chưa phân loại'
+};
+
+class SMCReplayController {
+    constructor() {
+        this.isActive = false;
+        this.isPlaying = false;
+        this.timer = null;
+        this.speedMs = 500;
+        this.currentBarIndex = 0;
+        this.timelineData = null;
+        this.rawTimeline = [];
+        this.renderer = null;
+        this.originalCandles = [];
+        this.isDrawerMinimized = false;
+        this._eventsInitialized = false;
+
+        // Cache DOM elements
+        this.fixedBar = document.getElementById('fixed-replay-bar');
+        this.sidebar = document.getElementById('diagnostic-sidebar');
+        this.stratSelect = document.getElementById('strategy-select');
+        this.slider = document.getElementById('r-bar-slider');
+        this.barText = document.getElementById('r-bar-text');
+        this.timeText = document.getElementById('r-time-text');
+        this.playBtn = document.getElementById('btn-r-play');
+        this.speedSelect = document.getElementById('r-speed-select');
+        this.quickDiagPill = document.getElementById('diag-reason-pill');
+        this.barPill = document.getElementById('diag-bar-pill');
+    }
+
+    init() {
+        this.initEvents();
+        return this;
+    }
+
+    // Compatibility aliases for previous API contracts
+    loadTimelineData() {
+        return this.loadTimeline();
+    }
+
+    stepNext() {
+        return this.stepForward();
+    }
+
+    stepPrev() {
+        return this.stepBackward();
+    }
+
+    jumpToNextBookmark(category) {
+        return this.jumpNextBookmark(category);
+    }
+
+    onBarStateChanged(index, barState) {
+        return this.updateInspector(barState, index);
+    }
+
+    initEvents() {
+        if (this._eventsInitialized) return;
+        this._eventsInitialized = true;
+
+        // Top Header "Chạy Backtest" Button -> Enter / Reload Replay
+        document.getElementById('btn-top-run-backtest')?.addEventListener('click', () => {
+            if (this.isActive) {
+                this.loadTimeline();
+            } else {
+                this.enterReplay();
+            }
+        });
+
+        // Top Range Select Helper Button
+        document.getElementById('btn-top-chart-range-select')?.addEventListener('click', () => {
+            if (tradingChart && tradingChart.currentCandles && tradingChart.currentCandles.length > 0) {
+                const candles = tradingChart.currentCandles;
+                const startCandle = candles[Math.max(0, candles.length - Math.min(500, candles.length))];
+                const endCandle = candles[candles.length - 1];
+                const formatForInput = (t) => {
+                    if (!t) return '';
+                    const d = typeof t === 'number' ? new Date(t * 1000) : new Date(t);
+                    return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 16);
+                };
+                const startEl = document.getElementById('top-start-time');
+                const endEl = document.getElementById('top-end-time');
+                if (startEl && startCandle) startEl.value = formatForInput(startCandle.time);
+                if (endEl && endCandle) endEl.value = formatForInput(endCandle.time);
+                const badge = document.getElementById('top-bars-count-badge');
+                if (badge) badge.textContent = `${candles.length} nến hiển thị`;
+            }
+        });
+
+        // Synchronize with SMCReplayRenderer callback
+        window.onSMCBarIndexChanged = (index, barState) => {
+            if (this.isActive && this.rawTimeline && this.rawTimeline.length > 0) {
+                this.updateInspector(barState, index);
+            }
+        };
+
+        // Toggle Sidebar
+        document.getElementById('btn-toggle-sidebar')?.addEventListener('click', () => {
+            this.sidebar?.classList.toggle('collapsed');
+        });
+
+        document.getElementById('btn-close-diag-sidebar')?.addEventListener('click', () => {
+            this.sidebar?.classList.add('collapsed');
+        });
+
+        // Layer Menu Popover Toggle
+        const layerBtn = document.getElementById('btn-toggle-layers');
+        const layerPopover = document.getElementById('layer-menu-popover');
+        layerBtn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            layerPopover?.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (layerPopover && !layerPopover.contains(e.target) && e.target !== layerBtn) {
+                layerPopover.classList.add('hidden');
+            }
+        });
+
+        // First / Prev / Play / Next / Last
+        document.getElementById('btn-r-first')?.addEventListener('click', () => {
+            this.pause();
+            this.jumpToBar(0);
+        });
+
+        document.getElementById('btn-r-prev')?.addEventListener('click', () => {
+            this.pause();
+            this.stepBackward();
+        });
+
+        this.playBtn?.addEventListener('click', () => {
+            this.togglePlay();
+        });
+
+        document.getElementById('btn-r-next')?.addEventListener('click', () => {
+            this.pause();
+            this.stepForward();
+        });
+
+        document.getElementById('btn-r-last')?.addEventListener('click', () => {
+            this.pause();
+            if (this.rawTimeline.length > 0) {
+                this.jumpToBar(this.rawTimeline.length - 1);
+            }
+        });
+
+        // Scrub slider
+        this.slider?.addEventListener('input', (e) => {
+            this.pause();
+            const val = parseInt(e.target.value);
+            this.jumpToBar(val);
+        });
+
+        // Speed select
+        this.speedSelect?.addEventListener('change', (e) => {
+            this.speedMs = parseInt(e.target.value);
+            if (this.isPlaying) {
+                this.pause();
+                this.play();
+            }
+        });
+
+        // Jump bookmarks
+        document.getElementById('btn-jump-candidate')?.addEventListener('click', () => {
+            this.jumpNextBookmark('candidates');
+        });
+
+        document.getElementById('btn-jump-rejection')?.addEventListener('click', () => {
+            this.jumpNextBookmark('rejections');
+        });
+
+        document.getElementById('btn-jump-fill')?.addEventListener('click', () => {
+            this.jumpNextBookmark('fills');
+        });
+
+        document.getElementById('btn-jump-event')?.addEventListener('click', () => {
+            this.jumpNextBookmark('events');
+        });
+
+        // Close Replay Button
+        document.getElementById('btn-r-exit')?.addEventListener('click', () => {
+            this.exitReplay();
+        });
+
+        // Layer Filter Checkboxes
+        const bindFilter = (id, prop) => {
+            document.getElementById(id)?.addEventListener('change', (e) => {
+                if (this.renderer) {
+                    this.renderer.filters[prop] = e.target.checked;
+                    this.renderer.requestRender();
+                }
+            });
+        };
+        bindFilter('chk-layer-candles', 'showCandles');
+        bindFilter('chk-layer-htf', 'showHTF');
+        bindFilter('chk-layer-structure', 'showStructure');
+        bindFilter('chk-layer-liquidity', 'showLiquidity');
+        bindFilter('chk-layer-fvg', 'showFVG');
+        bindFilter('chk-layer-ob', 'showOB');
+        bindFilter('chk-layer-candidates', 'showCandidates');
+        bindFilter('chk-layer-execution', 'showExecution');
+        bindFilter('chk-layer-winloss', 'showWinLossTrades');
+        bindFilter('chk-layer-confluence', 'showConfluence');
+        bindFilter('chk-layer-rejected-cand', 'showRejectedCandidates');
+
+        // Sidebar Tabs
+        document.querySelectorAll('.diag-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTabId = btn.dataset.tab;
+                document.querySelectorAll('.diag-tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.diag-tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(targetTabId)?.classList.add('active');
+            });
+        });
+
+        // Drawer minimize & close
+        document.getElementById('btn-insp-minimize')?.addEventListener('click', () => {
+            this.drawer?.classList.toggle('minimized');
+        });
+
+        document.getElementById('btn-insp-close')?.addEventListener('click', () => {
+            this.drawer?.classList.add('hidden');
+        });
+
+        // Hotkeys when Replay is active
+        window.addEventListener('keydown', (e) => {
+            if (!this.isActive) return;
+            // Ignore when user is typing in input or select
+            if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
+
+            if (e.code === 'Space') {
+                e.preventDefault();
+                this.togglePlay();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                this.pause();
+                this.stepForward();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                this.pause();
+                this.stepBackward();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                this.pause();
+                this.jumpToBar(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                this.pause();
+                if (this.rawTimeline.length > 0) this.jumpToBar(this.rawTimeline.length - 1);
+            } else if (e.key.toLowerCase() === 'c') {
+                this.jumpNextBookmark('candidates');
+            } else if (e.key.toLowerCase() === 'r') {
+                this.jumpNextBookmark('rejections');
+            } else if (e.key.toLowerCase() === 'f') {
+                this.jumpNextBookmark('fills');
+            } else if (e.key.toLowerCase() === 'e') {
+                this.jumpNextBookmark('events');
+            }
+        });
+    }
+
+    async enterReplay() {
+        if (replayManager && replayManager.isActive) {
+            replayManager.exitReplay();
+        }
+
+        this.isActive = true;
+        this.fixedBar?.classList.remove('hidden');
+        this.sidebar?.classList.remove('collapsed');
+
+        if (tradingChart && tradingChart.currentCandles) {
+            this.originalCandles = tradingChart.currentCandles.slice();
+        }
+
+        if (!this.renderer && tradingChart) {
+            this.renderer = new window.SMCReplayRenderer(tradingChart, document.getElementById('chart-container'));
+        }
+
+        await this.loadTimeline();
+    }
+
+    async exitReplay() {
+        this.pause();
+        this.isActive = false;
+        this.fixedBar?.classList.add('hidden');
+        this.sidebar?.classList.add('collapsed');
+
+        if (this.renderer) {
+            this.renderer.destroy();
+            this.renderer = null;
+        }
+
+        if (this.originalCandles && this.originalCandles.length > 0 && tradingChart) {
+            tradingChart.setCandles(this.originalCandles);
+        }
+    }
+
+    async loadTimeline() {
+        showLoading('Đang phân tích timeline SMC từng nến...');
+        try {
+            const strat = document.getElementById('strategy-select')?.value || this.stratSelect?.value || 'smc_wave1';
+            const tf = currentTf || 'M15';
+
+            const startTimeVal = document.getElementById('top-start-time')?.value;
+            const endTimeVal = document.getElementById('top-end-time')?.value;
+            const warmupBarsVal = parseInt(document.getElementById('warmup-bars-input')?.value || '500');
+
+            const formatDateTime = (val) => {
+                if (!val) return null;
+                return val.includes('T') ? val.replace('T', ' ') + ':00' : val;
+            };
+
+            const payload = {
+                timeframe: tf,
+                symbol: 'XAUUSD',
+                strategy_id: strat,
+                start_time: formatDateTime(startTimeVal),
+                end_time: formatDateTime(endTimeVal),
+                warmup_bars: warmupBarsVal,
+                limit: REPLAY_WINDOW_BARS,
+                max_bars: REPLAY_WINDOW_BARS,
+                initial_capital: parseFloat(document.getElementById('initial-capital')?.value || '10000'),
+                lot_size: parseFloat(document.getElementById('lot-size')?.value || '0.1'),
+                spread_points: parseFloat(document.getElementById('spread-points')?.value || '20'),
+                commission_per_lot: parseFloat(document.getElementById('commission')?.value || '5'),
+                allow_short: document.getElementById('allow-short')?.checked ?? true
+            };
+
+            const res = await fetch('/api/replay/timeline', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.detail || 'Lỗi nạp timeline SMC');
+            }
+
+            this.timelineData = await res.json();
+            this.rawTimeline = this.timelineData.timeline || [];
+
+            if (this.rawTimeline.length === 0) {
+                alert('Không có dữ liệu timeline cho chiến lược và khoảng thời gian này.');
+                return;
+            }
+
+            // Update top bar range breakdown badge
+            const analysisCount = this.timelineData.analysis_candles || this.rawTimeline.length;
+            const warmupCount = this.timelineData.warmup_candles || 0;
+            const totalCount = this.timelineData.total_timeline_bars || this.rawTimeline.length;
+
+            const topBarsBadge = document.getElementById('top-bars-count-badge');
+            if (topBarsBadge) {
+                topBarsBadge.textContent = `${analysisCount.toLocaleString('vi-VN')} nến (warm-up: ${warmupCount})`;
+                topBarsBadge.title = `Analysis: ${analysisCount} nến | Warm-up: ${warmupCount} nến | Tổng dữ liệu: ${totalCount} nến`;
+            }
+
+            const dataRangeBadge = document.getElementById('data-range-badge');
+            if (dataRangeBadge && this.timelineData.analysis_start) {
+                dataRangeBadge.textContent = `${this.timelineData.analysis_start} ➔ ${this.timelineData.analysis_end}`;
+            }
+
+            // Update bookmarks badge counters
+            const bms = this.timelineData.bookmarks || { candidates: [], rejections: [], fills: [], events: [] };
+            const candCountEl = document.getElementById('r-count-cand');
+            const rejCountEl = document.getElementById('r-count-rej');
+            const fillCountEl = document.getElementById('r-count-fill');
+            const evCountEl = document.getElementById('r-count-ev');
+
+            if (candCountEl) candCountEl.textContent = bms.candidates?.length || 0;
+            if (rejCountEl) rejCountEl.textContent = bms.rejections?.length || 0;
+            if (fillCountEl) fillCountEl.textContent = bms.fills?.length || 0;
+            if (evCountEl) evCountEl.textContent = bms.events?.length || 0;
+
+            // Setup Fixed Replay Bar Slider & Controls
+            const slider = document.getElementById('r-bar-slider');
+            if (slider) {
+                slider.min = '0';
+                slider.max = String(this.rawTimeline.length - 1);
+                slider.value = '0';
+            }
+
+            // Attach to renderer
+            if (this.renderer) {
+                this.renderer.setTimelineData(this.timelineData);
+            }
+
+            // Render Audit Log Table & Grouped Rejections
+            this.populateAuditTable();
+            this.renderGroupedRejections();
+
+            // Jump to bar 0
+            this.jumpToBar(0);
+
+        } catch (err) {
+            console.error('Lỗi loadTimeline:', err);
+            alert(`Lỗi nạp Replay SMC: ${err.message}`);
+        } finally {
+            hideLoading();
+        }
+    }
+
+    jumpToBar(idx) {
+        if (!this.rawTimeline || this.rawTimeline.length === 0) return;
+        idx = Math.max(0, Math.min(idx, this.rawTimeline.length - 1));
+        this.currentBarIndex = idx;
+
+        const currentBar = this.rawTimeline[idx];
+
+        // 1. Update fixed bottom bar controls
+        const slider = document.getElementById('r-bar-slider');
+        const barText = document.getElementById('r-bar-text');
+        const timeText = document.getElementById('r-time-text');
+        const barPill = document.getElementById('diag-bar-pill');
+        const reasonPill = document.getElementById('diag-reason-pill');
+
+        if (slider) slider.value = String(idx);
+        if (barText) barText.textContent = `Bar ${idx + 1} / ${this.rawTimeline.length}`;
+        if (timeText) timeText.textContent = currentBar.datetime_str ? currentBar.datetime_str.substring(11, 19) : '';
+        if (barPill) barPill.textContent = `Bar #${idx + 1}`;
+
+        if (reasonPill) {
+            const cands = currentBar.candidates || [];
+            const execCand = cands.find(c => c.status === 'selected' || c.status === 'executed');
+            const rejCand = cands.find(c => c.status === 'rejected');
+
+            if (execCand) {
+                reasonPill.textContent = `⚡ EXEC: ${execCand.strategy_id} ${execCand.direction}`;
+                reasonPill.style.color = '#00e676';
+            } else if (rejCand) {
+                const rCode = rejCand.diagnostic_reasons && rejCand.diagnostic_reasons.length > 0 ? rejCand.diagnostic_reasons[0] : 'REJECTED';
+                reasonPill.textContent = `❌ ${rejCand.strategy_id}: ${rCode}`;
+                reasonPill.style.color = '#ff9800';
+            } else {
+                reasonPill.textContent = 'NO SIGNAL';
+                reasonPill.style.color = 'var(--text-muted)';
+            }
+        }
+
+        // 2. Cut candles on TradingView chart for zero-lookahead
+        if (tradingChart) {
+            const windowStart = Math.max(0, idx + 1 - REPLAY_WINDOW_BARS);
+            const subCandles = this.rawTimeline.slice(windowStart, idx + 1).map(b => ({
+                time: b.time,
+                open: b.open,
+                high: b.high,
+                low: b.low,
+                close: b.close,
+                volume: b.volume,
+                datetime_str: b.datetime_str
+            }));
+            tradingChart.setCandles(subCandles);
+        }
+
+        // 3. Render SMC Visual Overlays
+        if (this.renderer) {
+            this.renderer.setBarIndex(idx);
+        }
+
+        // 4. Update Diagnostic Sidebar Inspector
+        this.updateInspector(currentBar, idx);
+    }
+
+    stepForward() {
+        if (this.currentBarIndex < this.rawTimeline.length - 1) {
+            this.jumpToBar(this.currentBarIndex + 1);
+        } else {
+            this.pause();
+        }
+    }
+
+    stepBackward() {
+        if (this.currentBarIndex > 0) {
+            this.jumpToBar(this.currentBarIndex - 1);
+        }
+    }
+
+    jumpNextBookmark(category) {
+        if (!this.timelineData || !this.timelineData.bookmarks) return;
+        const list = this.timelineData.bookmarks[category] || [];
+        if (list.length === 0) {
+            alert(`Không có bookmark nào cho loại "${category}".`);
+            return;
+        }
+
+        // Find first bar strictly greater than current
+        let nextIdx = list.find(idx => idx > this.currentBarIndex);
+        if (nextIdx === undefined) {
+            // Loop back to first
+            nextIdx = list[0];
+        }
+
+        this.pause();
+        this.jumpToBar(nextIdx);
+    }
+
+    togglePlay() {
+        if (this.isPlaying) {
+            this.pause();
+        } else {
+            this.play();
+        }
+    }
+
+    play() {
+        if (this.isPlaying) return;
+        if (this.currentBarIndex >= this.rawTimeline.length - 1) {
+            this.jumpToBar(0);
+        }
+
+        this.isPlaying = true;
+        if (this.playBtn) {
+            this.playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+            this.playBtn.title = 'Tạm dừng (Space)';
+        }
+
+        this.timer = setInterval(() => {
+            if (this.currentBarIndex >= this.rawTimeline.length - 1) {
+                this.pause();
+            } else {
+                this.stepForward();
+            }
+        }, this.speedMs);
+    }
+
+    pause() {
+        this.isPlaying = false;
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = null;
+        }
+        if (this.playBtn) {
+            this.playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+            this.playBtn.title = 'Phát tự động (Space)';
+        }
+    }
+
+    updateInspector(bar, idx) {
+        if (!bar) return;
+
+        // Header Badges
+        const barBadge = document.getElementById('insp-bar-badge');
+        const timeBadge = document.getElementById('insp-time-badge');
+        const biasBadge = document.getElementById('insp-bias-badge');
+
+        if (barBadge) barBadge.textContent = `Nến #${idx + 1}`;
+        if (timeBadge) timeBadge.textContent = bar.datetime_str || '--:--:--';
+        if (biasBadge) {
+            const bias = bar.active_state?.htf_bias || 'NEUTRAL';
+            biasBadge.textContent = `HTF: ${bias}`;
+            biasBadge.style.color = bias === 'BULLISH' ? '#089981' : bias === 'BEARISH' ? '#f23645' : 'var(--text-muted)';
+        }
+
+        // Tab 1: Telemetry
+        this.updateTelemetryTab(bar);
+
+        // Tab 2: Chẩn Đoán Bị Loại
+        this.updateDiagnosticTab(bar);
+
+        // Tab 3: Vị Thế & Thực Thi
+        this.updateExecutionTab(bar);
+    }
+
+    updateTelemetryTab(bar) {
+        if (!bar) return;
+        const act = bar.active_state || {};
+        const conf = bar.confluence || {};
+        const ev = bar.new_events || {};
+
+        const setText = (id, text, color) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = text;
+                if (color) el.style.color = color;
+                else el.style.color = '';
+            }
+        };
+
+        const bias = act.htf_bias || 'NEUTRAL';
+        const biasColor = bias === 'BULLISH' ? '#089981' : bias === 'BEARISH' ? '#f23645' : 'var(--text-muted)';
+        setText('tel-bias', bias, biasColor);
+
+        const status = act.htf_bias_status || 'UNCONFIRMED';
+        const statusColor = status === 'REVERSAL_PENDING' ? '#ff9800' : (status === 'CONFIRMED' ? '#089981' : 'var(--text-muted)');
+        setText('tel-bias-status', status, statusColor);
+
+        setText('tel-pending-reversal', act.htf_pending_reversal || 'NONE', act.htf_pending_reversal && act.htf_pending_reversal !== 'NONE' ? '#ff9800' : '');
+        setText('tel-source-event', act.htf_source_event || 'Chưa xác nhận');
+        setText('tel-choch-pending', act.htf_choch_pending || 'NONE');
+        setText('tel-bias-time', act.htf_bias_effective_time || '-');
+        setText('tel-atr', act.atr ? act.atr.toFixed(2) : '-');
+
+        // New events
+        const structStr = ev.structures && ev.structures.length > 0
+            ? ev.structures.map(s => {
+                const eventType = s.event_type || s.kind || 'STRUCTURE';
+                const displacement = s.displacement === true ? 'Y' : (s.displacement === false ? 'N' : '-');
+                return `${eventType} ${s.direction || ''} (disp: ${displacement})`;
+            }).join(', ')
+            : '0';
+        setText('tel-new-struct', structStr);
+
+        const sweepStr = ev.sweeps && ev.sweeps.length > 0
+            ? ev.sweeps.map(sw => `${sw.pool_kind} (${sw.price_wick ? sw.price_wick.toFixed(2) : '-'})`).join(', ')
+            : '0';
+        setText('tel-new-sweep', sweepStr);
+
+        setText('tel-new-fvg', ev.fvgs?.length ? String(ev.fvgs.length) : '0');
+        setText('tel-new-ob', ev.obs?.length ? String(ev.obs.length) : '0');
+
+        // Active items
+        setText('tel-active-fvg', act.fvgs?.length ? String(act.fvgs.length) : '0');
+        setText('tel-active-ob', act.obs?.length ? String(act.obs.length) : '0');
+        setText('tel-active-pools', act.liquidity_pools?.length ? String(act.liquidity_pools.length) : '0');
+        setText('tel-recent-swings', act.recent_swings?.length ? String(act.recent_swings.length) : '0');
+
+        // HTF POI & S1 Module
+        const poi = act.htf_poi;
+        if (poi) {
+            setText('tel-htf-poi', `${poi.poi_type} ${poi.direction ? poi.direction.toUpperCase() : ''} [${poi.bottom ? poi.bottom.toFixed(1) : ''} - ${poi.top ? poi.top.toFixed(1) : ''}]`);
+        } else {
+            setText('tel-htf-poi', 'Không có POI');
+        }
+
+        const poiStatus = act.poi_status || 'NONE';
+        const poiStatusColor = poiStatus === 'ACTIVE' ? '#089981' : (poiStatus === 'INVALIDATED' ? '#f23645' : 'var(--text-muted)');
+        setText('tel-poi-status', poiStatus, poiStatusColor);
+
+        const poiTouch = act.poi_touch || 'NONE';
+        const poiTouchColor = poiTouch === 'BODY_ENTRY' ? '#089981' : (poiTouch === 'WICK_TOUCH' ? '#ff9800' : 'var(--text-muted)');
+        setText('tel-poi-touch', poiTouch, poiTouchColor);
+
+        const s1State = act.s1_state || 'WAIT_HTF_BIAS';
+        const s1StateColor = s1State === 'S1_READY' ? '#089981' : (s1State.includes('INVALID') || s1State.includes('EXPIRED') ? '#f23645' : '#2962ff');
+        setText('tel-s1-state', s1State, s1StateColor);
+
+        setText('tel-s1-rejection', act.rejection_reason || '-');
+
+        // Confluence
+        const cands = bar.candidate_setups || [];
+        setText('tel-cand-count', String(cands.length));
+        setText('tel-conf-agree', conf.total_modules ? `${conf.agreement_count || 0}/${conf.total_modules}` : '0/3');
+        setText('tel-conf-conflict', conf.has_direction_conflict ? 'CÓ (Xung đột BUY/SELL)' : 'Không', conf.has_direction_conflict ? '#f23645' : '#089981');
+
+        const selAction = conf.selector_decision || 'NO_TRADE';
+        setText('tel-selector-action', selAction, selAction === 'EXECUTE_ORDER' ? '#089981' : selAction === 'REJECT_ORDER' ? '#f23645' : 'var(--text-muted)');
+        setText('tel-winner-module', conf.winner_module || '-');
+        setText('tel-cooldown', conf.cooldown_active ? `Active (${conf.cooldown_remaining || 0} nến)` : 'Inactive');
+    }
+
+    renderGroupedRejections() {
+        const container = document.getElementById('grouped-rejections-list');
+        if (!container || !this.rawTimeline) return;
+
+        const counts = {};
+        this.rawTimeline.forEach(bar => {
+            const cands = bar.candidate_setups || bar.candidates || [];
+            cands.forEach(cand => {
+                if ((cand.status === 'rejected' || cand.diagnostic_reasons) && cand.diagnostic_reasons) {
+                    cand.diagnostic_reasons.forEach(r => {
+                        counts[r] = (counts[r] || 0) + 1;
+                    });
+                }
+            });
+        });
+
+        const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+        const countBadge = document.getElementById('count-diag-rej');
+        if (countBadge) countBadge.textContent = String(entries.reduce((acc, curr) => acc + curr[1], 0));
+
+        if (entries.length === 0) {
+            container.innerHTML = `<span class="muted-text">Không có tín hiệu bị loại nào trong khoảng thời gian này.</span>`;
+            return;
+        }
+
+        let html = '';
+        entries.forEach(([code, count]) => {
+            const desc = SMC_DIAGNOSTIC_DESCRIPTIONS[code] || code;
+            html += `
+                <div class="grouped-item">
+                    <span class="grouped-item-reason" title="${code}">${desc}</span>
+                    <span class="grouped-item-count">${count}x</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    updateDiagnosticTab(bar) {
+        if (!bar) {
+            bar = this.rawTimeline[this.currentBarIndex];
+            if (!bar) return;
+        }
+
+        const clickIdEl = document.getElementById('click-bar-id');
+        const clickDetailsEl = document.getElementById('click-bar-details');
+        if (clickIdEl) clickIdEl.textContent = `#${(bar.bar_index ?? this.currentBarIndex) + 1} (${bar.datetime_str || bar.time || ''})`;
+
+        const cands = bar.candidate_setups || bar.candidates || [];
+        if (clickDetailsEl) {
+            if (cands.length === 0) {
+                clickDetailsEl.innerHTML = `<span class="muted-text">Nến này không phát sinh candidate setup nào.</span>`;
+            } else {
+                let dHtml = '';
+                cands.forEach(c => {
+                    const rCode = c.diagnostic_reasons && c.diagnostic_reasons.length > 0 ? c.diagnostic_reasons[0] : (c.status || 'NO_REASON');
+                    const desc = SMC_DIAGNOSTIC_DESCRIPTIONS[rCode] || rCode;
+                    dHtml += `<div style="margin-bottom: 4px;"><strong>${c.strategy_id} (${c.direction})</strong>: <span style="color: ${c.status === 'rejected' ? '#f23645' : '#089981'}; font-weight: bold;">[${c.status ? c.status.toUpperCase() : ''}]</span> ${desc}</div>`;
+                });
+                clickDetailsEl.innerHTML = dHtml;
+            }
+        }
+
+        const container = document.getElementById('diagnostic-candidates-list');
+        if (!container) return;
+
+        const modFilter = this.moduleFilter?.value || 'ALL';
+        let filteredCands = cands;
+        if (modFilter !== 'ALL') {
+            filteredCands = cands.filter(c => c.strategy_id.toUpperCase().includes(modFilter));
+        }
+
+        if (filteredCands.length === 0) {
+            container.innerHTML = `<div class="empty-state" style="color: var(--text-muted); font-size: 11px;">Không có candidate setup nào cho module ${modFilter} trên nến này.</div>`;
+            return;
+        }
+
+        let html = '';
+        filteredCands.forEach((cand) => {
+            const isBuy = cand.direction.toUpperCase() === 'BUY';
+            const dirClass = isBuy ? 'buy' : 'sell';
+            const status = (cand.status || 'unknown').toUpperCase();
+            const statusColor = status === 'EXECUTED' || status === 'ELIGIBLE' ? '#089981' : status === 'REJECTED' ? '#f23645' : '#f59e0b';
+
+            const reasons = cand.diagnostic_reasons || [];
+
+            html += `
+            <div class="diagnostic-card ${status === 'REJECTED' ? 'rejected' : 'passed'}">
+                <div class="card-header">
+                    <span class="strat-badge">${cand.strategy_id}</span>
+                    <span class="dir-badge ${dirClass}">${cand.direction}</span>
+                    <span class="rr-badge">R:R ${cand.planned_rr ? cand.planned_rr.toFixed(2) : '-'}</span>
+                    <span class="status-badge" style="background: ${statusColor}22; color: ${statusColor}; border: 1px solid ${statusColor}44;">${status}</span>
+                </div>
+                <div class="card-prices">
+                    <span>Entry: <strong>${cand.entry_price ? cand.entry_price.toFixed(2) : '-'}</strong></span>
+                    <span>SL: <strong>${cand.stop_loss ? cand.stop_loss.toFixed(2) : '-'}</strong></span>
+                    <span>TP: <strong>${cand.take_profit ? cand.take_profit.toFixed(2) : '-'}</strong></span>
+                </div>
+                <div class="diagnostic-reasons">
+                    <div class="reasons-label">Chẩn Đoán Loại Trừ (${reasons.length} tiêu chí):</div>
+                    ${reasons.length > 0 ? reasons.map(code => {
+                        const desc = SMC_DIAGNOSTIC_DESCRIPTIONS[code] || 'Lý do loại khác';
+                        return `
+                        <div class="reason-item">
+                            <span class="reason-code">${code}</span>
+                            <span class="reason-desc">${desc}</span>
+                        </div>
+                        `;
+                    }).join('') : '<div class="reason-empty">Đạt toàn bộ tiêu chí hợp lệ (Không bị loại)</div>'}
+                </div>
+            </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    updateExecutionTab(bar) {
+        if (!bar) return;
+        const posContainer = document.getElementById('exec-pos-content');
+        const evContainer = document.getElementById('exec-events-content');
+
+        const p = bar.portfolio || {};
+        const pos = p.active_position;
+
+        if (posContainer) {
+            if (pos) {
+                const isBuy = pos.direction.toUpperCase() === 'BUY';
+                const pnl = pos.unrealized_pnl || 0;
+                const pnlColor = pnl >= 0 ? '#089981' : '#f23645';
+
+                posContainer.innerHTML = `
+                    <div class="pos-info-card">
+                        <div class="pos-row">
+                            <span>Hướng / Khối lượng:</span>
+                            <strong style="color: ${isBuy ? '#089981' : '#f23645'}">${pos.direction} ${pos.size} lot</strong>
+                        </div>
+                        <div class="pos-row">
+                            <span>Giá vào (Entry):</span>
+                            <strong>${pos.entry_price.toFixed(2)}</strong>
+                        </div>
+                        <div class="pos-row">
+                            <span>Stop Loss / Take Profit:</span>
+                            <span>SL: ${pos.stop_loss.toFixed(2)} | TP: ${pos.take_profit.toFixed(2)}</span>
+                        </div>
+                        <div class="pos-row">
+                            <span>PnL thả nổi (Unrealized):</span>
+                            <strong style="color: ${pnlColor}">${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)}</strong>
+                        </div>
+                        <div class="pos-row">
+                            <span>Thời gian giữ lệnh:</span>
+                            <span>${pos.duration_bars || 0} nến</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                posContainer.innerHTML = `<span class="muted-text">Không có vị thế đang mở trên nến này. (Vốn khả dụng: $${p.cash ? p.cash.toFixed(2) : '-'})</span>`;
+            }
+        }
+
+        if (evContainer) {
+            const fills = p.fills_this_bar || [];
+            const exits = p.exits_this_bar || [];
+
+            if (fills.length === 0 && exits.length === 0) {
+                evContainer.innerHTML = `<span class="muted-text">Không có sự kiện khớp lệnh hay đóng lệnh trên nến này.</span>`;
+            } else {
+                let html = '';
+                fills.forEach(f => {
+                    html += `
+                        <div class="exec-event-item fill">
+                            <span class="event-tag fill">⚡ KHỚP LỆNH</span>
+                            <span>${f.direction} @ ${f.price.toFixed(2)} (Khối lượng: ${f.size} lot, Spread: ${f.spread || 0})</span>
+                        </div>
+                    `;
+                });
+                exits.forEach(e => {
+                    const pnlColor = e.realized_pnl >= 0 ? '#089981' : '#f23645';
+                    html += `
+                        <div class="exec-event-item exit">
+                            <span class="event-tag exit">🏁 ĐÓNG VỊ THẾ</span>
+                            <span>Lý do: <strong>${e.reason}</strong> @ ${e.price.toFixed(2)} | PnL: <strong style="color: ${pnlColor}">${e.realized_pnl >= 0 ? '+' : ''}$${e.realized_pnl.toFixed(2)}</strong></span>
+                        </div>
+                    `;
+                });
+                evContainer.innerHTML = html;
+            }
+        }
+    }
+
+    populateAuditTable() {
+        const tbody = document.querySelector('#audit-log-table tbody');
+        const auditCount = document.getElementById('tab-audit-count');
+        if (!tbody) return;
+
+        const modFilter = this.moduleFilter?.value || 'ALL';
+        let allCands = [];
+
+        this.rawTimeline.forEach((bar, bIdx) => {
+            (bar.candidate_setups || []).forEach(cand => {
+                if (modFilter === 'ALL' || cand.strategy_id.toUpperCase().includes(modFilter)) {
+                    allCands.push({ ...cand, bar_index: bIdx, datetime_str: bar.datetime_str });
+                }
+            });
+        });
+
+        if (auditCount) auditCount.textContent = String(allCands.length);
+
+        if (allCands.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 16px;">Không có sự kiện candidate setup nào trong timeline.</td></tr>`;
+            return;
+        }
+
+        let html = '';
+        allCands.forEach(cand => {
+            const isBuy = cand.direction.toUpperCase() === 'BUY';
+            const status = (cand.status || '').toUpperCase();
+            const statusColor = status === 'EXECUTED' || status === 'ELIGIBLE' ? '#089981' : status === 'REJECTED' ? '#f23645' : '#f59e0b';
+            const diagCodes = cand.diagnostic_reasons || [];
+            const diagStr = diagCodes.length > 0 ? diagCodes.join(', ') : '-';
+
+            html += `
+                <tr class="audit-row" data-bar="${cand.bar_index}">
+                    <td>#${cand.bar_index + 1}</td>
+                    <td>${cand.datetime_str}</td>
+                    <td><strong>${cand.strategy_id}</strong></td>
+                    <td style="color: ${isBuy ? '#089981' : '#f23645'}; font-weight: bold;">${cand.direction}</td>
+                    <td><span class="status-badge" style="background: ${statusColor}22; color: ${statusColor}; border: 1px solid ${statusColor}44;">${status}</span></td>
+                    <td>${cand.planned_rr ? cand.planned_rr.toFixed(2) : '-'}</td>
+                    <td title="${diagStr}"><code>${diagStr}</code></td>
+                    <td><button class="audit-jump-btn" onclick="window.smcReplayController?.jumpToBar(${cand.bar_index})">🔍 Đến nến</button></td>
+                </tr>
+            `;
+        });
+
+        tbody.innerHTML = html;
+    }
+
+    updateAuditTable() {
+        this.populateAuditTable();
+    }
+}
+
+if (typeof window !== 'undefined') {
+    window.SMCReplayController = SMCReplayController;
+}
+
 let replayManager = null;
+let smcReplayController = null;
 
 // ==========================================
 // 2. KHỞI CHẠY ỨNG DỤNG
@@ -305,9 +1259,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupContextMenu();
     setupAlertToasts();
     setupDrawingHotkeys();
-    
+
     replayManager = new ReplayManager();
     replayManager.initEvents();
+
+    smcReplayController = new SMCReplayController();
+    smcReplayController.initEvents();
+    window.smcReplayController = smcReplayController;
 
     await loadDatabaseInfo();
     await loadStrategies();
@@ -356,7 +1314,11 @@ function setupTimeframeButtons() {
             buttons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentTf = btn.dataset.tf;
-            document.getElementById('chart-1-tf').textContent = currentTf;
+            const tfEl = document.getElementById('chart-1-tf');
+            if (tfEl) tfEl.textContent = currentTf;
+            if (tradingChart && typeof tradingChart.setTimeframe === 'function') {
+                tradingChart.setTimeframe(currentTf);
+            }
 
             if (tradingChart && tradingChart.drawingManager) {
                 tradingChart.drawingManager.currentTimeframe = currentTf;
@@ -382,6 +1344,7 @@ function setupDualChartToggle() {
     btn?.addEventListener('click', async () => {
         isDualMode = !isDualMode;
         if (isDualMode) {
+            closeDrawer();
             btn.classList.add('active');
             grid.classList.add('dual-mode');
             box2.classList.remove('hidden');
@@ -441,7 +1404,7 @@ async function loadSecondaryCandles(timeframe, limit = 1200) {
         if (res.ok) {
             const data = await res.json();
             if (secondaryChart && data.candles) {
-                secondaryChart.setCandles(data.candles);
+                secondaryChart.setCandles(data.candles, true);
             }
         }
     } catch (e) {
@@ -457,7 +1420,7 @@ async function loadCandles(timeframe, limit = 1200) {
         if (!res.ok) throw new Error(`Lỗi tải nến: ${res.statusText}`);
         const data = await res.json();
         if (tradingChart && data.candles) {
-            tradingChart.setCandles(data.candles);
+            tradingChart.setCandles(data.candles, true);
         }
     } catch (err) {
         alert(`Không thể tải dữ liệu nến: ${err.message}`);
@@ -534,6 +1497,14 @@ function switchDrawerTab(targetTab) {
     const drawer = document.getElementById('side-panel');
     const isDrawerOpen = drawer ? !drawer.classList.contains('collapsed') : false;
 
+    if (drawer) {
+        if (targetTab === 'tab-results') {
+            drawer.classList.add('results-mode');
+        } else {
+            drawer.classList.remove('results-mode');
+        }
+    }
+
     tabBtns.forEach(btn => {
         const isActive = btn.dataset.tab === targetTab;
         btn.classList.toggle('active', isActive);
@@ -557,6 +1528,7 @@ function switchDrawerTab(targetTab) {
     }
 
     saveDrawerState(isDrawerOpen, targetTab);
+    triggerChartResize();
 }
 
 function openDrawer(tabId) {
@@ -665,6 +1637,17 @@ function setupDrawer() {
             const ctxMenu = document.getElementById('drawing-context-menu');
             if (ctxMenu && ctxMenu.style.display === 'block') return;
 
+            // Close popovers
+            document.getElementById('top-range-popover')?.classList.add('hidden');
+            document.getElementById('layer-menu-popover')?.classList.add('hidden');
+
+            // Close diagnostic sidebar if open
+            const diagSidebar = document.getElementById('diagnostic-sidebar');
+            if (diagSidebar && !diagSidebar.classList.contains('collapsed')) {
+                diagSidebar.classList.add('collapsed');
+                triggerChartResize();
+            }
+
             const drawer = document.getElementById('side-panel');
             if (drawer && !drawer.classList.contains('collapsed')) {
                 closeDrawer();
@@ -685,6 +1668,9 @@ function setupDrawer() {
         }
     });
 
+    // Khởi tạo các phím điều khiển TradingView & Popover
+    setupTradingViewControls();
+
     // Restore state from localStorage (default collapsed on first visit)
     const savedState = getDrawerState();
     if (savedState.isOpen) {
@@ -692,6 +1678,209 @@ function setupDrawer() {
     } else {
         closeDrawer();
         switchDrawerTab(savedState.activeTab);
+    }
+}
+
+function setupTradingViewControls() {
+    const getChart = () => tradingChart || (typeof window !== 'undefined' ? window.tradingChart : null);
+
+    // 1. Floating Chart Controls (Auto Fit, Zoom In, Zoom Out, Latest, Fullscreen)
+    document.getElementById('btn-chart-autofit')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const c = getChart();
+        if (c && typeof c.autoFit === 'function') {
+            c.autoFit();
+        }
+    });
+
+    document.getElementById('btn-chart-zoomin')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const c = getChart();
+        if (c && typeof c.zoomIn === 'function') {
+            c.zoomIn();
+        }
+    });
+
+    document.getElementById('btn-chart-zoomout')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const c = getChart();
+        if (c && typeof c.zoomOut === 'function') {
+            c.zoomOut();
+        }
+    });
+
+    document.getElementById('btn-chart-latest')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const c = getChart();
+        if (c && typeof c.scrollToLatest === 'function') {
+            c.scrollToLatest();
+        }
+    });
+
+    document.getElementById('btn-chart-fullscreen')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const chartArea = document.getElementById('chart-area-main') || document.getElementById('chart-box-1');
+        if (!document.fullscreenElement) {
+            if (chartArea && chartArea.requestFullscreen) {
+                chartArea.requestFullscreen().then(() => triggerChartResize()).catch(() => {});
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen().then(() => triggerChartResize()).catch(() => {});
+            }
+        }
+    });
+
+    // 2. Top Range Popover Toggle
+    const rangeBtn = document.getElementById('btn-toggle-top-range');
+    const rangePopover = document.getElementById('top-range-popover');
+    rangeBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        rangePopover?.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (rangePopover && !rangePopover.contains(e.target) && e.target !== rangeBtn && !rangeBtn?.contains(e.target)) {
+            rangePopover.classList.add('hidden');
+        }
+    });
+
+    // 3. Layer Menu Volume Checkbox
+    document.getElementById('chk-layer-volume')?.addEventListener('change', (e) => {
+        if (tradingChart && typeof tradingChart.setVolumeVisible === 'function') {
+            tradingChart.setVolumeVisible(e.target.checked);
+        }
+    });
+
+    // 4. Jump to trade in Replay
+    document.getElementById('btn-jump-trade')?.addEventListener('click', () => {
+        if (window.smcReplayController && typeof window.smcReplayController.jumpNextBookmark === 'function') {
+            window.smcReplayController.jumpNextBookmark('fills');
+        }
+    });
+
+    // 5. Drawer Resizers
+    setupDrawerResizers();
+}
+
+function setupDrawerResizers() {
+    const drawer = document.getElementById('side-panel');
+    const diagSidebar = document.getElementById('diagnostic-sidebar');
+
+    // Resizer top (cho bottom drawer results-mode)
+    const resizerTop = document.getElementById('drawer-resizer-top');
+    if (resizerTop && drawer) {
+        let isResizing = false;
+        let startY = 0;
+        let startHeight = 0;
+
+        resizerTop.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startY = e.clientY;
+            startHeight = drawer.offsetHeight;
+            document.body.style.cursor = 'row-resize';
+            document.body.style.userSelect = 'none';
+
+            const onMouseMove = (ev) => {
+                if (!isResizing) return;
+                const deltaY = startY - ev.clientY;
+                const newHeight = Math.max(160, Math.min(650, startHeight + deltaY));
+                drawer.style.height = `${newHeight}px`;
+                triggerChartResize();
+            };
+
+            const onMouseUp = () => {
+                if (!isResizing) return;
+                isResizing = false;
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+                window.removeEventListener('mousemove', onMouseMove);
+                window.removeEventListener('mouseup', onMouseUp);
+                triggerChartResize();
+            };
+
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onMouseUp);
+        });
+    }
+
+    // Resizer left (cho side drawer right-mode)
+    const resizerLeft = document.getElementById('drawer-resizer-left');
+    if (resizerLeft && drawer) {
+        let isResizing = false;
+        let startX = 0;
+        let startWidth = 0;
+
+        resizerLeft.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startWidth = drawer.offsetWidth;
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+
+            const onMouseMove = (ev) => {
+                if (!isResizing) return;
+                const deltaX = startX - ev.clientX;
+                const newWidth = Math.max(280, Math.min(750, startWidth + deltaX));
+                drawer.style.width = `${newWidth}px`;
+                triggerChartResize();
+            };
+
+            const onMouseUp = () => {
+                if (!isResizing) return;
+                isResizing = false;
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+                window.removeEventListener('mousemove', onMouseMove);
+                window.removeEventListener('mouseup', onMouseUp);
+                triggerChartResize();
+            };
+
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onMouseUp);
+        });
+    }
+
+    // Resizer left cho diagnostic sidebar
+    const resizerSidebar = document.getElementById('sidebar-resizer-left');
+    if (resizerSidebar && diagSidebar) {
+        let isResizing = false;
+        let startX = 0;
+        let startWidth = 0;
+
+        resizerSidebar.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startWidth = diagSidebar.offsetWidth;
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+
+            const onMouseMove = (ev) => {
+                if (!isResizing) return;
+                const deltaX = startX - ev.clientX;
+                const newWidth = Math.max(280, Math.min(750, startWidth + deltaX));
+                diagSidebar.style.width = `${newWidth}px`;
+                triggerChartResize();
+            };
+
+            const onMouseUp = () => {
+                if (!isResizing) return;
+                isResizing = false;
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+                window.removeEventListener('mousemove', onMouseMove);
+                window.removeEventListener('mouseup', onMouseUp);
+                triggerChartResize();
+            };
+
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onMouseUp);
+        });
     }
 }
 
@@ -708,7 +1897,7 @@ async function loadStrategies() {
         const res = await fetch('/api/strategies');
         const data = await res.json();
         availableStrategies = data.strategies || [];
-        
+
         const select = document.getElementById('strategy-select');
         select.innerHTML = '';
         availableStrategies.forEach(s => {
@@ -739,10 +1928,10 @@ function renderStrategyParams(strategyId) {
     strat.params.forEach(p => {
         const formGroup = document.createElement('div');
         formGroup.className = 'form-group';
-        
+
         const label = document.createElement('label');
         label.textContent = p.label;
-        
+
         const input = document.createElement('input');
         input.type = 'number';
         input.className = 'form-control param-input';
@@ -2100,3 +3289,10 @@ window.onDrawingContextMenu = function(drawing, event, chartInstance) {
 window.onDrawingAlertTriggered = function(alertData, chartInstance) {
     showDrawingAlertToast(alertData);
 };
+
+// ==========================================
+// 12. SMC REPLAY INSPECTOR EXPORT & COMPATIBILITY
+// ==========================================
+if (typeof window !== 'undefined') {
+    window.SMCReplayController = SMCReplayController;
+}

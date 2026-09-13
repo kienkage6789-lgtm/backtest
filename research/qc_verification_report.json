@@ -1,0 +1,266 @@
+{
+  "qc_evaluator": "machine_2_independent_qc",
+  "verified_at": "2026-09-12T04:27:33.173901+00:00",
+  "source_connection_mode": "sqlite_uri_readonly",
+  "database_file": "D:\\tool\\backtest\\data\\XAUUSD.db",
+  "manifest_file_verified": "D:\\tool\\backtest\\research\\dataset_manifest.json",
+  "independent_metrics": {
+    "m1_candle_count": 1646963,
+    "m1_start_time": "2022-01-02 23:05:00",
+    "m1_end_time": "2026-08-31 23:59:00",
+    "m1_sha256": "e53ca000c7bda2f733210e41e0a9b39e99c7712580f79b2df2d2e1d82bf5fb59",
+    "m15_candle_count": 110130,
+    "m15_sha256": "4553fba513f86bc0f9b49a804740016127e6053155b29f79ed1950063ebc9333",
+    "duplicates": 0,
+    "non_monotonic": 0
+  },
+  "verification_checks": {
+    "M1 Row Count Match": {
+      "passed": true,
+      "detail": "1646963 vs 1646963"
+    },
+    "M1 SHA256 Checksum Match": {
+      "passed": true,
+      "detail": "e53ca000c7bda2f7... vs e53ca000c7bda2f7..."
+    },
+    "M1 Min Timestamp Match": {
+      "passed": true,
+      "detail": "2022-01-02 23:05:00 vs 2022-01-02 23:05:00"
+    },
+    "M1 Max Timestamp Match": {
+      "passed": true,
+      "detail": "2026-08-31 23:59:00 vs 2026-08-31 23:59:00"
+    },
+    "M15 Row Count Match": {
+      "passed": true,
+      "detail": "110130 vs 110130"
+    },
+    "M15 SHA256 Checksum Match": {
+      "passed": true,
+      "detail": "4553fba513f86bc0... vs 4553fba513f86bc0..."
+    },
+    "Duplicate Timestamps Zero": {
+      "passed": true,
+      "detail": "Duplicates = 0"
+    },
+    "Monotonic Order Valid": {
+      "passed": true,
+      "detail": "Violations = 0"
+    },
+    "Random Sample Audit Valid": {
+      "passed": true,
+      "detail": "Audited 20/20 samples passed"
+    }
+  },
+  "sample_audit": {
+    "seed": 42,
+    "sample_size": 20,
+    "samples": [
+      {
+        "index": 52451,
+        "time": "2022-02-24 13:40:00",
+        "open": 1962.622,
+        "high": 1963.238,
+        "low": 1962.568,
+        "close": 1962.816,
+        "tick_volume": 162,
+        "valid": true
+      },
+      {
+        "index": 62489,
+        "time": "2022-03-07 23:20:00",
+        "open": 1997.416,
+        "high": 1997.64,
+        "low": 1997.416,
+        "close": 1997.529,
+        "tick_volume": 33,
+        "valid": true
+      },
+      {
+        "index": 66653,
+        "time": "2022-03-10 23:50:00",
+        "open": 1995.336,
+        "high": 1995.791,
+        "low": 1995.2,
+        "close": 1995.791,
+        "tick_volume": 41,
+        "valid": true
+      },
+      {
+        "index": 182323,
+        "time": "2022-07-08 11:01:00",
+        "open": 1740.682,
+        "high": 1741.343,
+        "low": 1740.681,
+        "close": 1741.068,
+        "tick_volume": 77,
+        "valid": true
+      },
+      {
+        "index": 196493,
+        "time": "2022-07-22 17:49:00",
+        "open": 1726.807,
+        "high": 1726.809,
+        "low": 1726.453,
+        "close": 1726.49,
+        "tick_volume": 56,
+        "valid": true
+      },
+      {
+        "index": 214947,
+        "time": "2022-08-11 05:17:00",
+        "open": 1784.71,
+        "high": 1784.73,
+        "low": 1784.276,
+        "close": 1784.404,
+        "tick_volume": 53,
+        "valid": true
+      },
+      {
+        "index": 233478,
+        "time": "2022-08-30 15:59:00",
+        "open": 1726.338,
+        "high": 1726.438,
+        "low": 1725.963,
+        "close": 1726.182,
+        "tick_volume": 90,
+        "valid": true
+      },
+      {
+        "index": 292632,
+        "time": "2022-10-28 19:17:00",
+        "open": 1643.788,
+        "high": 1643.805,
+        "low": 1643.687,
+        "close": 1643.805,
+        "tick_volume": 27,
+        "valid": true
+      },
+      {
+        "index": 458517,
+        "time": "2023-04-21 00:00:00",
+        "open": 2005.387,
+        "high": 2005.608,
+        "low": 2005.212,
+        "close": 2005.293,
+        "tick_volume": 75,
+        "valid": true
+      },
+      {
+        "index": 468106,
+        "time": "2023-05-01 23:18:00",
+        "open": 1982.418,
+        "high": 1982.481,
+        "low": 1982.401,
+        "close": 1982.481,
+        "tick_volume": 24,
+        "valid": true
+      },
+      {
+        "index": 513575,
+        "time": "2023-06-16 03:55:00",
+        "open": 1956.239,
+        "high": 1956.424,
+        "low": 1956.239,
+        "close": 1956.4,
+        "tick_volume": 33,
+        "valid": true
+      },
+      {
+        "index": 576778,
+        "time": "2023-08-21 08:46:00",
+        "open": 1888.994,
+        "high": 1889.175,
+        "low": 1888.959,
+        "close": 1889.107,
+        "tick_volume": 58,
+        "valid": true
+      },
+      {
+        "index": 884834,
+        "time": "2024-07-04 08:27:00",
+        "open": 2358.044,
+        "high": 2358.056,
+        "low": 2357.407,
+        "close": 2357.655,
+        "tick_volume": 116,
+        "valid": true
+      },
+      {
+        "index": 1143716,
+        "time": "2025-03-28 14:52:00",
+        "open": 3072.538,
+        "high": 3072.816,
+        "low": 3070.462,
+        "close": 3070.693,
+        "tick_volume": 489,
+        "valid": true
+      },
+      {
+        "index": 1238352,
+        "time": "2025-07-06 22:40:00",
+        "open": 3335.565,
+        "high": 3335.875,
+        "low": 3335.244,
+        "close": 3335.44,
+        "tick_volume": 62,
+        "valid": true
+      },
+      {
+        "index": 1340975,
+        "time": "2025-10-17 15:25:00",
+        "open": 4241.427,
+        "high": 4244.974,
+        "low": 4239.356,
+        "close": 4239.643,
+        "tick_volume": 821,
+        "valid": true
+      },
+      {
+        "index": 1419141,
+        "time": "2026-01-08 21:03:00",
+        "open": 4479.057,
+        "high": 4479.461,
+        "low": 4477.47,
+        "close": 4479.118,
+        "tick_volume": 238,
+        "valid": true
+      },
+      {
+        "index": 1544492,
+        "time": "2026-05-19 03:52:00",
+        "open": 4548.041,
+        "high": 4549.515,
+        "low": 4547.868,
+        "close": 4548.863,
+        "tick_volume": 107,
+        "valid": true
+      },
+      {
+        "index": 1553292,
+        "time": "2026-05-27 15:16:00",
+        "open": 4431.867,
+        "high": 4432.72,
+        "low": 4431.134,
+        "close": 4431.66,
+        "tick_volume": 200,
+        "valid": true
+      },
+      {
+        "index": 1555144,
+        "time": "2026-05-29 00:12:00",
+        "open": 4496.171,
+        "high": 4498.304,
+        "low": 4496.171,
+        "close": 4497.851,
+        "tick_volume": 277,
+        "valid": true
+      }
+    ]
+  },
+  "gate_evaluation": {
+    "verdict": "PASS",
+    "ready_for_protocol_lock": true,
+    "ready_for_baseline_t54_1": true
+  }
+}

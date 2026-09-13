@@ -25,6 +25,19 @@ def _candle(t, o, h, l, c, repair=True):
 
 
 class TestSMCFVG(unittest.TestCase):
+    def test_00_metadata_and_directional_displacement(self):
+        candles = [
+            _candle("2024-01-01", 100, 101, 99, 100),
+            _candle("2024-01-02", 110, 112, 100, 101),  # bearish body: not bullish displacement
+            _candle("2024-01-03", 113, 115, 102, 114),
+        ]
+        df = _make_df(candles)
+        raw = detect_fvgs(df)[0]
+        self.assertEqual((raw.ce, raw.gap_size), ((raw.top + raw.bottom) / 2, raw.top - raw.bottom))
+        self.assertFalse(raw.displacement)
+        self.assertEqual(raw.to_dict()["ce"], raw.ce)
+        self.assertEqual(len(detect_fvgs(df, require_displacement=True)), 0)
+
     # ------------------------------------------------------------------
     # 01 Bullish FVG detected
     # ------------------------------------------------------------------
@@ -192,6 +205,27 @@ class TestSMCFVG(unittest.TestCase):
         self.assertTrue(len(tracker_fvgs) >= 1)
         self.assertTrue(tracker_fvgs[0].filled, "Tracker FVG should also be filled")
         self.assertEqual(tracker_fvgs[0].filled_at, 4)
+
+    def test_08_displacement_atr_batch_tracker_parity(self):
+        rng = np.random.default_rng(7)
+        n = 120
+        prices = 100 + np.cumsum(rng.normal(0, 1, n))
+        times = pd.date_range("2024-02-01", periods=n, freq="min", tz="UTC")
+        candles = []
+        for i, price in enumerate(prices):
+            o = float(price)
+            c = float(o + rng.normal(0, 1.5))
+            candles.append({"time": times[i], "open": o, "high": max(o, c) + float(rng.random() * 1.5),
+                            "low": min(o, c) - float(rng.random() * 1.5), "close": c})
+        df = normalize_ohlcv(candles)
+        kwargs = {"require_displacement": True, "atr_period": 14, "displacement_multiplier": 0.73}
+        batch = detect_fvgs(df, **kwargs)
+        tracker = FVGTracker(**kwargs)
+        for _, row in df.iterrows():
+            tracker.update(row)
+        streamed = tracker.get_all_fvgs()
+        self.assertEqual([(x.index, x.direction, x.confirmed_at) for x in batch],
+                         [(x.index, x.direction, x.confirmed_at) for x in streamed])
 
 
 if __name__ == "__main__":

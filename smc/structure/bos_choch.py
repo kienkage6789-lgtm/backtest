@@ -178,7 +178,8 @@ def detect_structure_events(
                 confirmed_swing_at=active_high.confirmed_at,
                 body_size=body_size,
                 atr_value=float(atr_val),
-                break_type="close"
+                break_type="close",
+                structure_leg_id=f"{mode}:{direction}:{active_high.index}"
             )
             events.append(event)
             active_high.broken = True
@@ -207,7 +208,8 @@ def detect_structure_events(
                 confirmed_swing_at=active_low.confirmed_at,
                 body_size=body_size,
                 atr_value=float(atr_val),
-                break_type="close"
+                break_type="close",
+                structure_leg_id=f"{mode}:{direction}:{active_low.index}"
             )
             events.append(event)
             active_low.broken = True
@@ -362,7 +364,8 @@ class StructureTracker:
                 confirmed_swing_at=self.active_high.confirmed_at,
                 body_size=body_size,
                 atr_value=float(atr_val),
-                break_type="close"
+                break_type="close",
+                structure_leg_id=f"{self.mode}:{direction}:{self.active_high.index}"
             )
             self.active_high.broken = True
             self.active_high.broken_at = bar_idx
@@ -391,7 +394,8 @@ class StructureTracker:
                 confirmed_swing_at=self.active_low.confirmed_at,
                 body_size=body_size,
                 atr_value=float(atr_val),
-                break_type="close"
+                break_type="close",
+                structure_leg_id=f"{self.mode}:{direction}:{self.active_low.index}"
             )
             self.active_low.broken = True
             self.active_low.broken_at = bar_idx

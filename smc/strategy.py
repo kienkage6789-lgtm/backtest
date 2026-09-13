@@ -102,6 +102,12 @@ class SMCStrategyConfig:
     rr_ratio: float = 2.0
     sl_buffer: float = 0.5
 
+    def __post_init__(self):
+        if self.ob_lookback <= 0:
+            raise ValueError("ob_lookback must be > 0.")
+        if self.sl_anchor not in {"ob", "fvg"}:
+            raise ValueError("sl_anchor must be 'ob' or 'fvg'.")
+
 
 @dataclass
 class SMCStrategyResult:
@@ -112,6 +118,10 @@ class SMCStrategyResult:
     trades: List[Dict[str, Any]]
     funnel_stats: SMCFunnelStats
     chart_objects: Dict[str, Any]
+    planned_entry_prices: Optional[pd.Series] = None
+    planned_stop_losses: Optional[pd.Series] = None
+    planned_take_profits: Optional[pd.Series] = None
+    planned_rrs: Optional[pd.Series] = None
 
 
 def run_smc_strategy(
@@ -137,9 +147,22 @@ def run_smc_strategy(
     stats.total_bars = n
 
     signals = pd.Series(0, index=df.index, dtype=int)
+    planned_entry_prices = pd.Series(np.nan, index=df.index, dtype=float)
+    planned_stop_losses = pd.Series(np.nan, index=df.index, dtype=float)
+    planned_take_profits = pd.Series(np.nan, index=df.index, dtype=float)
+    planned_rrs = pd.Series(np.nan, index=df.index, dtype=float)
 
     if n < max(config.swing_strength * 2 + 1, config.internal_strength * 2 + 1):
-        return SMCStrategyResult(signals=signals, trades=[], funnel_stats=stats, chart_objects={})
+        return SMCStrategyResult(
+            signals=signals,
+            trades=[],
+            funnel_stats=stats,
+            chart_objects={},
+            planned_entry_prices=planned_entry_prices,
+            planned_stop_losses=planned_stop_losses,
+            planned_take_profits=planned_take_profits,
+            planned_rrs=planned_rrs
+        )
 
     # Step 1: Detect Swings (HTF)
     swing_points = detect_swings(df, strength=config.swing_strength, mode="swing")
@@ -160,7 +183,8 @@ def run_smc_strategy(
     stats.internal_choch_detected = sum(1 for e in internal_events if e.event_type == "CHoCH")
 
     # Step 5: Detect FVGs
-    fvgs = detect_fvgs(df, mode="internal", min_gap_pct=0.0)
+    fvgs = detect_fvgs(df, mode="internal", min_gap_pct=0.0,
+                       structure_events=internal_events)
     stats.fvgs_total_detected = len(fvgs)
 
     # Step 6: Detect Order Blocks (Confluence)
@@ -252,7 +276,12 @@ def run_smc_strategy(
 
             if filled:
                 stats.orders_filled += 1
-                signals.iloc[k] = 1 if order['direction'] == 'bullish' else -1
+                if signals.iloc[k] == 0:
+                    signals.iloc[k] = 1 if order['direction'] == 'bullish' else -1
+                    planned_entry_prices.iloc[k] = round(float(order['entry_price']), 3)
+                    planned_stop_losses.iloc[k] = round(float(order['stop_loss']), 3)
+                    planned_take_profits.iloc[k] = round(float(order['take_profit']), 3)
+                    planned_rrs.iloc[k] = round(float(config.rr_ratio), 2)
                 trade_record = {
                     'entry_bar': b_idx,
                     'entry_time': c_time,
@@ -351,7 +380,12 @@ def run_smc_strategy(
 
                 linked_ob = None
                 if b_idx in obs_by_event_index:
-                    linked_ob = obs_by_event_index[b_idx][0]
+                    linked_ob = next(
+                        (ob for ob in obs_by_event_index[b_idx]
+                         if ob.created_at <= b_idx and
+                         (ob.invalidated_at is None or ob.invalidated_at > b_idx)),
+                        None,
+                    )
 
                 if config.require_ob and linked_ob is None:
                     continue
@@ -430,27 +464,40 @@ def run_smc_strategy(
 
             # Generate Entry & SL/TP based on Order Block + FVG Confluence
             if win['direction'] == 'bullish':
-                entry_price = float(best_fvg.top)
+                entry_price = round(float(best_fvg.top), 3)
                 if config.sl_anchor == "ob" and matched_ob is not None:
-                    stop_loss = float(matched_ob.low - config.sl_buffer)
+                    stop_loss = round(float(matched_ob.low - config.sl_buffer), 3)
                 else:
-                    stop_loss = float(best_fvg.bottom - config.sl_buffer)
-                risk = max(entry_price - stop_loss, 0.1)
-                take_profit = entry_price + (risk * config.rr_ratio)
+                    stop_loss = round(float(best_fvg.bottom - config.sl_buffer), 3)
+                if stop_loss >= entry_price:
+                    stop_loss = round(entry_price - 0.1, 3)
+                risk = max(round(entry_price - stop_loss, 3), 0.1)
+                take_profit = round(entry_price + (risk * config.rr_ratio), 3)
+                if take_profit <= entry_price:
+                    take_profit = round(entry_price + 0.1, 3)
             else:
-                entry_price = float(best_fvg.bottom)
+                entry_price = round(float(best_fvg.bottom), 3)
                 if config.sl_anchor == "ob" and matched_ob is not None:
-                    stop_loss = float(matched_ob.high + config.sl_buffer)
+                    stop_loss = round(float(matched_ob.high + config.sl_buffer), 3)
                 else:
-                    stop_loss = float(best_fvg.top + config.sl_buffer)
-                risk = max(stop_loss - entry_price, 0.1)
-                take_profit = entry_price - (risk * config.rr_ratio)
+                    stop_loss = round(float(best_fvg.top + config.sl_buffer), 3)
+                if stop_loss <= entry_price:
+                    stop_loss = round(entry_price + 0.1, 3)
+                risk = max(round(stop_loss - entry_price, 3), 0.1)
+                take_profit = round(entry_price - (risk * config.rr_ratio), 3)
+                if take_profit >= entry_price:
+                    take_profit = round(entry_price - 0.1, 3)
 
             # Place Order strictly at current bar b_idx (when candidate is confirmed)
             if config.order_type == 'market':
                 stats.pending_orders_created += 1
                 stats.orders_filled += 1
-                signals.iloc[k] = 1 if win['direction'] == 'bullish' else -1
+                if signals.iloc[k] == 0:
+                    signals.iloc[k] = 1 if win['direction'] == 'bullish' else -1
+                    planned_entry_prices.iloc[k] = round(float(c_close), 3)
+                    planned_stop_losses.iloc[k] = round(float(stop_loss), 3)
+                    planned_take_profits.iloc[k] = round(float(take_profit), 3)
+                    planned_rrs.iloc[k] = round(float(config.rr_ratio), 2)
                 active_trades.append({
                     'entry_bar': b_idx,
                     'entry_time': c_time,
@@ -510,5 +557,9 @@ def run_smc_strategy(
         signals=signals,
         trades=trades,
         funnel_stats=stats,
-        chart_objects=chart_objects
+        chart_objects=chart_objects,
+        planned_entry_prices=planned_entry_prices,
+        planned_stop_losses=planned_stop_losses,
+        planned_take_profits=planned_take_profits,
+        planned_rrs=planned_rrs
     )

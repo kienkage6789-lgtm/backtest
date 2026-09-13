@@ -1,0 +1,119 @@
+{
+  "protocol_version": "1.0.0",
+  "created_at": "2026-09-12T11:25:00Z",
+  "symbol": "XAUUSD",
+  "base_currency": "USD",
+  "data_range": {
+    "start": "2022-01-01 00:00:00+00:00",
+    "end": "2026-08-31 23:59:59+00:00",
+    "timezone": "UTC"
+  },
+  "timeframes": {
+    "execution": "M15",
+    "htf_bias": "H1",
+    "base": "M1"
+  },
+  "dataset_split": {
+    "in_sample": {
+      "start": "2022-01-01 00:00:00+00:00",
+      "end": "2024-09-30 23:59:59+00:00",
+      "pct": 58.9,
+      "purpose": "Exploration, strategy baseline, and initial hypothesis testing"
+    },
+    "validation": {
+      "start": "2024-10-01 00:00:00+00:00",
+      "end": "2025-08-31 23:59:59+00:00",
+      "pct": 19.6,
+      "purpose": "Cost sensitivity analysis, regime matrix, and selector calibration"
+    },
+    "out_of_sample": {
+      "start": "2025-09-01 00:00:00+00:00",
+      "end": "2026-08-31 23:59:59+00:00",
+      "pct": 21.5,
+      "purpose": "Final blind verification and overfit audit"
+    }
+  },
+  "execution_policy": {
+    "mode": "market_at_next_open",
+    "fill_phase": "open_n_plus_1",
+    "sl_tp_evaluation": "intrabar_sl_first",
+    "allowed_short": true,
+    "max_open_positions": 1,
+    "reversal_policy": "atomic_reversal"
+  },
+  "htf_source": {
+    "table": "XAUUSD_M1",
+    "resample_rule": "H1",
+    "bias_window": "rolling_context",
+    "label": "left",
+    "closed": "left"
+  },
+  "cost_model": {
+    "standard": {
+      "spread_points": 20.0,
+      "point_value": 0.01,
+      "commission_per_lot": 5.0
+    },
+    "sensitivity_scenarios": {
+      "scenario_a_low_cost": {
+        "multiplier": 0.5,
+        "spread_points": 10.0,
+        "commission_per_lot": 2.5
+      },
+      "scenario_b_standard": {
+        "multiplier": 1.0,
+        "spread_points": 20.0,
+        "commission_per_lot": 5.0
+      },
+      "scenario_c_high_cost": {
+        "multiplier": 1.5,
+        "spread_points": 30.0,
+        "commission_per_lot": 7.5
+      },
+      "scenario_d_stress_cost": {
+        "multiplier": 2.0,
+        "spread_points": 40.0,
+        "commission_per_lot": 10.0
+      }
+    }
+  },
+  "account": {
+    "initial_capital": 10000.0,
+    "lot_size": 0.01,
+    "contract_size": 100.0
+  },
+  "strategy_parameters": {
+    "min_rr": 1.5,
+    "cooldown_bars": 3
+  },
+  "strategies_in_scope": [
+    "smc_s01",
+    "smc_s05",
+    "smc_s09",
+    "smc_wave1",
+    "smc_confluence"
+  ],
+  "locked_kpis": [
+    "total_trades",
+    "win_rate",
+    "profit_factor",
+    "net_profit",
+    "expectancy",
+    "average_win",
+    "average_loss",
+    "max_drawdown",
+    "max_drawdown_pct",
+    "sharpe_ratio",
+    "return_over_max_drawdown",
+    "holding_time_avg_bars",
+    "long_trades_count",
+    "short_trades_count"
+  ],
+  "rules_of_engagement": [
+    "Machine 1 (Runner) and Machine 2 (QC) operate on the exact same commit hash.",
+    "Canonical dataset checksum must match 100% before any backtest is run.",
+    "No parameter optimization is permitted during baseline phases T54.1 - T54.4.",
+    "OOS period (2025-09-01 to 2026-08-31) is strictly blind until T54.5/T54.8.",
+    "Any logic change made after observing OOS performance invalidates results and mandates a new protocol version."
+  ]
+}

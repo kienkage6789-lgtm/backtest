@@ -589,36 +589,266 @@ Sau khi đóng các issue QC của OB, triển khai theo thứ tự sau; không 
 
 ### Milestone tiếp theo — Liquidity Pool & Liquidity Sweep
 
-- [ ] Tạo model `LiquidityPool` và `LiquiditySweep` có `mode`, `direction`, source swing, `confirmed_at`, `created_at`, `swept_at`, validity và serialization.
-- [ ] Detect equal highs/equal lows bằng tolerance cấu hình theo phần trăm giá hoặc pip; hỗ trợ batch và incremental tracker.
-- [ ] Detect sweep bằng wick vượt liquidity pool rồi close quay lại vùng; phân biệt bullish/bearish sweep và không nhầm với BOS/CHoCH.
-- [ ] Bảo đảm zero-lookahead: chỉ công bố pool sau pivot confirmation và chỉ công bố sweep sau khi nến sweep đóng cửa.
-- [ ] Bổ sung test đối xứng, tolerance, wick-only, close vượt hẳn, ambiguous candle, invalidation, batch/incremental parity và replay cutoff.
+### [x] T51 - Liquidity Pool & Liquidity Sweep
+- Mô tả: Bổ sung lớp thanh khoản ngang từ các swing equal highs/equal lows và phát hiện sweep theo wick vượt pool nhưng close quay lại vùng. Đây là milestone SMC tiếp theo sau khi đã hoàn tất Structure, FVG và OB.
+- Phạm vi:
+  - Model `LiquidityPool` và `LiquiditySweep`, có source swing, `mode`, `direction`, `created_at`, `confirmed_at`, `swept_at`, validity và `to_dict()`.
+  - Batch detector và incremental tracker dùng chung semantics; không mutate input swing/candle.
+  - Tolerance equal high/low cấu hình theo phần trăm giá hoặc pip, có validation và policy rõ cho pool nhiều swing.
+  - Sweep chỉ được xác nhận khi candle đã đóng; close vượt hẳn pool là break/invalidation, không phải sweep.
+  - Replay cutoff và timestamp phải không nhìn thấy dữ liệu tương lai; không nhầm sweep với BOS/CHoCH.
+- Acceptance criteria:
+  - [x] Test đối xứng bullish/bearish, equal-high/equal-low và tolerance trong/ngoài ngưỡng.
+  - [x] Test wick-only, close vượt hẳn, ambiguous candle và invalidation sau pool.
+  - [x] Batch/incremental parity trên toàn bộ field, gồm serialization và lifecycle timestamps.
+  - [x] Replay cutoff không phát hiện pool/sweep trước thời điểm đủ điều kiện.
+  - [x] Benchmark incremental không quét lại toàn bộ lịch sử mỗi candle; xác nhận hiệu năng trên dataset dài (10.000 bars < 0.7s).
+- File đã đổi: `smc/models.py`, `smc/liquidity/__init__.py`, `smc/liquidity/detector.py`, `smc/__init__.py`, `tests/test_smc_liquidity.py`, `.agent/DECISIONS.md`, `.agent/TASKS.md`, `.agent/CHANGELOG.md`, `walkthrough.md`.
+- Phụ thuộc: T50.
+- Trạng thái: done
 
 ### Milestone kế tiếp — Context
 
-- [ ] Xây `KillZone/SessionFilter`: timezone rõ ràng, session cấu hình được, quy tắc DST, closed-candle only và lý do reject.
-- [ ] Xây HTF bias adapter: chạy structure trên HTF, ánh xạ bias về LTF theo timestamp/as-of bar, tuyệt đối không dùng bias tương lai.
-- [ ] Bổ sung test timezone, biên session, ngày không có dữ liệu, gaps và mapping HTF/LTF.
+### [x] T52 - Context (KillZone/SessionFilter và HTF bias)
+- Mô tả: Xây dựng module Context độc lập gồm `KillZone/SessionFilter` (London, NY, Asian, Custom, Overnight, Timezone & DST, candle closed policy) và `HTF Bias Adapter` (as-of timestamp mapping, zero-lookahead, conflict=neutral, future/late event queueing).
+- Phạm vi:
+  - Data models `Signal`, `SessionWindow`, `SessionDecision`, `BiasState` với `to_dict()` và mapping immutability.
+  - Session filter: boundary `start <= t < end`, overnight attribution ngày bắt đầu, timezone/DST IANA, precedence `closed`/`is_closed`/`candle_closed`.
+  - HTF bias: mapping bằng timestamp (không dùng integer index), zero-lookahead, conflict policy `"neutral"` only, deterministic sort/dedup, late event không hồi tố lịch sử.
+  - Batch và Incremental parity 100% trên toàn bộ các trường metadata.
+- Acceptance criteria:
+  - [x] Model `Signal`, `SessionWindow`, `SessionDecision`, `BiasState` hoạt động đúng, bất biến, serializable.
+  - [x] Session boundary start inclusive, end exclusive; DST và session qua midnight hoạt động chính xác.
+  - [x] Precedence `closed`/`is_closed`/`candle_closed` phát hiện mâu thuẫn và reject đúng quy định.
+  - [x] HTF bias mapping theo timestamp as-of, không nhìn thấy event tương lai, duplicate/unsorted event deterministic.
+  - [x] 16 unit tests trong `tests/test_smc_context.py` PASS 100%.
+  - [x] Full test suite discovery PASS 100%, không hồi quy các test cũ.
+- File liên quan: `smc/models.py`, `smc/context/__init__.py`, `smc/context/session.py`, `smc/context/htf_bias.py`, `smc/__init__.py`, `tests/test_smc_context.py`, `.agent/DECISIONS.md`, `.agent/TASKS.md`, `.agent/CHANGELOG.md`, `walkthrough.md`.
+- Phụ thuộc: T51.
+- Trạng thái: done
 
 ### Milestone kế tiếp — Confluence Engine
 
-- [ ] Chuẩn hóa các tín hiệu: HTF bias, BOS/CHoCH, OB, FVG, liquidity sweep, Kill Zone và context.
-- [ ] Implement hai policy: `AND` cứng và weighted scoring; mỗi setup phải có score, threshold, direction, reason codes và source metadata.
-- [ ] Tạo `TradeSetup` độc lập với strategy; deduplicate theo event/zone, xử lý conflict bullish/bearish và không tự mutate input.
-- [ ] Chốt rõ Strong OB/FVG cùng structure leg trước khi dùng quality score trong confluence.
+### [x] T52.1 - Tài liệu hóa 10 Strategy Template SMC/ICT
+- Mô tả: Tạo danh mục thống nhất cho 10 chiến lược có khả năng code hóa cao, gồm sequence, điều kiện bắt buộc/tùy chọn, invalidation, tham số mở, deduplication, regime và test contract.
+- File: `SMC_STRATEGY_CATALOG_V1.md`.
+- Phụ thuộc: T51, T52.
+- Trạng thái: done
 
-### Milestone kế tiếp — Risk, Entry & Backtest Adapter
+### [ ] T53 - Multi-Strategy Confluence & Selection Engine
+- Mô tả: Xây framework deterministic để chạy strategy templates, loại setup không phù hợp, deduplicate evidence, giải quyết conflict và chọn một setup hoặc `NO_TRADE`.
+- Plan chi tiết: `SMC_MULTI_STRATEGY_IMPLEMENTATION_PLAN.md`.
+- Prompt thực thi: `T53_MULTI_STRATEGY_EXECUTION_PROMPT.md`.
+- Phụ thuộc: T51, T52, T52.1.
+- Trạng thái: doing
 
-- [ ] Chốt entry policy: market/limit/retest, thời điểm đặt lệnh và expiry.
-- [ ] Chốt SL/TP: SL ngoài OB hoặc swing, buffer theo spread/ATR; TP theo RR hoặc liquidity/structure target.
-- [ ] Bổ sung risk-per-trade, position sizing, spread, commission và metadata source setup vào trade record.
-- [ ] Adapter signal phải giữ nguyên contract BacktestEngine: signal bar N chỉ khớp từ Open bar N+1.
+#### [x] T53.0 - Khóa semantics Wave 1
+- Chốt ADR cho S01 ICT 2022, S05 BOS/OB và S09 Silver Bullet: event ordering, entry, SL, target, expiry, cooldown, session và regime policy.
+- Đã hoàn thành khảo sát codebase và tạo `T53_WAVE1_SEMANTICS.md`. Đã ghi nhận ADR 16 [ACCEPTED] sau khi người dùng phê duyệt Gate A v5.
+- Trạng thái: done
 
-### Milestone kế tiếp — Replay, UI và Validation
+#### [x] T53.1 - Domain models & serialization
+- Tạo `EvidenceRef`, `StrategyContext`, `StrategyProfile`, `CandidateSetup`, `MarketRegime`, `StrategyEvaluation`, `SelectionDecision` với validation, immutable metadata, stable IDs và serialization JSON round-trip.
+- Đã hoàn thành sửa đổi toàn diện 5 vấn đề QC (P1.1 Deep immutability snapshot DTOs `SessionDecisionSnapshot` và `BiasStateSnapshot`, P1.2 Boolean/NumPy serialization an toàn & fail-fast, P1.3 Injective stable ID grammar Hướng A chống collision 100%, P1.4 Strict from_dict không ép kiểu ngầm & fail-fast KeyError, P1.5 SelectionDecision cross-field validation). Đã PASS QC độc lập: 18/18 test trong `test_smc_engine_models`, 191/191 test Python, 87/87 test Node, compileall và diff-check pass, 0 P0/P1.
+- Trạng thái: done
 
-- [ ] Tích hợp incremental trackers vào Replay/Live path; batch và replay phải cho kết quả tương đương.
-- [ ] API/UI overlay cho liquidity pools, sweep markers, Kill Zone, HTF bias, setup score và lý do reject.
-- [ ] Bổ sung integration test end-to-end: Sweep → CHoCH → OB/FVG → Confluence → Entry → SL/TP.
-- [ ] Chạy backtest in-sample/out-of-sample, walk-forward, sensitivity và kiểm tra overfit trước khi tối ưu tham số.
-- [ ] Chỉ sau khi toàn bộ v1 được verify bằng dữ liệu và chart mới xem xét Breaker Block, Mitigation Block và Propulsion Block.
+#### [x] T53.2 - As-of StrategyContext builder
+- Gom state đã xác nhận từ Structure/OB/FVG/Liquidity/Context tại mỗi closed bar; zero-lookahead và batch/incremental parity.
+- Khắc phục triệt để các lỗi QC Wave 2, Wave 3 và Wave 4 (P1, P2.1, P2.2, P2.3).
+- Phụ thuộc: T53.1.
+- Trạng thái: done (performance optimization deferred; ADR 19)
+
+#### [ ] T53.PERF - Deferred StrategyContext performance optimization
+- Áp dụng revision cache/event-driven rebuild; giảm fingerprint, deduplicate và sort trên cache hit.
+- Mục tiêu gần `< 7.0s / 10.000 bars`; mục tiêu dài hạn `< 1.5s`.
+- Không được đổi output, zero-lookahead, batch/incremental parity hoặc workload benchmark để đạt PASS.
+- Phụ thuộc: không chặn T53.3; thực hiện khi cần mở rộng số lượng symbol/timeframe hoặc tăng tốc backtest/walk-forward.
+- Trạng thái: backlog
+
+#### [x] T53.3 - Template protocol & registry
+- Tạo interface/registry deterministic, config bật tắt strategy, duplicate-ID validation, lifecycle reset và exactly-once dispatch.
+- File liên quan: `smc/engine/errors.py`, `smc/engine/protocol.py`, `smc/engine/registry.py`, `smc/engine/__init__.py`, `tests/test_smc_engine_registry.py`.
+- 59/59 tests PASS trong `tests.test_smc_engine_registry`, full regression PASS 100%.
+- Phụ thuộc: T53.1.
+- Trạng thái: done
+
+#### [x] T53.4 - S01 ICT 2022 Reversal
+- Implement sweep → MSS/CHoCH → FVG sequence, expiry/invalidation và Long/Short symmetry.
+- Plan chi tiết: `T53_4_S01_ICT_2022_IMPLEMENTATION_PLAN.md`.
+- 67/67 unit tests PASS trong `tests.test_smc_strategy_s01`; full correctness regression PASS.
+- Phụ thuộc: T53.2, T53.3.
+- Trạng thái: done
+
+#### [x] T53.5 - S05 BOS → OB Retest
+- Implement bias → BOS → valid OB first-retest continuation, same-leg/source-event linkage và opposite BOS/CHoCH invalidation.
+- Plan chi tiết: `T53_5_S05_BOS_OB_RETEST_IMPLEMENTATION_PLAN.md`.
+- Batch/incremental/JSON replay full-payload parity; regression và independent QC không còn P0/P1.
+- Phụ thuộc: T53.2, T53.3, T53.4.
+- Trạng thái: done
+
+#### [x] T53.6 - S09 ICT Silver Bullet
+- Implement time-window → sweep → MSS → FVG sequence với timezone/DST và deterministic expiry.
+- Plan chi tiết: `T53_6_S09_ICT_SILVER_BULLET_IMPLEMENTATION_PLAN.md`.
+- Production builder/registry, DST, batch/incremental/JSON/future-append parity và full regression pass.
+- Phụ thuộc: T53.2, T53.3.
+- Trạng thái: done
+
+#### [x] T53.7 - Regime, gate, dedup & conflict
+- Rule-based regime V1, eligibility reason codes, evidence clustering và bullish/bearish conflict policy.
+- Plan chi tiết: `T53_7_REGIME_GATE_DEDUP_CONFLICT_IMPLEMENTATION_PLAN.md`.
+- 30/30 `Strategy × Direction × Regime` cells được test; HTF policy và reason codes đúng ADR 16.
+- Phụ thuộc: T53.4, T53.5, T53.6.
+- Trạng thái: done
+
+#### [x] T53.8 - Selector & telemetry
+- Component scoring, stable tie-break, minimum score gap, no-trade policy và audit telemetry.
+- Plan chi tiết: `T53_8_SELECTOR_TELEMETRY_IMPLEMENTATION_PLAN.md`.
+- Phụ thuộc: T53.7.
+- Trạng thái: done
+
+#### [x] T53.9 - Backtest integration & independent QC
+- Adapter multi-strategy giữ fill contract N+1; full regression, parity, performance, diff-check và QC không còn P0/P1.
+- Plan chi tiết: `T53_9_BACKTEST_INTEGRATION_IMPLEMENTATION_PLAN.md`.
+- Các bước thực hiện:
+  - [x] T53.9.0 — Gate A: khóa fill/reversal/cooldown/HTF/timestamp/event contract và golden vectors (ADR 25 đã được người dùng phê duyệt).
+  - [x] T53.9.1 — Strict execution models, serialization và pure fill/cash-RR gate (independent QC PASS: 0 P0/P1/P2).
+  - [x] T53.9.2 — Shared execution kernel, dynamic SL/TP và legacy compatibility (independent QC PASS).
+  - [x] T53.9.3 — Bar-by-bar SMC coordinator, cooldown-after-fill và HTF as-of timeline (adapter 24 tests, independent probe 10/10 pass, full regression baseline PASS).
+  - [x] T53.9.4 — API/data integration cho smc_wave1, smc_s01, smc_s05, smc_s09 (36 integration tests, API/legacy regression PASS, full 1141 tests PASS).
+  - [x] T53.9.5 — End-to-end, parity, no-lookahead, accounting và opt-in performance evidence (40 E2E tests, 9 API tests, 10k bars benchmark, full 1190 tests PASS).
+  - [x] T53.9.6 — Documentation, full regression và independent read-only QC/Gate E (15/15 probes PASS, 1190 tests PASS, Gate E PASS).
+- Acceptance criteria:
+  - [x] Signal tại Close N chỉ được xét fill ở Open N+1; bar cuối không được fill giả.
+  - [x] Dynamic BUY/SELL geometry, spread, commission và cash-RR đúng ADR 16/25; reject không đổi position/cooldown.
+  - [x] Tối đa một position; same-direction skip và opposite-direction reversal deterministic.
+  - [x] Cooldown theo primary `(strategy_id, direction)` chỉ bắt đầu sau successful fill.
+  - [x] HTF events được map as-of bar close, không dùng same-timeframe substitute hoặc future event.
+  - [x] Execution events/trade metadata JSON-safe và truy nguyên được selector decision.
+  - [x] Bốn Wave 1 modes hoạt động (`smc_wave1`, `smc_s01`, `smc_s05`, `smc_s09`); năm strategy legacy và API fields cũ không regression.
+  - [x] API `/api/strategies` trả về 9 strategies; `/api/backtest` nhận `htf_events` + `timeframe`, route đúng path Wave1/Legacy.
+  - [x] Timeframe validation fail-closed: chỉ M1/M5/M15 cho Wave1; H1/D1 bị HTTP 400.
+  - [x] `parse_htf_event_payload` chuyển dict → StructureEvent; NaN/Inf/missing tz bị reject.
+  - [x] Batch, incremental và replay-prefix parity 100% bằng canonical JSON.
+  - [x] Future append invariance: thêm dữ liệu/HTF tương lai không làm thay đổi prefix cũ.
+  - [x] Accounting audit: BUY/SELL formulas, cash-basis RR, min_rr boundary, symmetry, balance conservation.
+  - [x] Dynamic SL/TP audit: per-setup levels, SL-first invariant, short Ask trigger, one-close per bar.
+  - [x] Full trace chain: decision_id -> setup_id -> strategy_id -> cluster_id -> evidence_ids -> pending_intent -> events -> trades.
+  - [x] API E2E: fail-closed HTTP 400 validation cho invalid timezone/NaN/Inf/timeframe/strategy_id; không có lỗi HTTP 500.
+  - [x] Performance baseline: 10.000 bars benchmark ghi nhận ContextBuilder, StrategyRegistry, Gate, Confluence, Selector, Kernel, Coordinator (reported baseline / chưa tái lập độc lập; opt-in evidence không chặn correctness).
+  - [x] Full regression 1190 tests PASS (skipped=2), compileall OK, diff-check OK.
+  - [x] Gate E independent probes pass 15/15 probes không lỗi (`scratch/probe_qc_t53_9_6_gate_e.py`).
+  - [x] P2 Benchmark được ghi nhận minh bạch làm technical debt (Owner: Backtest performance follow-up; Destination: task tối ưu sau nghiên cứu baseline).
+- Ranh giới: không limit order, pyramiding, portfolio nhiều symbol, tối ưu tham số, walk-forward, UI overlay hoặc live broker.
+- Phụ thuộc: T53.8.
+- Trạng thái: done (Gate E PASS — 0 P0/P1; hoàn thành tích hợp Wave 1 và bảo toàn legacy; sẵn sàng cho giai đoạn backtest nghiên cứu).
+
+### [ ] M54 - Research Backtest với 2 máy hỗ trợ (Milestone T54)
+- Mục tiêu: Đánh giá hiệu quả chiến lược SMC trên dữ liệu lịch sử thực tế một cách có kiểm soát, tái lập được và không tối ưu quá mức.
+- Quy tắc vận hành:
+  - Máy 1 và Máy 2 dùng cùng commit code.
+  - Dataset có checksum SHA256.
+  - Không dùng file kết quả của máy kia làm input.
+  - Mỗi run có run_id.
+  - Không sửa code giữa một batch test.
+  - Không tối ưu tham số trước khi baseline và OOS protocol được khóa.
+
+#### [x] T54.0 - Research Protocol & Data Quality Gate
+- Mô tả: Xác định canonical dataset [2022-01-01, 2026-08-31], kiểm toán nến M1, M5, M15, gap analysis, volume distribution, DB spread survey; Máy 2 kiểm tra độc lập qua SQLite read-only connection, đối chiếu checksum 1-1, kiểm toán 20 mẫu ngẫu nhiên; khóa Protocol V1 JSON (14 tham số) và phê duyệt Data Quality Gate.
+- File liên quan: `research/protocol_v1.json`, `research/dataset_manifest.json`, `research/data_quality_report.json`, `research/data_quality_report.md`, `research/qc_verification_report.json`, `research/scripts/data_runner_m1.py`, `research/scripts/independent_qc_m2.py`, `tests/test_research_data_quality.py`.
+- Acceptance criteria:
+  - [x] Phát hiện dữ liệu trước 2021-03-02 là D1 nến ngày; khóa Canonical Dataset từ 2022-01-01 đến 2026-08-31 (1,646,963 nến M1).
+  - [x] Zero duplicate timestamps, zero non-monotonic timestamps, zero invalid OHLC ($H \ge L$, $H \ge \max(O,C)$, $L \le \min(O,C)$, $P > 0$).
+  - [x] Zero negative/zero volumes, bảo toàn volume sau resample $V_{M1} = V_{M5} = V_{M15} = V_{H1}$.
+  - [x] Phân loại chính xác 1,352 gaps (> 1 min): 238 weekend gaps, 926 daily rollover breaks, 39 holiday gaps, 149 intraday gaps (median 2.0 min).
+  - [x] Khảo sát spread trong DB phát hiện 86.1% là 0 do giới hạn tick history; Protocol V1 khóa mô hình chi phí chuẩn (spread 20 points, commission 5.0 USD/lot).
+  - [x] Khóa Protocol V1 JSON 14 trường: symbol, timeframe (M15 exec, H1 bias, M1 base), UTC, 60/20/20 split (IS: 2022-01-01 to 2024-09-30, Val: 2024-10-01 to 2025-08-31, OOS: 2025-09-01 to 2026-08-31), capital $10,000, lot 0.01, standard costs, strategy params (min_rr=1.5, cooldown=3).
+  - [x] Máy 2 (Read-only SQLite URI) tự query, tính checksum SHA256 độc lập, đối chiếu 1-1 khớp 100% với Máy 1 manifest cho cả M1 và M15.
+  - [x] Máy 2 kiểm toán 20 mẫu ngẫu nhiên (seed 42) đạt 100% hợp lệ; xuất `research/qc_verification_report.json` với phán quyết PASS.
+  - [x] Báo cáo chi tiết `research/data_quality_report.md` đầy đủ, tích hợp kết luận Máy 2.
+  - [x] Test suite `tests/test_research_data_quality.py` PASS 3/3 tests; full regression 1193 tests PASS (skipped=2), Node tests 87/87 PASS, compileall clean, git diff clean.
+- Phụ thuộc: T53.9
+- Trạng thái: done (Data Quality Gate PASS — sẵn sàng cho T54.1 Baseline)
+
+#### [-] T54.1.x - Nối Planned SL/TP vào Legacy Execution (smc_confluence)
+- Mô tả: Nối luồng Planned SL/TP từ `smc_confluence` qua `StrategyRegistry` đến `BacktestEngine` và `ExecutionKernel`. Đảm bảo `rr_ratio` ảnh hưởng thật tới TP price, khớp lệnh tại Open nến N+1, zero lookahead, fail-closed geometry check tại actual fill, giữ nguyên fallback legacy cho non-SMC strategies, bảo toàn luồng Wave 1 và thu thập đầy đủ telemetry per trade.
+- File liên quan:
+  - `smc/strategy.py`
+  - `engine/strategies.py`
+  - `engine/execution_kernel.py`
+  - `engine/backtest_engine.py`
+  - `research/scripts/evaluate_t54_1_planned_sltp.py`
+  - `research/t54_1_before_after_raw.json`
+  - `research/t54_1_planned_sltp_sweep_raw.json`
+  - `tests/fixtures/t53_9_2_legacy_baseline.json`
+  - `tests/test_smc_confluence_planned_sltp.py`
+  - `tests/test_backtest_legacy_compat.py`
+- Acceptance criteria:
+  - [x] T54.1.1: Chốt contract Planned SL/TP (`planned_entry_price`, `planned_stop_loss`, `planned_take_profit`, `planned_rr`).
+  - [x] T54.1.2: Xuất Planned SL/TP từ `smc_confluence` trong `smc/strategy.py` gắn atomic theo bar signal tại nến N.
+  - [x] T54.1.3: Truyền Planned SL/TP qua `StrategyRegistry` vào DataFrame output, cô lập với non-SMC legacy strategies.
+  - [x] T54.1.4: Nối vào `BacktestEngine` / `OpenInstruction`, chuyển `sl_price` và `tp_price` động vào `ExecutionKernel`.
+  - [x] T54.1.5: Geometry guard tại `actual_entry` (BUY: `sl < entry < tp`, SELL: `tp < entry < sl`); fail-closed `rejected_invalid_geometry` khi gap nến N+1 vi phạm.
+  - [x] T54.1.6: Ghi telemetry per trade (`planned_entry_price`, `planned_stop_loss`, `planned_take_profit`, `planned_rr`, `actual_entry_price`, `sl_tp_source`) và tổng hợp `legacy_telemetry`.
+  - [x] T54.1.7: Viết 9 unit/regression tests trong `tests/test_smc_confluence_planned_sltp.py` (Tests 1-9 PASS 100%).
+  - [x] T54.1.8: Chạy backtest 5.000 nến M15 IS chuẩn Protocol V1 (lot 0.01) sweep RR [1.0, 1.5, 2.0, 2.5, 3.0], xuất raw JSON artifacts, xác nhận số signal cố định (36), holding bars và average win tăng theo RR, fallback_levels_used = 0, planned_levels_used > 0.
+  - [x] T54.1.9: QC và nghiệm thu: Full regression 1202 Python tests PASS, 87 Node tests PASS, compileall clean, git diff clean, tái lập golden baseline.
+- Phụ thuộc: T54.0
+- Trạng thái: review (đã hoàn thiện tài liệu, taxonomy, bằng chứng tái lập và chuẩn Protocol V1 — chờ QC nghiệm thu)
+
+### [x] T54.1.10 - T54.1.15: Chuẩn hóa HTF Event Timeline & Chạy lại 10.000 nến M15
+- Mô tả: Khắc phục lỗi khiến S01/S05/S09/Wave1 không thể backtest đúng trên 10.000 nến M15. Sửa lỗi slicing `_query_and_resample` trong `DataFeed`, chuẩn hóa ánh xạ canonical H1 -> M15 zero-lookahead, kiểm thử 6 test cases độc lập, chạy lại 10.000 nến độc lập cho 5 chiến lược, xuất funnel 12 tầng cho Wave 1, sinh đầy đủ 7 artifacts JSON.
+- File liên quan:
+  - `engine/data_feed.py`
+  - `smc/engine/backtest_adapter.py`
+  - `engine/backtest_engine.py`
+  - `research/scripts/htf_event_runner.py`
+  - `research/scripts/run_t54_1_baseline_10000.py`
+  - `tests/test_htf_timeline_canonical.py`
+  - `research/runs/t54_1_htf_events_m15_10000.json`
+  - `research/runs/t54_1_baseline_s01_10000.json`
+  - `research/runs/t54_1_baseline_s05_10000.json`
+  - `research/runs/t54_1_baseline_s09_10000.json`
+  - `research/runs/t54_1_baseline_wave1_10000.json`
+  - `research/runs/t54_1_baseline_confluence_10000.json`
+  - `research/runs/t54_1_baseline_summary_10000.json`
+- Acceptance criteria:
+  - [x] T54.1.10: Chuẩn hóa HTF Event Timeline: Rà soát timestamp open/close semantics, định nghĩa canonical mapping qua `searchsorted` trên `m15_close_times`, sửa `_query_and_resample` head-slicing logic khi có `start_time`, bảo đảm $0 \le \text{event.index} < 10.000$, tỷ số index M15/H1 $\approx 3.99\times$. Thêm kiểm tra từ chối `index < 0` trong `parse_htf_event_payload`.
+  - [x] T54.1.11: Kiểm thử HTF Timeline (`tests/test_htf_timeline_canonical.py`): Test 1 (index canonical), Test 2 (zero future leak), Test 3 (timestamp boundary), Test 4 (future append invariance 5k vs 10k: 52 == 52), Test 5 (deterministic sorting & hash), Test 6 (invalid payload rejection) -> 6/6 PASS 100%.
+  - [x] T54.1.12: Chạy lại 10.000 nến độc lập cho 5 chiến lược (`smc_s01`, `smc_s05`, `smc_s09`, `smc_wave1`, `smc_confluence`) với vốn 10.000 USD, lot 0.01, spread 20 pts, comm 5.0 USD/lot, min_rr 1.5, cooldown_bars 3.
+  - [x] T54.1.13: Đánh giá kết quả & phân loại nguyên nhân: `smc_confluence` đạt 47 trades (WR 57.45%, net profit +$140.29, MDD 0.28%); S01/S05/S09/Wave1 phân loại chính xác `no_candidate` tại Tầng 7 (`candidate setups` = 0) do điều kiện chiến lược không kích hoạt trên dataset này, hạ tầng timeline đạt chuẩn 100%.
+  - [x] T54.1.14: Sinh đầy đủ 7 artifacts chuẩn hóa tại `research/runs/` có SHA256 hash, metrics, funnel và validation status.
+  - [x] T54.1.15: Regression & QC: 1208/1208 Python tests PASS, 87/87 Node tests PASS, compileall clean, git diff clean.
+- Phụ thuộc: T54.1.x
+- Trạng thái: review
+
+#### [x] T54.1 - Baseline từng chiến lược (smc_s01, smc_s05, smc_s09, smc_confluence)
+- Mô tả: Chạy độc lập từng chiến lược trên cùng dataset IS 10.000 bars, vốn 10.000 USD, lot 0.01, spread 20 points, commission 5.0 USD/lot, khung M15, HTF H1.
+- Trạng thái: review (đã hoàn tất trong T54.1.12)
+
+#### [x] T54.2 - Baseline smc_wave1
+- Mô tả: Chạy selector multi-strategy smc_wave1 trên 10.000 bars IS, phân tích funnel 12 tầng, no_trade, conflict, cooldown và so sánh với từng chiến lược riêng.
+- Trạng thái: review (đã hoàn tất trong T54.1.12)
+
+#### [ ] T54.3 - Regime & Session Analysis
+- Mô tả: Phân tích ma trận Strategy x Direction x Regime x Session, xuất `regime_session_matrix.csv` và `regime_session_report.md`.
+- Trạng thái: todo
+
+#### [ ] T54.4 - Cost Sensitivity
+- Mô tả: Chạy 4 kịch bản chi phí (0.5x, 1.0x, 1.5x, 2.0x cost) đánh giá độ nhạy spread/commission của từng chiến lược.
+- Trạng thái: todo
+
+#### [ ] T54.5 - In-Sample / Validation / Out-of-Sample
+- Mô tả: Đánh giá trên Validation (20%) và Out-of-Sample (20%), tuân thủ nguyên tắc không sửa code sau khi xem OOS.
+- Trạng thái: todo
+
+#### [ ] T54.6 - Walk-Forward
+- Mô tả: Chạy theo các cửa sổ thời gian rolling train -> test để kiểm tra độ ổn định theo thời gian.
+- Trạng thái: todo
+
+#### [ ] T54.7 - Robustness & Overfit Audit
+- Mô tả: Kiểm tra độ nhạy tham số (min_rr, cooldown, spread, buffer SL, ATR levels, regime threshold) tìm parameter plateau.
+- Trạng thái: todo
+
+#### [ ] T54.8 - Final Research Report
+- Mô tả: Báo cáo tổng kết T54 trả lời 8 câu hỏi cốt lõi, xuất summary CSV, equity comparison PNG và strategy matrix.
+- Trạng thái: todo

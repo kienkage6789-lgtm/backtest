@@ -1,0 +1,38 @@
+{
+  "Metric": [
+    "Total Trades",
+    "Win Rate (%)",
+    "Net Profit ($)",
+    "Profit Factor",
+    "Max Drawdown ($)",
+    "Max Drawdown (%)",
+    "Final Balance ($)",
+    "Planned Levels Used",
+    "Fallback Levels Used",
+    "Rejected Invalid Geometry"
+  ],
+  "Before Fix (Broken Fallback 200/400 pts)": [
+    36,
+    30.56,
+    -96.0,
+    0.82,
+    300.0,
+    2.98,
+    9904.0,
+    0,
+    36,
+    0
+  ],
+  "After Fix (Wired Planned SL/TP, RR=2.0)": [
+    31,
+    45.16,
+    1456.56,
+    1.43,
+    1643.95,
+    14.14,
+    11456.56,
+    33,
+    0,
+    3
+  ]
+}

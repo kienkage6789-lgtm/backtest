@@ -1,0 +1,79 @@
+{
+  "manifest_version": "1.0.0",
+  "generated_by": "machine_1_data_runner",
+  "generated_at": "2026-09-12T04:27:25.966040+00:00",
+  "database_file": "data/XAUUSD.db",
+  "canonical_period": {
+    "start_time_configured": "2022-01-01 00:00:00",
+    "end_time_configured": "2026-08-31 23:59:59",
+    "start_time_actual": "2022-01-02 23:05:00",
+    "end_time_actual": "2026-08-31 23:59:00",
+    "total_months": 56,
+    "timezone": "UTC"
+  },
+  "timeframes": {
+    "M1": {
+      "count": 1646963,
+      "sha256": "e53ca000c7bda2f733210e41e0a9b39e99c7712580f79b2df2d2e1d82bf5fb59",
+      "min_time": "2022-01-02 23:05:00",
+      "max_time": "2026-08-31 23:59:00"
+    },
+    "M5": {
+      "count": 330126,
+      "sha256": "e6142449e01025fa6b6fcc0b287e541b680467eadbd477fe3c15f81a92210e80",
+      "min_time": "2022-01-02 23:05:00",
+      "max_time": "2026-08-31 23:55:00"
+    },
+    "M15": {
+      "count": 110130,
+      "sha256": "4553fba513f86bc0f9b49a804740016127e6053155b29f79ed1950063ebc9333",
+      "min_time": "2022-01-02 23:00:00",
+      "max_time": "2026-08-31 23:45:00"
+    },
+    "H1": {
+      "count": 27561,
+      "sha256": "c178c22c756dc53f993fb965a1e5c3e955e25b2cce56a36f990222e06fb16065",
+      "min_time": "2022-01-02 23:00:00",
+      "max_time": "2026-08-31 23:00:00"
+    }
+  },
+  "splits": {
+    "in_sample": {
+      "start": "2022-01-01 00:00:00",
+      "end": "2024-09-30 23:59:59",
+      "purpose": "Exploration, strategy baseline, and initial hypothesis testing",
+      "m1_bars": 970516,
+      "m5_bars": 194536,
+      "m15_bars": 64904,
+      "h1_bars": 16244,
+      "pct_of_total_m1": 58.93,
+      "pct_of_total_m15": 58.93
+    },
+    "validation": {
+      "start": "2024-10-01 00:00:00",
+      "end": "2025-08-31 23:59:59",
+      "purpose": "Cost sensitivity analysis, regime matrix, and selector calibration",
+      "m1_bars": 322932,
+      "m5_bars": 64735,
+      "m15_bars": 21600,
+      "h1_bars": 5406,
+      "pct_of_total_m1": 19.61,
+      "pct_of_total_m15": 19.61
+    },
+    "out_of_sample": {
+      "start": "2025-09-01 00:00:00",
+      "end": "2026-08-31 23:59:59",
+      "purpose": "Final blind verification and overfit audit",
+      "m1_bars": 353515,
+      "m5_bars": 70855,
+      "m15_bars": 23626,
+      "h1_bars": 5911,
+      "pct_of_total_m1": 21.46,
+      "pct_of_total_m15": 21.45
+    }
+  },
+  "volume_preservation": {
+    "status": "PASS",
+    "total_tick_volume": 237307387
+  }
+}

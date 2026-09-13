@@ -1,0 +1,43 @@
+{
+  "run_id": "run_smc_confluence_10000_1789203674",
+  "git_commit": "471d1fb6194a434c227e66525f2855c18a75a8bc",
+  "dataset_id": "XAUUSD_M1_resampled_M15",
+  "protocol_version": "1.0.0",
+  "timeframe": "M15",
+  "bar_count": 10000,
+  "start_time": "2022-01-02 23:00:00",
+  "end_time": "2022-06-06 07:30:00",
+  "strategy_id": "smc_confluence",
+  "strategy_params": {
+    "swing_strength": 7,
+    "internal_strength": 3,
+    "bias_timing": "pre_candle",
+    "rr_ratio": 1.5
+  },
+  "htf_payload_hash": "5465ba0343ad968a4f876ac6536eb18d5622be4212356f1a3d35928eb4d8fb4e",
+  "execution_duration_sec": 3.33,
+  "metrics": {
+    "total_trades": 47,
+    "winning_trades": 27,
+    "losing_trades": 20,
+    "win_rate": 57.45,
+    "profit_factor": 2.7,
+    "net_profit": 140.29,
+    "return_pct": 1.4,
+    "max_drawdown": 28.77,
+    "max_drawdown_pct": 0.28,
+    "final_balance": 10140.29,
+    "average_win": 8.26,
+    "average_loss": 4.14,
+    "average_holding_bars": 19.64,
+    "long_trades": 27,
+    "short_trades": 20
+  },
+  "diagnostics": {
+    "coordinator_metrics": null,
+    "funnel": null,
+    "first_zero_layer": null,
+    "root_cause_classification": "TRADES_EXECUTED"
+  },
+  "validation_status": "VALID_COMPLETED"
+}

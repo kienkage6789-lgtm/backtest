@@ -1,0 +1,131 @@
+{
+  "summary_id": "summary_10000_1789203674",
+  "git_commit": "471d1fb6194a434c227e66525f2855c18a75a8bc",
+  "protocol_version": "1.0.0",
+  "dataset_id": "XAUUSD_M1_resampled_M15",
+  "timeframe": "M15",
+  "bar_count": 10000,
+  "start_time": "2022-01-02 23:00:00",
+  "end_time": "2022-06-06 07:30:00",
+  "htf_payload_hash": "5465ba0343ad968a4f876ac6536eb18d5622be4212356f1a3d35928eb4d8fb4e",
+  "timestamp_utc": "2026-09-12T09:01:14.898269+00:00",
+  "strategies": [
+    {
+      "strategy_id": "smc_s01",
+      "strategy_params": {
+        "min_rr": 1.5,
+        "cooldown_bars": 3
+      },
+      "bar_count": 10000,
+      "total_trades": 2,
+      "win_rate": 50.0,
+      "net_profit": 8.41,
+      "profit_factor": 2.04,
+      "max_drawdown": 14.33,
+      "max_drawdown_pct": 0.14,
+      "final_balance": 10008.41,
+      "average_win": 16.52,
+      "average_loss": 8.1,
+      "average_holding_bars": 32.0,
+      "long_trades": 0,
+      "short_trades": 2,
+      "root_cause_classification": "TRADES_EXECUTED",
+      "first_zero_layer": null,
+      "artifact": "research\\runs\\t54_1_baseline_s01_10000.json"
+    },
+    {
+      "strategy_id": "smc_s05",
+      "strategy_params": {
+        "min_rr": 1.5,
+        "cooldown_bars": 3
+      },
+      "bar_count": 10000,
+      "total_trades": 16,
+      "win_rate": 18.75,
+      "net_profit": 22.24,
+      "profit_factor": 1.91,
+      "max_drawdown": 16.86,
+      "max_drawdown_pct": 0.17,
+      "final_balance": 10022.24,
+      "average_win": 15.54,
+      "average_loss": 1.87,
+      "average_holding_bars": 9.44,
+      "long_trades": 6,
+      "short_trades": 10,
+      "root_cause_classification": "TRADES_EXECUTED",
+      "first_zero_layer": null,
+      "artifact": "research\\runs\\t54_1_baseline_s05_10000.json"
+    },
+    {
+      "strategy_id": "smc_s09",
+      "strategy_params": {
+        "min_rr": 1.5,
+        "cooldown_bars": 3
+      },
+      "bar_count": 10000,
+      "total_trades": 0,
+      "win_rate": 0.0,
+      "net_profit": 0.0,
+      "profit_factor": 0.0,
+      "max_drawdown": 0.0,
+      "max_drawdown_pct": 0.0,
+      "final_balance": 10000.0,
+      "average_win": 0.0,
+      "average_loss": 0.0,
+      "average_holding_bars": 0.0,
+      "long_trades": 0,
+      "short_trades": 0,
+      "root_cause_classification": "no_candidate",
+      "first_zero_layer": "candidate_setups",
+      "artifact": "research\\runs\\t54_1_baseline_s09_10000.json"
+    },
+    {
+      "strategy_id": "smc_wave1",
+      "strategy_params": {
+        "min_rr": 1.5,
+        "cooldown_bars": 3
+      },
+      "bar_count": 10000,
+      "total_trades": 16,
+      "win_rate": 25.0,
+      "net_profit": 36.55,
+      "profit_factor": 2.38,
+      "max_drawdown": 15.25,
+      "max_drawdown_pct": 0.15,
+      "final_balance": 10036.55,
+      "average_win": 15.79,
+      "average_loss": 2.21,
+      "average_holding_bars": 13.31,
+      "long_trades": 6,
+      "short_trades": 10,
+      "root_cause_classification": "TRADES_EXECUTED",
+      "first_zero_layer": null,
+      "artifact": "research\\runs\\t54_1_baseline_wave1_10000.json"
+    },
+    {
+      "strategy_id": "smc_confluence",
+      "strategy_params": {
+        "swing_strength": 7,
+        "internal_strength": 3,
+        "bias_timing": "pre_candle",
+        "rr_ratio": 1.5
+      },
+      "bar_count": 10000,
+      "total_trades": 47,
+      "win_rate": 57.45,
+      "net_profit": 140.29,
+      "profit_factor": 2.7,
+      "max_drawdown": 28.77,
+      "max_drawdown_pct": 0.28,
+      "final_balance": 10140.29,
+      "average_win": 8.26,
+      "average_loss": 4.14,
+      "average_holding_bars": 19.64,
+      "long_trades": 27,
+      "short_trades": 20,
+      "root_cause_classification": "TRADES_EXECUTED",
+      "first_zero_layer": null,
+      "artifact": "research\\runs\\t54_1_baseline_confluence_10000.json"
+    }
+  ]
+}

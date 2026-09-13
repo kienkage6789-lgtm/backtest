@@ -1,0 +1,67 @@
+{
+  "run_id": "run_smc_s05_10000_1789203570",
+  "git_commit": "471d1fb6194a434c227e66525f2855c18a75a8bc",
+  "dataset_id": "XAUUSD_M1_resampled_M15",
+  "protocol_version": "1.0.0",
+  "timeframe": "M15",
+  "bar_count": 10000,
+  "start_time": "2022-01-02 23:00:00",
+  "end_time": "2022-06-06 07:30:00",
+  "strategy_id": "smc_s05",
+  "strategy_params": {
+    "min_rr": 1.5,
+    "cooldown_bars": 3
+  },
+  "htf_payload_hash": "5465ba0343ad968a4f876ac6536eb18d5622be4212356f1a3d35928eb4d8fb4e",
+  "execution_duration_sec": 39.19,
+  "metrics": {
+    "total_trades": 16,
+    "winning_trades": 3,
+    "losing_trades": 13,
+    "win_rate": 18.75,
+    "profit_factor": 1.91,
+    "net_profit": 22.24,
+    "return_pct": 0.22,
+    "max_drawdown": 16.86,
+    "max_drawdown_pct": 0.17,
+    "final_balance": 10022.24,
+    "average_win": 15.54,
+    "average_loss": 1.87,
+    "average_holding_bars": 9.44,
+    "long_trades": 6,
+    "short_trades": 10
+  },
+  "diagnostics": {
+    "coordinator_metrics": {
+      "raw_decisions": 10000,
+      "selected_decisions": 18,
+      "no_trade_decisions": 9982,
+      "evaluated_candidates": 19,
+      "eligible_candidates": 19,
+      "rejected_candidates": 0,
+      "strategy_selection_count": 18,
+      "execution_events": 52,
+      "successful_fills": 16,
+      "cancelled_orders": 0,
+      "skipped_orders": 0,
+      "candidate_rejection_reasons": {}
+    },
+    "funnel": {
+      "m15_bars_scanned": 10000,
+      "htf_events_accepted": 113,
+      "htf_bias_available": 9941,
+      "ltf_structure_events": "available",
+      "fvgs_detected": "available",
+      "obs_detected": "available",
+      "candidate_setups": 19,
+      "eligible_setups": 19,
+      "selector_selections": 18,
+      "execution_instructions": 18,
+      "successful_fills": 16,
+      "completed_trades": 16
+    },
+    "first_zero_layer": null,
+    "root_cause_classification": "TRADES_EXECUTED"
+  },
+  "validation_status": "VALID_COMPLETED"
+}

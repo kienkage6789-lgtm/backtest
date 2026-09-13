@@ -1,0 +1,420 @@
+<USER_REQUEST>
+Bạn đang làm việc trong repository:
+
+`D:\tool\backtest`
+
+Hãy sửa toàn bộ lỗi QC còn lại của **T53.8 – Deterministic Selector, Ownership & Audit Telemetry**. Chỉ xử lý phạm vi T53.8, tuyệt đối chưa triển khai T53.9, không thêm fill Open N+1, spread, commission, cash-RR, cooldown, PnL fitness hoặc BacktestEngine adapter.
+
+Trước khi sửa, bắt buộc đọc đầy đủ:
+
+- `D:\tool\backtest\.agent\SKILL.md`
+- Các tài liệu testing/code-review mà skill yêu cầu.
+- `D:\tool\backtest\T53_8_SELECTOR_TELEMETRY_IMPLEMENTATION_PLAN.md`
+- `D:\tool\backtest\T53_WAVE1_SEMANTICS.md`
+- ADR 16, 23 và 24 trong `.agent/DECISIONS.md`
+- Trạng thái T53.8 trong `.agent/TASKS.md`
+- Code hiện tại:
+  - `smc/engine/models.py`
+  - `smc/engine/selector.py`
+  - `smc/engine/telemetry.py`
+  - `smc/engine/confluence.py`
+  - `smc/engine/context.py`
+  - `smc/engine/eligibility.py`
+  - `smc/engine/registry.py`
+- Các test T53.8 hiện tại.
+
+Không tin nội dung `walkthrough.md` nếu chưa kiểm chứng trực tiếp bằng code, test và probe độc lập.
+
+## 1. Sửa P1 — Đồng bộ timestamp đúng contract production
+
+Hiện tại selector đang kiểm tra sai:
+
+```python
+context.timestamp == batch.timestamp
+```
+
+Trong pipeline thật:
+
+```text
+context.timestamp       = thời điểm mở nến N
+context.bar_close_time = thời điểm đóng nến N
+batch.timestamp         = context.bar_close_time
+batch.regime.timestamp  = context.bar_close_time
+```
+
+Hãy sửa preflight của selector để bắt buộc:
+
+```text
+batch.bar_index == context.bar_index
+batch.timestamp == context.bar_close_time
+batch.regime.bar_index == context.bar_index
+batch.regime.timestamp == context.bar_close_time
+```
+
+Yêu cầu:
+
+- Không đổi `StrategyContext.timestamp` thành close time để lách lỗi.
+- Không đổi `ConfluenceBatch.timestamp` về open time.
+- Timestamp của final `SelectionDecision` và audit record phải tiếp tục dùng closed-bar time của batch.
+- Candidate setup được sinh tại context bar N phải tuân theo contract timestamp hiện có của Registry/Strategy; không tự ý đổi contract của các task trước.
+- Mismatch phải fail closed trước khi chấm điểm hoặc tạo partial output.
+- Exception phải theo hierarchy/convention hiện có.
+
+Bổ sung test với nến 15 phút thật sự có:
+
+```text
+timestamp = 15:00
+bar_close_time = 15:15
+batch.timestamp = 15:15
+```
+
+Pipeline hợp lệ phải chạy thành công. Các trường hợp batch timestamp bằng 15:00 hoặc regime timestamp sai phải bị reject.
+
+## 2. Sửa P1 — Không cho ELIGIBLE evaluation bỏ qua regime-score integrity
+
+Hiện tại `compute_regime_score()` chỉ đối chiếu Gate score khi:
+
+```python
+eval_item.regime_score > 0.0
+```
+
+Điều này cho phép evaluation `ELIGIBLE` có `regime_score=0` bỏ qua kiểm tra.
+
+Hãy thực hiện đúng contract:
+
+- Nếu có `eval_item` và `status == "ELIGIBLE"`:
+  - Luôn recompute score từ bảng `Strategy × Direction × Regime`.
+  - Luôn so sánh với `eval_item.regime_score`.
+  - Sai khác vượt tolerance cố định phải raise integrity/state error.
+- Không coi `0` là “chưa được Gate chấm”.
+- Không silently overwrite score sai.
+- Không dùng default lạc quan.
+- Evaluation `REJECTED` không được scorer cứu hoặc biến thành ELIGIBLE.
+- Không mutate evaluation đầu vào.
+
+Bổ sung regression:
+
+- ELIGIBLE, matrix score khác 0 nhưng Gate score bằng 0 → reject.
+- ELIGIBLE, Gate score sai 1 đơn vị → reject.
+- ELIGIBLE, Gate score đúng → pass.
+- REJECTED → không được chọn.
+- Test production phải lấy evaluation thật từ `EligibilityGate`, không tạo fake eligible evaluation với các component bằng 0.
+
+## 3. Sửa P1 — Siết `SelectionDecision`
+
+Cập nhật `SelectionDecision.__post_init__()` và serialization để bảo đảm toàn bộ invariant sau.
+
+### Canonical decision ID
+
+Recompute bằng:
+
+```python
+make_decision_id(
+    bar_index,
+    action,
+    primary_strategy_id,
+)
+```
+
+`decision_id` đầu vào phải khớp chính xác. Mismatch phải reject ở cả constructor và `from_dict()`.
+
+### Đồng bộ regime
+
+Nếu `regime` tồn tại:
+
+```text
+regime.bar_index == decision.bar_index
+regime.timestamp == decision.timestamp
+```
+
+Mọi mismatch phải reject.
+
+### Evaluations
+
+- Tất cả phần tử phải là `StrategyEvaluation`.
+- Unique tuyệt đối theo `candidate.setup_id`.
+- Không chấp nhận hai payload khác nhau hoặc giống nhau dùng cùng setup ID.
+- Canonical sort theo khóa ổn định đã định nghĩa trong plan.
+- Constructor hoặc factory phải tạo đúng canonical tuple; payload từ `from_dict()` không được lợi dụng input order.
+- Với `action="SELECT"`:
+  - `selected_setup` phải xuất hiện **đúng một lần** trong evaluations.
+  - Evaluation tương ứng phải có `status="ELIGIBLE"`.
+  - Candidate payload phải bằng chính xác `selected_setup`.
+  - `primary_strategy_id == selected_setup.strategy_id`.
+- Với `action="NO_TRADE"`:
+  - Không có selected setup.
+  - Không có primary strategy.
+  - `supporting_strategy_ids` phải rỗng.
+  - Execution payload không được chứa active signal.
+
+### Supporting strategies
+
+- Unique.
+- Canonical sorted.
+- Không chứa primary strategy.
+- Với SELECT, phải đúng tập supporting strategies của winning cluster được ghi trong output/audit.
+- Không chỉ validate rồi giữ nguyên thứ tự do caller cung cấp.
+
+### Reason và score gap
+
+Áp dụng cross-field invariant:
+
+- `action="SELECT", reason="ok"` → `score_gap is None`, trừ khi plan quy định trường hợp conflict đã được giải quyết cần lưu gap.
+- `reason="conflicting_direction"` → `action="NO_TRADE"` và phải có finite `score_gap`.
+- Các reason không liên quan conflict → `score_gap is None`.
+- Reason phải thuộc canonical reason set của T53.8.
+- Không nhận chuỗi reason tùy ý.
+
+### Execution payload
+
+Trong T53.8, execution payload phải chính xác là mapping rỗng `{}` cho cả SELECT và NO_TRADE. Không chỉ kiểm tra signal khác 0.
+
+Bổ sung tamper tests cho từng invariant, bao gồm JSON payload bị sửa sau `to_dict()`.
+
+## 4. Sửa P1 — Triển khai strict `SelectorOutput`
+
+`SelectorOutput` không được chỉ là frozen container. Hãy bổ sung:
+
+- `__post_init__()` strict.
+- `to_dict()`.
+- `from_dict()`.
+- Unknown fields reject.
+- Exact JSON round-trip:
+
+```python
+payload = json.loads(
+    json.dumps(output.to_dict(), allow_nan=False)
+)
+restored = SelectorOutput.from_dict(payload)
+assert restored.to_dict() == output.to_dict()
+```
+
+Cross-validation bắt buộc giữa `decision`, `audit_record` và `scorecards`:
+
+```text
+decision_id
+bar_index
+timestamp
+action
+reason
+primary_strategy_id
+primary_setup_id
+selected direction
+selected cluster ID
+supporting strategy IDs
+score gap
+regime
+```
+
+Ngoài ra:
+
+- `audit_record.cluster_scorecards` phải đúng bằng `SelectorOutput.scorecards`.
+- Cluster IDs phải unique và canonical.
+- Nếu SELECT, winning cluster phải tồn tại đúng một lần trong scorecards.
+- Selected setup/strategy phải khớp primary owner của winning scorecard.
+- Total score trong audit phải khớp winning scorecard.
+- Nếu NO_TRADE, không được có selected IDs.
+- Output collections phải là tuple và deep immutable.
+- Không silently sửa payload mâu thuẫn; phải reject.
+
+## 5. Sửa P1 — Audit phải lưu đủ selector config và aggregator phải fail closed
+
+Hiện audit không lưu đủ thông tin để xác định hai record có cùng scoring policy hay không.
+
+Mở rộng strict schema của `SelectionAuditRecord` với tối thiểu:
+
+```text
+selector_version
+minimum_total_score
+minimum_direction_gap
+scoring_weights
+```
+
+Có thể dùng tuple bốn phần tử hoặc một immutable config snapshot/fingerprint, nhưng phải đáp ứng:
+
+- JSON-safe.
+- Exact round-trip.
+- Deterministic.
+- Không phụ thuộc Python hash.
+- Validate bool-as-number, NaN, Inf, range và tổng weights.
+- Unknown fields reject.
+- Cross-check với config thực tế selector đã dùng.
+- Decision meta và audit phải ghi thống nhất:
+  - selector version
+  - minimum total score
+  - minimum direction gap
+  - scoring weights
+  - execution-score basis
+  - FVG ATR basis
+  - symbol/timeframe nếu plan yêu cầu.
+
+`SelectorConfig` cũng phải có canonical `version`, mặc định theo plan, ví dụ `selector-v1`. Version phải là stable non-empty token và có trong `to_dict()/from_dict()`.
+
+Cập nhật `aggregate_selection_telemetry()`:
+
+- Reject mixed `record_version`.
+- Reject mixed `selector_version`.
+- Reject mixed minimum score.
+- Reject mixed direction gap.
+- Reject mixed scoring weights/config fingerprint.
+- Không gộp mù các record được chấm bằng policy khác nhau.
+- Output aggregate phải trả selector version và config thresholds/weights.
+- Empty aggregate phải có schema JSON-safe nhất quán.
+- Tuân thủ chính xác policy duplicate decision của plan:
+  - Nếu plan khóa “duplicate decision ID reject”, mọi duplicate key phải reject.
+  - Không silently deduplicate record giống hệt nếu test 117 yêu cầu reject.
+  - Duplicate key khác payload chắc chắn phải reject.
+- Khóa uniqueness phải gồm `(symbol, timeframe, decision_id)`.
+
+Bổ sung probe với hai selector configs khác nhau và cùng `record_version`; aggregator bắt buộc raise.
+
+## 6. Sửa P1/P2 — Thay integration test giả bằng production pipeline thật
+
+Các test 126–130 hiện dựng thủ công Candidate/Evaluation/Cluster và đặt:
+
+```text
+timestamp == bar_close_time
+regime_score = 0
+```
+
+Cách này không được xem là production integration.
+
+Hãy bổ sung hoặc thay thế bằng test đi xuyên các tầng thật:
+
+```text
+StrategyContextBuilder
+→ StrategyRegistry.evaluate_enabled()
+→ EligibilityGate
+→ build_confluence_batch()
+→ DeterministicStrategySelector.select()
+→ SelectorOutput serialization
+→ aggregate_selection_telemetry()
+```
+
+Phải có tối thiểu:
+
+- Production S01.
+- Production S05.
+- Production S09.
+- S01/S09 cùng opportunity cluster.
+- S05 cluster riêng cạnh S01/S09.
+- BUY/SELL conflict.
+- Nến có open timestamp khác close timestamp.
+- Gate tạo regime score thật.
+- Batch/incremental parity.
+- Full serialized `SelectorOutput` parity.
+- JSON replay parity.
+- Append future bars không đổi prefix.
+- Input permutation invariant.
+
+Không được mock component score hoặc tạo `StrategyEvaluation(status="ELIGIBLE", regime_score=0)` để vượt qua production Gate.
+
+## 7. Benchmark và full regression
+
+Benchmark T53.8 hiện phụ thuộc mạnh vào tải khi chạy chung full suite.
+
+Hãy xử lý theo policy trong plan:
+
+- Correctness/determinism là hard gate.
+- Benchmark phải báo:
+  - total wall-clock
+  - median latency
+  - P99 latency
+- Không biến timing nhiễu thành correctness gate quá chặt.
+- Nếu vẫn giữ ngưỡng `<3 giây`, benchmark phải:
+  - warm up trước khi đo;
+  - dùng clock monotonic/perf counter;
+  - không in/log trong timed section;
+  - không phụ thuộc test chạy trước;
+  - chạy ổn định cả riêng lẻ và trong full suite.
+- Nếu không thể bảo đảm độ ổn định, chuyển timing assertion thành benchmark report theo đúng plan và giữ hard assertions cho:
+  - bounded state;
+  - không scan history tăng dần;
+  - output deterministic;
+  - không quadratic behavior.
+
+Không được chỉnh ngưỡng tùy tiện chỉ để test xanh. Nếu cần thay đổi ngưỡng/policy, phải giải thích và cập nhật plan/ADR trước.
+
+## 8. Bộ test bắt buộc
+
+Sau khi sửa, chạy ít nhất:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest tests.test_smc_engine_selector -v
+.\.venv\Scripts\python.exe -m unittest tests.test_smc_engine_telemetry -v
+.\.venv\Scripts\python.exe -m unittest tests.test_smc_engine_t53_8_integration -v
+.\.venv\Scripts\python.exe -m unittest discover tests -v
+.\.venv\Scripts\python.exe -m compileall -q smc tests
+git diff --check
+```
+
+Ngoài unit tests, chạy và ghi kết quả các probe độc lập:
+
+1. Open time khác close time vẫn đi qua pipeline.
+2. Batch timestamp sai bị reject.
+3. ELIGIBLE với regime score 0 sai matrix bị reject.
+4. Forged decision ID bị reject.
+5. SELECT thiếu selected evaluation bị reject.
+6. Duplicate evaluation setup ID bị reject.
+7. Tampered SelectorOutput bị reject.
+8. SelectorOutput exact JSON round-trip.
+9. Mixed selector config aggregation bị reject.
+10. Duplicate telemetry key xử lý đúng policy plan.
+11. Append future bars không thay đổi output prefix.
+12. Input permutation cho payload serialized giống hệt.
+
+Không xóa hoặc làm yếu test cũ để đạt PASS.
+
+## 9. Tài liệu và trạng thái task
+
+Sau khi code và test thực sự đạt:
+
+- Cập nhật `walkthrough.md` bằng kết quả chạy thật mới nhất.
+- Không giữ số benchmark cũ nếu không tái hiện được.
+- Ghi rõ số tests, thời gian và mọi skipped test.
+- Cập nhật `.agent/CHANGELOG.md`.
+- Giữ T53.8 ở trạng thái `review`.
+- Không tự tick mục “independent QC không còn P0/P1”.
+- Không chuyển T53.8 sang `done`.
+- Không bắt đầu T53.9.
+- Không tự tuyên bố QC PASS; independent QC sẽ do agent khác thực hiện.
+
+## 10. Giới hạn thay đổi
+
+Không được:
+
+- Triển khai execution/fill của T53.9.
+- Sửa logic detector SMC không liên quan.
+- Thay đổi trigger hoặc geometry của S01/S05/S09 nếu không cần cho contract T53.8.
+- Thêm dependency ngoài.
+- Dùng dữ liệu tương lai.
+- Che lỗi bằng mock hoặc default score.
+- Xóa acceptance test.
+- Sửa unrelated files.
+- Reset hoặc ghi đè thay đổi hiện có của người dùng.
+
+Repository đang có nhiều thay đổi chưa commit. Hãy bảo toàn toàn bộ thay đổi ngoài phạm vi và kiểm tra diff trước khi sửa.
+
+## 11. Báo cáo hoàn thành
+
+Khi hoàn tất, trả báo cáo gồm:
+
+1. Danh sách file đã sửa.
+2. Root cause và cách sửa từng P1/P2.
+3. Danh sách invariant mới được khóa.
+4. Kết quả từng nhóm unit test.
+5. Kết quả full regression.
+6. Kết quả 12 probe độc lập.
+7. Benchmark riêng và benchmark trong full suite.
+8. Kết quả `compileall` và `git diff --check`.
+9. Những rủi ro hoặc việc còn mở.
+10. Xác nhận:
+   - T53.8 vẫn `review`.
+   - T53.9 chưa được triển khai.
+   - Chưa tự đánh dấu independent QC PASS.
+
+Chỉ báo cáo hoàn thành khi tất cả lỗi correctness/no-lookahead/tamper/config isolation đã được sửa thật sự và kiểm chứng bằng test.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-09-11T10:09:58+07:00.
+</ADDITIONAL_METADATA>

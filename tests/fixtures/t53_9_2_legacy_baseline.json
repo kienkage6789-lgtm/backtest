@@ -1,0 +1,6837 @@
+{
+  "donchian_breakout": {
+    "equity_curve": [
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9958.0,
+        "equity": 9958.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9853.0,
+        "equity": 9853.0,
+        "time": 1
+      },
+      {
+        "balance": 9853.0,
+        "equity": 9853.0,
+        "time": 1
+      },
+      {
+        "balance": 9853.0,
+        "equity": 9853.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9790.0,
+        "equity": 9790.0,
+        "time": 1
+      },
+      {
+        "balance": 9769.0,
+        "equity": 9769.0,
+        "time": 1
+      },
+      {
+        "balance": 9769.0,
+        "equity": 9769.0,
+        "time": 1
+      },
+      {
+        "balance": 9769.0,
+        "equity": 9769.0,
+        "time": 1
+      },
+      {
+        "balance": 9769.0,
+        "equity": 9769.0,
+        "time": 1
+      },
+      {
+        "balance": 9769.0,
+        "equity": 9769.0,
+        "time": 1
+      },
+      {
+        "balance": 9769.0,
+        "equity": 9769.0,
+        "time": 1
+      },
+      {
+        "balance": 9748.0,
+        "equity": 9748.0,
+        "time": 1
+      },
+      {
+        "balance": 9727.0,
+        "equity": 9727.0,
+        "time": 1
+      },
+      {
+        "balance": 9727.0,
+        "equity": 9727.0,
+        "time": 1
+      },
+      {
+        "balance": 9706.0,
+        "equity": 9706.0,
+        "time": 1
+      },
+      {
+        "balance": 9706.0,
+        "equity": 9706.0,
+        "time": 1
+      },
+      {
+        "balance": 9706.0,
+        "equity": 9706.0,
+        "time": 1
+      },
+      {
+        "balance": 9685.0,
+        "equity": 9685.0,
+        "time": 1
+      },
+      {
+        "balance": 9685.0,
+        "equity": 9685.0,
+        "time": 1
+      },
+      {
+        "balance": 9664.0,
+        "equity": 9664.0,
+        "time": 1
+      },
+      {
+        "balance": 9664.0,
+        "equity": 9664.0,
+        "time": 1
+      },
+      {
+        "balance": 9643.0,
+        "equity": 9643.0,
+        "time": 1
+      },
+      {
+        "balance": 9643.0,
+        "equity": 9643.0,
+        "time": 1
+      },
+      {
+        "balance": 9643.0,
+        "equity": 9643.0,
+        "time": 1
+      }
+    ],
+    "markers": [
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4554.02",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4584.22",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4614.75",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4643.93",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4684.89",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4616.43",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4596.32",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4580.51",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4524.34",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4456.79",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4422.80",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4370.93",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4356.36",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4315.87",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4385.50",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4410.47",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4444.23",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      }
+    ],
+    "metrics": {
+      "final_balance": 9643.0,
+      "gross_loss": 357.0,
+      "gross_profit": 0,
+      "initial_capital": 10000.0,
+      "losing_trades": 17,
+      "max_drawdown": 357.0,
+      "max_drawdown_pct": 3.57,
+      "net_profit": -357.0,
+      "profit_factor": 0.0,
+      "return_pct": -3.57,
+      "total_trades": 17,
+      "win_rate": 0.0,
+      "winning_trades": 0
+    },
+    "trades": [
+      {
+        "entry_price": 4554.016,
+        "entry_time": 1787292000,
+        "entry_timestamp": 1,
+        "exit_price": 4552.016,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787292000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 1,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4584.223,
+        "entry_time": 1787302800,
+        "entry_timestamp": 1,
+        "exit_price": 4582.223,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787302800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 2,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4614.754,
+        "entry_time": 1787328000,
+        "entry_timestamp": 1,
+        "exit_price": 4612.754,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787328000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 3,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4643.926,
+        "entry_time": 1787540400,
+        "entry_timestamp": 1,
+        "exit_price": 4641.926,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787540400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 4,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4684.893,
+        "entry_time": 1787619600,
+        "entry_timestamp": 1,
+        "exit_price": 4682.893,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787619600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 5,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4616.43,
+        "entry_time": 1787666400,
+        "entry_timestamp": 1,
+        "exit_price": 4618.43,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787666400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 6,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4596.319,
+        "entry_time": 1787760000,
+        "entry_timestamp": 1,
+        "exit_price": 4598.319,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787760000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 7,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4580.508,
+        "entry_time": 1787824800,
+        "entry_timestamp": 1,
+        "exit_price": 4582.508,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787824800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 8,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4524.335,
+        "entry_time": 1787932800,
+        "entry_timestamp": 1,
+        "exit_price": 4526.335,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787932800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 9,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4456.793,
+        "entry_time": 1787943600,
+        "entry_timestamp": 1,
+        "exit_price": 4458.793,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787943600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 10,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4422.798,
+        "entry_time": 1788145200,
+        "entry_timestamp": 1,
+        "exit_price": 4424.798,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788145200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 11,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4370.929,
+        "entry_time": 1788253200,
+        "entry_timestamp": 1,
+        "exit_price": 4372.929,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788253200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 12,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4356.363,
+        "entry_time": 1788267600,
+        "entry_timestamp": 1,
+        "exit_price": 4358.363,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788267600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 13,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4315.874,
+        "entry_time": 1788310800,
+        "entry_timestamp": 1,
+        "exit_price": 4317.874,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788310800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 14,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4385.501,
+        "entry_time": 1788357600,
+        "entry_timestamp": 1,
+        "exit_price": 4383.501,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788357600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 15,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4410.475,
+        "entry_time": 1788400800,
+        "entry_timestamp": 1,
+        "exit_price": 4408.475,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788400800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 16,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4444.231,
+        "entry_time": 1788436800,
+        "entry_timestamp": 1,
+        "exit_price": 4442.231,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788436800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 17,
+        "type": "BUY"
+      }
+    ]
+  },
+  "macd_crossover": {
+    "equity_curve": [
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9853.0,
+        "equity": 9853.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9871.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9871.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9888.36,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9829.0,
+        "equity": 9829.0,
+        "time": 1
+      },
+      {
+        "balance": 9829.0,
+        "equity": 9829.0,
+        "time": 1
+      },
+      {
+        "balance": 9868.0,
+        "equity": 9868.0,
+        "time": 1
+      },
+      {
+        "balance": 9868.0,
+        "equity": 9868.0,
+        "time": 1
+      },
+      {
+        "balance": 9847.0,
+        "equity": 9847.0,
+        "time": 1
+      },
+      {
+        "balance": 9826.0,
+        "equity": 9826.0,
+        "time": 1
+      },
+      {
+        "balance": 9805.0,
+        "equity": 9805.0,
+        "time": 1
+      },
+      {
+        "balance": 9805.0,
+        "equity": 9805.0,
+        "time": 1
+      },
+      {
+        "balance": 9784.0,
+        "equity": 9784.0,
+        "time": 1
+      },
+      {
+        "balance": 9784.0,
+        "equity": 9784.0,
+        "time": 1
+      },
+      {
+        "balance": 9784.0,
+        "equity": 9784.0,
+        "time": 1
+      },
+      {
+        "balance": 9763.0,
+        "equity": 9763.0,
+        "time": 1
+      },
+      {
+        "balance": 9763.0,
+        "equity": 9763.0,
+        "time": 1
+      },
+      {
+        "balance": 9763.0,
+        "equity": 9763.0,
+        "time": 1
+      },
+      {
+        "balance": 9763.0,
+        "equity": 9763.0,
+        "time": 1
+      },
+      {
+        "balance": 9763.0,
+        "equity": 9763.0,
+        "time": 1
+      },
+      {
+        "balance": 9742.0,
+        "equity": 9742.0,
+        "time": 1
+      },
+      {
+        "balance": 9742.0,
+        "equity": 9742.0,
+        "time": 1
+      },
+      {
+        "balance": 9742.0,
+        "equity": 9742.0,
+        "time": 1
+      },
+      {
+        "balance": 9742.0,
+        "equity": 9742.0,
+        "time": 1
+      },
+      {
+        "balance": 9721.0,
+        "equity": 9721.0,
+        "time": 1
+      },
+      {
+        "balance": 9721.0,
+        "equity": 9721.0,
+        "time": 1
+      },
+      {
+        "balance": 9721.0,
+        "equity": 9721.0,
+        "time": 1
+      },
+      {
+        "balance": 9721.0,
+        "equity": 9721.0,
+        "time": 1
+      },
+      {
+        "balance": 9721.0,
+        "equity": 9721.0,
+        "time": 1
+      },
+      {
+        "balance": 9721.0,
+        "equity": 9721.0,
+        "time": 1
+      },
+      {
+        "balance": 9721.0,
+        "equity": 9721.0,
+        "time": 1
+      },
+      {
+        "balance": 9721.0,
+        "equity": 9721.0,
+        "time": 1
+      },
+      {
+        "balance": 9700.0,
+        "equity": 9700.0,
+        "time": 1
+      }
+    ],
+    "markers": [
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4494.01",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4467.26",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4516.11",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4606.42",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4643.93",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4638.89",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4684.89",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4658.16",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4654.67",
+        "time": 1
+      },
+      {
+        "color": "#089981",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT +$39.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4642.89",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4623.77",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4598.98",
+        "time": 1
+      },
+      {
+        "color": "#089981",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT +$39.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4610.69",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4576.08",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4612.78",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4524.34",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4443.35",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4370.93",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4320.20",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4475.71",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      }
+    ],
+    "metrics": {
+      "final_balance": 9700.0,
+      "gross_loss": 378.0,
+      "gross_profit": 78.0,
+      "initial_capital": 10000.0,
+      "losing_trades": 18,
+      "max_drawdown": 300.0,
+      "max_drawdown_pct": 3.0,
+      "net_profit": -300.0,
+      "profit_factor": 0.21,
+      "return_pct": -3.0,
+      "total_trades": 20,
+      "win_rate": 10.0,
+      "winning_trades": 2
+    },
+    "trades": [
+      {
+        "entry_price": 4494.015,
+        "entry_time": 1787209200,
+        "entry_timestamp": 1,
+        "exit_price": 4492.015,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787209200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 1,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4467.259,
+        "entry_time": 1787227200,
+        "entry_timestamp": 1,
+        "exit_price": 4469.259,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787227200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 2,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4516.112,
+        "entry_time": 1787238000,
+        "entry_timestamp": 1,
+        "exit_price": 4514.112,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787238000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 3,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4606.42,
+        "entry_time": 1787526000,
+        "entry_timestamp": 1,
+        "exit_price": 4608.42,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787526000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 4,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4643.926,
+        "entry_time": 1787540400,
+        "entry_timestamp": 1,
+        "exit_price": 4641.926,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787540400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 5,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4638.888,
+        "entry_time": 1787547600,
+        "entry_timestamp": 1,
+        "exit_price": 4640.888,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787547600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 6,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4684.893,
+        "entry_time": 1787619600,
+        "entry_timestamp": 1,
+        "exit_price": 4682.893,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787619600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 7,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4658.158,
+        "entry_time": 1787623200,
+        "entry_timestamp": 1,
+        "exit_price": 4660.158,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787623200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 8,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4654.67,
+        "entry_time": 1787684400,
+        "entry_timestamp": 1,
+        "exit_price": 4658.67,
+        "exit_reason": "Take Profit",
+        "exit_time": 1787684400,
+        "exit_timestamp": 1,
+        "pnl": 39.0,
+        "return_pct": 0.39,
+        "trade_id": 9,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4642.887,
+        "entry_time": 1787716800,
+        "entry_timestamp": 1,
+        "exit_price": 4644.887,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787720400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 10,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4623.771,
+        "entry_time": 1787788800,
+        "entry_timestamp": 1,
+        "exit_price": 4621.771,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787788800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 11,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4598.979,
+        "entry_time": 1787821200,
+        "entry_timestamp": 1,
+        "exit_price": 4594.979,
+        "exit_reason": "Take Profit",
+        "exit_time": 1787821200,
+        "exit_timestamp": 1,
+        "pnl": 39.0,
+        "return_pct": 0.39,
+        "trade_id": 12,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4610.691,
+        "entry_time": 1787846400,
+        "entry_timestamp": 1,
+        "exit_price": 4608.691,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787846400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 13,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4576.077,
+        "entry_time": 1787882400,
+        "entry_timestamp": 1,
+        "exit_price": 4578.077,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787882400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 14,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4612.782,
+        "entry_time": 1787900400,
+        "entry_timestamp": 1,
+        "exit_price": 4610.782,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787900400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 15,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4524.335,
+        "entry_time": 1787932800,
+        "entry_timestamp": 1,
+        "exit_price": 4526.335,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787932800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 16,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4443.351,
+        "entry_time": 1788163200,
+        "entry_timestamp": 1,
+        "exit_price": 4441.351,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788163200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 17,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4370.929,
+        "entry_time": 1788253200,
+        "entry_timestamp": 1,
+        "exit_price": 4372.929,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788253200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 18,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4320.2,
+        "entry_time": 1788328800,
+        "entry_timestamp": 1,
+        "exit_price": 4318.2,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788328800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 19,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4475.708,
+        "entry_time": 1788472800,
+        "entry_timestamp": 1,
+        "exit_price": 4477.708,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788472800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 20,
+        "type": "SELL"
+      }
+    ]
+  },
+  "rsi_reversal": {
+    "equity_curve": [
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9958.0,
+        "equity": 9958.0,
+        "time": 1
+      },
+      {
+        "balance": 9958.0,
+        "equity": 9958.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9874.0,
+        "equity": 9874.0,
+        "time": 1
+      },
+      {
+        "balance": 9853.0,
+        "equity": 9853.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9832.0,
+        "equity": 9832.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9811.0,
+        "equity": 9811.0,
+        "time": 1
+      },
+      {
+        "balance": 9790.0,
+        "equity": 9790.0,
+        "time": 1
+      },
+      {
+        "balance": 9748.0,
+        "equity": 9748.0,
+        "time": 1
+      },
+      {
+        "balance": 9748.0,
+        "equity": 9748.0,
+        "time": 1
+      },
+      {
+        "balance": 9748.0,
+        "equity": 9748.0,
+        "time": 1
+      },
+      {
+        "balance": 9748.0,
+        "equity": 9748.0,
+        "time": 1
+      },
+      {
+        "balance": 9748.0,
+        "equity": 9748.0,
+        "time": 1
+      },
+      {
+        "balance": 9748.0,
+        "equity": 9748.0,
+        "time": 1
+      },
+      {
+        "balance": 9727.0,
+        "equity": 9727.0,
+        "time": 1
+      },
+      {
+        "balance": 9706.0,
+        "equity": 9706.0,
+        "time": 1
+      },
+      {
+        "balance": 9706.0,
+        "equity": 9706.0,
+        "time": 1
+      }
+    ],
+    "markers": [
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4553.82",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4615.78",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4650.05",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4649.13",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4635.67",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4625.03",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4631.80",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4609.39",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4443.35",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4324.99",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4320.20",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4323.48",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4427.41",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4486.50",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      }
+    ],
+    "metrics": {
+      "final_balance": 9706.0,
+      "gross_loss": 294.0,
+      "gross_profit": 0,
+      "initial_capital": 10000.0,
+      "losing_trades": 14,
+      "max_drawdown": 294.0,
+      "max_drawdown_pct": 2.94,
+      "net_profit": -294.0,
+      "profit_factor": 0.0,
+      "return_pct": -2.94,
+      "total_trades": 14,
+      "win_rate": 0.0,
+      "winning_trades": 0
+    },
+    "trades": [
+      {
+        "entry_price": 4553.816,
+        "entry_time": 1787292000,
+        "entry_timestamp": 1,
+        "exit_price": 4555.816,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787292000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 1,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4615.78,
+        "entry_time": 1787522400,
+        "entry_timestamp": 1,
+        "exit_price": 4617.78,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787522400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 2,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4650.05,
+        "entry_time": 1787554800,
+        "entry_timestamp": 1,
+        "exit_price": 4652.05,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787554800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 3,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4649.128,
+        "entry_time": 1787587200,
+        "entry_timestamp": 1,
+        "exit_price": 4651.128,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787587200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 4,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4635.669,
+        "entry_time": 1787670000,
+        "entry_timestamp": 1,
+        "exit_price": 4633.669,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787670000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 5,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4625.033,
+        "entry_time": 1787745600,
+        "entry_timestamp": 1,
+        "exit_price": 4623.033,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787745600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 6,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4631.798,
+        "entry_time": 1787752800,
+        "entry_timestamp": 1,
+        "exit_price": 4629.798,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787752800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 7,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4609.385,
+        "entry_time": 1787785200,
+        "entry_timestamp": 1,
+        "exit_price": 4607.385,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787785200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 8,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4443.351,
+        "entry_time": 1788163200,
+        "entry_timestamp": 1,
+        "exit_price": 4441.351,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788163200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 9,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4324.993,
+        "entry_time": 1788307200,
+        "entry_timestamp": 1,
+        "exit_price": 4322.993,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788307200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 10,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4320.2,
+        "entry_time": 1788328800,
+        "entry_timestamp": 1,
+        "exit_price": 4318.2,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788328800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 11,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4323.481,
+        "entry_time": 1788336000,
+        "entry_timestamp": 1,
+        "exit_price": 4321.481,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788336000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 12,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4427.412,
+        "entry_time": 1788433200,
+        "entry_timestamp": 1,
+        "exit_price": 4429.412,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788433200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 13,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4486.5,
+        "entry_time": 1788454800,
+        "entry_timestamp": 1,
+        "exit_price": 4488.5,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788454800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 14,
+        "type": "SELL"
+      }
+    ]
+  },
+  "sma_crossover": {
+    "equity_curve": [
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9958.0,
+        "equity": 9958.0,
+        "time": 1
+      },
+      {
+        "balance": 9958.0,
+        "equity": 9958.0,
+        "time": 1
+      },
+      {
+        "balance": 9997.0,
+        "equity": 9997.0,
+        "time": 1
+      },
+      {
+        "balance": 9997.0,
+        "equity": 9997.0,
+        "time": 1
+      },
+      {
+        "balance": 9997.0,
+        "equity": 9997.0,
+        "time": 1
+      },
+      {
+        "balance": 9997.0,
+        "equity": 9997.0,
+        "time": 1
+      },
+      {
+        "balance": 9997.0,
+        "equity": 9997.0,
+        "time": 1
+      },
+      {
+        "balance": 9997.0,
+        "equity": 9997.0,
+        "time": 1
+      },
+      {
+        "balance": 9997.0,
+        "equity": 9997.0,
+        "time": 1
+      },
+      {
+        "balance": 9955.0,
+        "equity": 9955.0,
+        "time": 1
+      },
+      {
+        "balance": 9955.0,
+        "equity": 9955.0,
+        "time": 1
+      },
+      {
+        "balance": 9955.0,
+        "equity": 9955.0,
+        "time": 1
+      },
+      {
+        "balance": 9913.0,
+        "equity": 9913.0,
+        "time": 1
+      },
+      {
+        "balance": 9913.0,
+        "equity": 9913.0,
+        "time": 1
+      },
+      {
+        "balance": 9913.0,
+        "equity": 9913.0,
+        "time": 1
+      },
+      {
+        "balance": 9913.0,
+        "equity": 9913.0,
+        "time": 1
+      },
+      {
+        "balance": 9913.0,
+        "equity": 9913.0,
+        "time": 1
+      },
+      {
+        "balance": 9913.0,
+        "equity": 9913.0,
+        "time": 1
+      },
+      {
+        "balance": 9913.0,
+        "equity": 9913.0,
+        "time": 1
+      },
+      {
+        "balance": 9892.0,
+        "equity": 9892.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9871.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9871.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9871.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9871.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9871.0,
+        "time": 1
+      },
+      {
+        "balance": 9871.0,
+        "equity": 9871.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      },
+      {
+        "balance": 9850.0,
+        "equity": 9850.0,
+        "time": 1
+      }
+    ],
+    "markers": [
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4630.42",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4672.79",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4623.44",
+        "time": 1
+      },
+      {
+        "color": "#089981",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT +$39.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4589.26",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4576.08",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4601.69",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4479.67",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4443.24",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4370.93",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4373.20",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      }
+    ],
+    "metrics": {
+      "final_balance": 9850.0,
+      "gross_loss": 189.0,
+      "gross_profit": 39.0,
+      "initial_capital": 10000.0,
+      "losing_trades": 9,
+      "max_drawdown": 150.0,
+      "max_drawdown_pct": 1.5,
+      "net_profit": -150.0,
+      "profit_factor": 0.21,
+      "return_pct": -1.5,
+      "total_trades": 10,
+      "win_rate": 10.0,
+      "winning_trades": 1
+    },
+    "trades": [
+      {
+        "entry_price": 4630.424,
+        "entry_time": 1787648400,
+        "entry_timestamp": 1,
+        "exit_price": 4632.424,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787648400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 1,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4672.791,
+        "entry_time": 1787698800,
+        "entry_timestamp": 1,
+        "exit_price": 4670.791,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787698800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 2,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4623.437,
+        "entry_time": 1787738400,
+        "entry_timestamp": 1,
+        "exit_price": 4619.437,
+        "exit_reason": "Take Profit",
+        "exit_time": 1787738400,
+        "exit_timestamp": 1,
+        "pnl": 39.0,
+        "return_pct": 0.39,
+        "trade_id": 3,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4589.26,
+        "entry_time": 1787878800,
+        "entry_timestamp": 1,
+        "exit_price": 4587.26,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787878800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 4,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4576.077,
+        "entry_time": 1787882400,
+        "entry_timestamp": 1,
+        "exit_price": 4578.077,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787882400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 5,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4601.695,
+        "entry_time": 1787922000,
+        "entry_timestamp": 1,
+        "exit_price": 4599.695,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787922000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 6,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4479.668,
+        "entry_time": 1787936400,
+        "entry_timestamp": 1,
+        "exit_price": 4481.668,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787936400,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 7,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4443.242,
+        "entry_time": 1788231600,
+        "entry_timestamp": 1,
+        "exit_price": 4441.242,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788231600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 8,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4370.929,
+        "entry_time": 1788253200,
+        "entry_timestamp": 1,
+        "exit_price": 4372.929,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788253200,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 9,
+        "type": "SELL"
+      },
+      {
+        "entry_price": 4373.2,
+        "entry_time": 1788364800,
+        "entry_timestamp": 1,
+        "exit_price": 4371.2,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788364800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 10,
+        "type": "BUY"
+      }
+    ]
+  },
+  "sma_crossover_long_only": {
+    "equity_curve": [
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9979.0,
+        "equity": 9979.0,
+        "time": 1
+      },
+      {
+        "balance": 9958.0,
+        "equity": 9958.0,
+        "time": 1
+      },
+      {
+        "balance": 9958.0,
+        "equity": 9958.0,
+        "time": 1
+      },
+      {
+        "balance": 9958.0,
+        "equity": 9958.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9937.0,
+        "equity": 9937.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9916.0,
+        "equity": 9916.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      },
+      {
+        "balance": 9895.0,
+        "equity": 9895.0,
+        "time": 1
+      }
+    ],
+    "markers": [
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4672.79",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4589.26",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4601.69",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4443.24",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      },
+      {
+        "color": "#2962ff",
+        "position": "belowBar",
+        "shape": "arrowUp",
+        "text": "BUY @ 4373.20",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "aboveBar",
+        "shape": "circle",
+        "text": "EXIT $-21.0",
+        "time": 1
+      }
+    ],
+    "metrics": {
+      "final_balance": 9895.0,
+      "gross_loss": 105.0,
+      "gross_profit": 0,
+      "initial_capital": 10000.0,
+      "losing_trades": 5,
+      "max_drawdown": 105.0,
+      "max_drawdown_pct": 1.05,
+      "net_profit": -105.0,
+      "profit_factor": 0.0,
+      "return_pct": -1.05,
+      "total_trades": 5,
+      "win_rate": 0.0,
+      "winning_trades": 0
+    },
+    "trades": [
+      {
+        "entry_price": 4672.791,
+        "entry_time": 1787698800,
+        "entry_timestamp": 1,
+        "exit_price": 4670.791,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787698800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 1,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4589.26,
+        "entry_time": 1787878800,
+        "entry_timestamp": 1,
+        "exit_price": 4587.26,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787878800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 2,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4601.695,
+        "entry_time": 1787922000,
+        "entry_timestamp": 1,
+        "exit_price": 4599.695,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1787922000,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 3,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4443.242,
+        "entry_time": 1788231600,
+        "entry_timestamp": 1,
+        "exit_price": 4441.242,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788231600,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 4,
+        "type": "BUY"
+      },
+      {
+        "entry_price": 4373.2,
+        "entry_time": 1788364800,
+        "entry_timestamp": 1,
+        "exit_price": 4371.2,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788364800,
+        "exit_timestamp": 1,
+        "pnl": -21.0,
+        "return_pct": -0.21,
+        "trade_id": 5,
+        "type": "BUY"
+      }
+    ]
+  },
+  "smc_confluence": {
+    "equity_curve": [
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10000.0,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10034.74,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10216.69,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10124.35,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10177.58,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10049.49,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10268.07,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10351.72,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10464.64,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10512.32,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10490.94,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10485.25,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10533.45,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10621.45,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10868.77,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10752.74,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10748.29,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10707.99,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10580.86,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10564.26,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10549.27,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10650.06,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10693.03,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10685.78,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10458.55,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10465.22,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9926.99,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10011.38,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10049.79,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10095.33,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10012.01,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 10038.44,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9868.24,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9904.15,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9934.16,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9925.83,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9826.8,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9674.72,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9577.34,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9467.2,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9405.09,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9467.89,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9572.67,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9493.84,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9429.49,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9505.38,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9506.12,
+        "time": 1
+      },
+      {
+        "balance": 10000.0,
+        "equity": 9339.76,
+        "time": 1
+      },
+      {
+        "balance": 9316.14,
+        "equity": 9316.14,
+        "time": 1
+      },
+      {
+        "balance": 9316.14,
+        "equity": 9316.14,
+        "time": 1
+      },
+      {
+        "balance": 9316.14,
+        "equity": 9316.14,
+        "time": 1
+      }
+    ],
+    "funnel_stats": {
+      "choch_matching_swing_bias": 4,
+      "choch_rejected_by_bias": 8,
+      "choch_rejected_simultaneous_swing": 0,
+      "fvgs_eligible_after_ranking": 2,
+      "fvgs_in_choch_window": 6,
+      "fvgs_rejected_direction": 4,
+      "fvgs_rejected_min_score": 0,
+      "fvgs_total_detected": 49,
+      "internal_bos_detected": 12,
+      "internal_choch_detected": 12,
+      "internal_pivots_detected": 68,
+      "order_blocks_detected": 24,
+      "orders_filled": 1,
+      "pending_orders_created": 2,
+      "pending_orders_expired_no_fill": 1,
+      "swing_bos_detected": 7,
+      "swing_choch_detected": 4,
+      "swing_pivots_detected": 29,
+      "total_bars": 250,
+      "trades_lost": 1,
+      "trades_won": 0
+    },
+    "markers": [
+      {
+        "color": "#e91e63",
+        "position": "aboveBar",
+        "shape": "arrowDown",
+        "text": "SELL @ 4378.39",
+        "time": 1
+      },
+      {
+        "color": "#f23645",
+        "position": "belowBar",
+        "shape": "circle",
+        "text": "EXIT $-683.9",
+        "time": 1
+      }
+    ],
+    "metrics": {
+      "final_balance": 9316.14,
+      "gross_loss": 683.86,
+      "gross_profit": 0,
+      "initial_capital": 10000.0,
+      "losing_trades": 1,
+      "max_drawdown": 1552.63,
+      "max_drawdown_pct": 14.29,
+      "net_profit": -683.86,
+      "profit_factor": 0.0,
+      "return_pct": -6.84,
+      "total_trades": 1,
+      "win_rate": 0.0,
+      "winning_trades": 0
+    },
+    "smc_objects": {
+      "choch_windows": [
+        {
+          "direction": "bearish",
+          "end_index": 99,
+          "start_index": 94,
+          "start_time": "2026-08-26T07:00:00+00:00"
+        },
+        {
+          "direction": "bearish",
+          "end_index": 143,
+          "start_index": 138,
+          "start_time": "2026-08-28T05:00:00+00:00"
+        },
+        {
+          "direction": "bearish",
+          "end_index": 153,
+          "start_index": 148,
+          "start_time": "2026-08-28T15:00:00+00:00"
+        },
+        {
+          "direction": "bearish",
+          "end_index": 192,
+          "start_index": 187,
+          "start_time": "2026-09-01T08:00:00+00:00"
+        }
+      ],
+      "funnel": {
+        "choch_matching_swing_bias": 4,
+        "choch_rejected_by_bias": 8,
+        "choch_rejected_simultaneous_swing": 0,
+        "fvgs_eligible_after_ranking": 2,
+        "fvgs_in_choch_window": 6,
+        "fvgs_rejected_direction": 4,
+        "fvgs_rejected_min_score": 0,
+        "fvgs_total_detected": 49,
+        "internal_bos_detected": 12,
+        "internal_choch_detected": 12,
+        "internal_pivots_detected": 68,
+        "order_blocks_detected": 24,
+        "orders_filled": 1,
+        "pending_orders_created": 2,
+        "pending_orders_expired_no_fill": 1,
+        "swing_bos_detected": 7,
+        "swing_choch_detected": 4,
+        "swing_pivots_detected": 29,
+        "total_bars": 250,
+        "trades_lost": 1,
+        "trades_won": 0
+      },
+      "fvgs": [
+        {
+          "bottom": 4477.262,
+          "confirmed_at": 7,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 8,
+          "index": 6,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:72",
+          "time": "2026-08-20T11:00:00+00:00",
+          "top": 4480.631
+        },
+        {
+          "bottom": 4477.262,
+          "confirmed_at": 9,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 149,
+          "index": 8,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:3",
+          "time": "2026-08-20T13:00:00+00:00",
+          "top": 4480.786
+        },
+        {
+          "bottom": 4489.554,
+          "confirmed_at": 10,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 149,
+          "index": 9,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:14",
+          "time": "2026-08-20T14:00:00+00:00",
+          "top": 4509.548
+        },
+        {
+          "bottom": 4556.417,
+          "confirmed_at": 25,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 147,
+          "index": 24,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:29",
+          "time": "2026-08-21T06:00:00+00:00",
+          "top": 4558.449
+        },
+        {
+          "bottom": 4568.334,
+          "confirmed_at": 27,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 30,
+          "index": 26,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:29",
+          "time": "2026-08-21T08:00:00+00:00",
+          "top": 4580.353
+        },
+        {
+          "bottom": 4603.885,
+          "confirmed_at": 34,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 38,
+          "index": 33,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:35",
+          "time": "2026-08-21T15:00:00+00:00",
+          "top": 4609.206
+        },
+        {
+          "bottom": 4617.786,
+          "confirmed_at": 38,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 39,
+          "index": 37,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:72",
+          "time": "2026-08-21T19:00:00+00:00",
+          "top": 4619.484
+        },
+        {
+          "bottom": 4642.474,
+          "confirmed_at": 61,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 66,
+          "index": 60,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:54",
+          "time": "2026-08-24T19:00:00+00:00",
+          "top": 4647.157
+        },
+        {
+          "bottom": 4655.49,
+          "confirmed_at": 63,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 66,
+          "index": 62,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:54",
+          "time": "2026-08-24T22:00:00+00:00",
+          "top": 4666.881
+        },
+        {
+          "bottom": 4668.553,
+          "confirmed_at": 64,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 65,
+          "index": 63,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:54",
+          "time": "2026-08-24T23:00:00+00:00",
+          "top": 4675.486
+        },
+        {
+          "bottom": 4661.632,
+          "confirmed_at": 66,
+          "direction": "bearish",
+          "filled": false,
+          "filled_at": null,
+          "index": 65,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:72",
+          "time": "2026-08-25T01:00:00+00:00",
+          "top": 4675.486
+        },
+        {
+          "bottom": 4641.527,
+          "confirmed_at": 67,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 79,
+          "index": 66,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:72",
+          "time": "2026-08-25T02:00:00+00:00",
+          "top": 4656.591
+        },
+        {
+          "bottom": 4648.594,
+          "confirmed_at": 83,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 87,
+          "index": 82,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:79",
+          "time": "2026-08-25T18:00:00+00:00",
+          "top": 4653.312
+        },
+        {
+          "bottom": 4655.211,
+          "confirmed_at": 84,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 86,
+          "index": 83,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:105",
+          "time": "2026-08-25T19:00:00+00:00",
+          "top": 4657.728
+        },
+        {
+          "bottom": 4644.514,
+          "confirmed_at": 91,
+          "direction": "bearish",
+          "filled": false,
+          "filled_at": null,
+          "index": 90,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:88",
+          "time": "2026-08-26T03:00:00+00:00",
+          "top": 4655.024
+        },
+        {
+          "bottom": 4601.691,
+          "confirmed_at": 103,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 105,
+          "index": 102,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:107",
+          "time": "2026-08-26T15:00:00+00:00",
+          "top": 4602.821
+        },
+        {
+          "bottom": 4596.919,
+          "confirmed_at": 109,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 117,
+          "index": 108,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:122",
+          "time": "2026-08-26T22:00:00+00:00",
+          "top": 4607.076
+        },
+        {
+          "bottom": 4621.823,
+          "confirmed_at": 115,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 146,
+          "index": 114,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:107",
+          "time": "2026-08-27T04:00:00+00:00",
+          "top": 4624.428
+        },
+        {
+          "bottom": 4611.961,
+          "confirmed_at": 116,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 129,
+          "index": 115,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:107",
+          "time": "2026-08-27T05:00:00+00:00",
+          "top": 4617.169
+        },
+        {
+          "bottom": 4590.745,
+          "confirmed_at": 120,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 121,
+          "index": 119,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:135",
+          "time": "2026-08-27T09:00:00+00:00",
+          "top": 4594.817
+        },
+        {
+          "bottom": 4598.478,
+          "confirmed_at": 126,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 132,
+          "index": 125,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:132",
+          "time": "2026-08-27T15:00:00+00:00",
+          "top": 4602.409
+        },
+        {
+          "bottom": 4586.543,
+          "confirmed_at": 140,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 147,
+          "index": 139,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:172",
+          "time": "2026-08-28T06:00:00+00:00",
+          "top": 4596.539
+        },
+        {
+          "bottom": 4583.186,
+          "confirmed_at": 148,
+          "direction": "bearish",
+          "filled": false,
+          "filled_at": null,
+          "index": 147,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:138",
+          "time": "2026-08-28T14:00:00+00:00",
+          "top": 4593.652
+        },
+        {
+          "bottom": 4529.681,
+          "confirmed_at": 149,
+          "direction": "bearish",
+          "filled": false,
+          "filled_at": null,
+          "index": 148,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:155",
+          "time": "2026-08-28T15:00:00+00:00",
+          "top": 4529.716
+        },
+        {
+          "bottom": 4486.735,
+          "confirmed_at": 150,
+          "direction": "bearish",
+          "filled": false,
+          "filled_at": null,
+          "index": 149,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:155",
+          "time": "2026-08-28T16:00:00+00:00",
+          "top": 4523.884
+        },
+        {
+          "bottom": 4441.683,
+          "confirmed_at": 158,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 166,
+          "index": 157,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:155",
+          "time": "2026-08-31T01:00:00+00:00",
+          "top": 4452.198
+        },
+        {
+          "bottom": 4434.174,
+          "confirmed_at": 159,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 161,
+          "index": 158,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:169",
+          "time": "2026-08-31T02:00:00+00:00",
+          "top": 4435.878
+        },
+        {
+          "bottom": 4425.122,
+          "confirmed_at": 162,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 169,
+          "index": 161,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:172",
+          "time": "2026-08-31T05:00:00+00:00",
+          "top": 4429.145
+        },
+        {
+          "bottom": 4445.759,
+          "confirmed_at": 167,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 168,
+          "index": 166,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:172",
+          "time": "2026-08-31T10:00:00+00:00",
+          "top": 4452.509
+        },
+        {
+          "bottom": 4448.416,
+          "confirmed_at": 169,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 175,
+          "index": 168,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:169",
+          "time": "2026-08-31T12:00:00+00:00",
+          "top": 4452.509
+        },
+        {
+          "bottom": 4437.041,
+          "confirmed_at": 176,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 180,
+          "index": 175,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:210",
+          "time": "2026-08-31T19:00:00+00:00",
+          "top": 4446.578
+        },
+        {
+          "bottom": 4420.334,
+          "confirmed_at": 187,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 228,
+          "index": 186,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:169",
+          "time": "2026-09-01T07:00:00+00:00",
+          "top": 4427.827
+        },
+        {
+          "bottom": 4378.163,
+          "confirmed_at": 188,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 226,
+          "index": 187,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:198",
+          "time": "2026-09-01T08:00:00+00:00",
+          "top": 4412.153
+        },
+        {
+          "bottom": 4367.672,
+          "confirmed_at": 192,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 193,
+          "index": 191,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:198",
+          "time": "2026-09-01T12:00:00+00:00",
+          "top": 4371.922
+        },
+        {
+          "bottom": 4352.154,
+          "confirmed_at": 196,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 215,
+          "index": 195,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:198",
+          "time": "2026-09-01T16:00:00+00:00",
+          "top": 4355.195
+        },
+        {
+          "bottom": 4344.545,
+          "confirmed_at": 197,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 215,
+          "index": 196,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:198",
+          "time": "2026-09-01T17:00:00+00:00",
+          "top": 4346.916
+        },
+        {
+          "bottom": 4337.81,
+          "confirmed_at": 198,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 214,
+          "index": 197,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:198",
+          "time": "2026-09-01T18:00:00+00:00",
+          "top": 4340.934
+        },
+        {
+          "bottom": 4308.126,
+          "confirmed_at": 208,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 211,
+          "index": 207,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:210",
+          "time": "2026-09-02T05:00:00+00:00",
+          "top": 4314.608
+        },
+        {
+          "bottom": 4312.412,
+          "confirmed_at": 212,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 213,
+          "index": 211,
+          "mode": "internal",
+          "structure_leg_id": null,
+          "time": "2026-09-02T09:00:00+00:00",
+          "top": 4312.564
+        },
+        {
+          "bottom": 4312.412,
+          "confirmed_at": 214,
+          "direction": "bullish",
+          "filled": false,
+          "filled_at": null,
+          "index": 213,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:216",
+          "time": "2026-09-02T11:00:00+00:00",
+          "top": 4327.274
+        },
+        {
+          "bottom": 4344.741,
+          "confirmed_at": 216,
+          "direction": "bullish",
+          "filled": false,
+          "filled_at": null,
+          "index": 215,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:216",
+          "time": "2026-09-02T13:00:00+00:00",
+          "top": 4374.437
+        },
+        {
+          "bottom": 4379.963,
+          "confirmed_at": 222,
+          "direction": "bullish",
+          "filled": false,
+          "filled_at": null,
+          "index": 221,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:216",
+          "time": "2026-09-02T19:00:00+00:00",
+          "top": 4383.966
+        },
+        {
+          "bottom": 4398.23,
+          "confirmed_at": 227,
+          "direction": "bullish",
+          "filled": false,
+          "filled_at": null,
+          "index": 226,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:233",
+          "time": "2026-09-03T01:00:00+00:00",
+          "top": 4406.67
+        },
+        {
+          "bottom": 4412.41,
+          "confirmed_at": 228,
+          "direction": "bullish",
+          "filled": false,
+          "filled_at": null,
+          "index": 227,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:233",
+          "time": "2026-09-03T02:00:00+00:00",
+          "top": 4419.278
+        },
+        {
+          "bottom": 4420.625,
+          "confirmed_at": 229,
+          "direction": "bullish",
+          "filled": true,
+          "filled_at": 231,
+          "index": 228,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:233",
+          "time": "2026-09-03T03:00:00+00:00",
+          "top": 4425.625
+        },
+        {
+          "bottom": 4429.92,
+          "confirmed_at": 237,
+          "direction": "bullish",
+          "filled": false,
+          "filled_at": null,
+          "index": 236,
+          "mode": "internal",
+          "structure_leg_id": null,
+          "time": "2026-09-03T11:00:00+00:00",
+          "top": 4437.797
+        },
+        {
+          "bottom": 4446.042,
+          "confirmed_at": 238,
+          "direction": "bullish",
+          "filled": false,
+          "filled_at": null,
+          "index": 237,
+          "mode": "internal",
+          "structure_leg_id": null,
+          "time": "2026-09-03T12:00:00+00:00",
+          "top": 4456.646
+        },
+        {
+          "bottom": 4480.873,
+          "confirmed_at": 244,
+          "direction": "bearish",
+          "filled": true,
+          "filled_at": 248,
+          "index": 243,
+          "mode": "internal",
+          "structure_leg_id": null,
+          "time": "2026-09-03T18:00:00+00:00",
+          "top": 4483.235
+        },
+        {
+          "bottom": 4480.416,
+          "confirmed_at": 249,
+          "direction": "bullish",
+          "filled": false,
+          "filled_at": null,
+          "index": 248,
+          "mode": "internal",
+          "structure_leg_id": null,
+          "time": "2026-09-04T00:00:00+00:00",
+          "top": 4482.761
+        }
+      ],
+      "internal_events": [
+        {
+          "atr_value": 0.0,
+          "body_size": 34.063999999999396,
+          "break_type": "close",
+          "broken_swing_index": 3,
+          "broken_swing_price": 4498.85,
+          "close_price": 4515.78,
+          "confirmed_swing_at": 5,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 9,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:3",
+          "time": "2026-08-20T14:00:00+00:00"
+        },
+        {
+          "atr_value": 20.77199999999987,
+          "body_size": 3.2280000000000655,
+          "break_type": "close",
+          "broken_swing_index": 14,
+          "broken_swing_price": 4532.344,
+          "close_price": 4534.019,
+          "confirmed_swing_at": 16,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 20,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:14",
+          "time": "2026-08-21T02:00:00+00:00"
+        },
+        {
+          "atr_value": 18.574428571428534,
+          "body_size": 12.91399999999976,
+          "break_type": "close",
+          "broken_swing_index": 19,
+          "broken_swing_price": 4544.061,
+          "close_price": 4553.451,
+          "confirmed_swing_at": 21,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 23,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:19",
+          "time": "2026-08-21T05:00:00+00:00"
+        },
+        {
+          "atr_value": 21.52857142857153,
+          "body_size": 22.625,
+          "break_type": "close",
+          "broken_swing_index": 29,
+          "broken_swing_price": 4604.698,
+          "close_price": 4614.491,
+          "confirmed_swing_at": 31,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 33,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:29",
+          "time": "2026-08-21T15:00:00+00:00"
+        },
+        {
+          "atr_value": 22.304500000000058,
+          "body_size": 10.58600000000024,
+          "break_type": "close",
+          "broken_swing_index": 35,
+          "broken_swing_price": 4632.235,
+          "close_price": 4632.337,
+          "confirmed_swing_at": 37,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 42,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:35",
+          "time": "2026-08-24T01:00:00+00:00"
+        },
+        {
+          "atr_value": 22.193714285714382,
+          "body_size": 5.180999999999585,
+          "break_type": "close",
+          "broken_swing_index": 47,
+          "broken_swing_price": 4660.132,
+          "close_price": 4663.021,
+          "confirmed_swing_at": 49,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 53,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:47",
+          "time": "2026-08-24T12:00:00+00:00"
+        },
+        {
+          "atr_value": 21.272428571428527,
+          "body_size": 4.532000000000153,
+          "break_type": "close",
+          "broken_swing_index": 54,
+          "broken_swing_price": 4681.078,
+          "close_price": 4684.439,
+          "confirmed_swing_at": 56,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 64,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:54",
+          "time": "2026-08-25T00:00:00+00:00"
+        },
+        {
+          "atr_value": 21.424999999999986,
+          "body_size": 24.395000000000437,
+          "break_type": "close",
+          "broken_swing_index": 72,
+          "broken_swing_price": 4620.195,
+          "close_price": 4616.476,
+          "confirmed_swing_at": 74,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 77,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:72",
+          "time": "2026-08-25T13:00:00+00:00"
+        },
+        {
+          "atr_value": 21.81292857142866,
+          "body_size": 17.149000000000342,
+          "break_type": "close",
+          "broken_swing_index": 75,
+          "broken_swing_price": 4647.641,
+          "close_price": 4652.618,
+          "confirmed_swing_at": 77,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 79,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:75",
+          "time": "2026-08-25T15:00:00+00:00"
+        },
+        {
+          "atr_value": 18.65735714285724,
+          "body_size": 12.362999999999374,
+          "break_type": "close",
+          "broken_swing_index": 79,
+          "broken_swing_price": 4659.707,
+          "close_price": 4666.833,
+          "confirmed_swing_at": 81,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 83,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:79",
+          "time": "2026-08-25T19:00:00+00:00"
+        },
+        {
+          "atr_value": 16.07857142857139,
+          "body_size": 5.190000000000509,
+          "break_type": "close",
+          "broken_swing_index": 88,
+          "broken_swing_price": 4629.755,
+          "close_price": 4628.869,
+          "confirmed_swing_at": 90,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 94,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:88",
+          "time": "2026-08-26T07:00:00+00:00"
+        },
+        {
+          "atr_value": 17.21035714285725,
+          "body_size": 9.704999999999927,
+          "break_type": "close",
+          "broken_swing_index": 105,
+          "broken_swing_price": 4604.702,
+          "close_price": 4609.244,
+          "confirmed_swing_at": 107,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 108,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:105",
+          "time": "2026-08-26T22:00:00+00:00"
+        },
+        {
+          "atr_value": 18.09257142857145,
+          "body_size": 18.46900000000005,
+          "break_type": "close",
+          "broken_swing_index": 107,
+          "broken_swing_price": 4584.111,
+          "close_price": 4580.51,
+          "confirmed_swing_at": 109,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 119,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:107",
+          "time": "2026-08-27T09:00:00+00:00"
+        },
+        {
+          "atr_value": 18.874357142857207,
+          "body_size": 19.123999999999796,
+          "break_type": "close",
+          "broken_swing_index": 122,
+          "broken_swing_price": 4601.378,
+          "close_price": 4610.367,
+          "confirmed_swing_at": 124,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 125,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:122",
+          "time": "2026-08-27T15:00:00+00:00"
+        },
+        {
+          "atr_value": 14.51378571428573,
+          "body_size": 10.996000000000095,
+          "break_type": "close",
+          "broken_swing_index": 135,
+          "broken_swing_price": 4575.11,
+          "close_price": 4573.628,
+          "confirmed_swing_at": 137,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 138,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:135",
+          "time": "2026-08-28T05:00:00+00:00"
+        },
+        {
+          "atr_value": 15.820714285714335,
+          "body_size": 38.89599999999973,
+          "break_type": "close",
+          "broken_swing_index": 132,
+          "broken_swing_price": 4611.646,
+          "close_price": 4612.581,
+          "confirmed_swing_at": 134,
+          "direction": "bullish",
+          "displacement": true,
+          "event_type": "CHoCH",
+          "index": 139,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:132",
+          "time": "2026-08-28T06:00:00+00:00"
+        },
+        {
+          "atr_value": 25.900142857142914,
+          "body_size": 51.96399999999994,
+          "break_type": "close",
+          "broken_swing_index": 138,
+          "broken_swing_price": 4571.475,
+          "close_price": 4524.734,
+          "confirmed_swing_at": 140,
+          "direction": "bearish",
+          "displacement": true,
+          "event_type": "CHoCH",
+          "index": 148,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:138",
+          "time": "2026-08-28T15:00:00+00:00"
+        },
+        {
+          "atr_value": 36.03121428571421,
+          "body_size": 17.296000000000276,
+          "break_type": "close",
+          "broken_swing_index": 155,
+          "broken_swing_price": 4435.725,
+          "close_price": 4423.125,
+          "confirmed_swing_at": 157,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 158,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:155",
+          "time": "2026-08-31T02:00:00+00:00"
+        },
+        {
+          "atr_value": 16.601999999999798,
+          "body_size": 22.714999999999236,
+          "break_type": "close",
+          "broken_swing_index": 172,
+          "broken_swing_price": 4440.445,
+          "close_price": 4453.65,
+          "confirmed_swing_at": 174,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 175,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:172",
+          "time": "2026-08-31T19:00:00+00:00"
+        },
+        {
+          "atr_value": 18.472499999999854,
+          "body_size": 49.42199999999957,
+          "break_type": "close",
+          "broken_swing_index": 169,
+          "broken_swing_price": 4415.626,
+          "close_price": 4370.912,
+          "confirmed_swing_at": 171,
+          "direction": "bearish",
+          "displacement": true,
+          "event_type": "CHoCH",
+          "index": 187,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:169",
+          "time": "2026-09-01T08:00:00+00:00"
+        },
+        {
+          "atr_value": 18.864142857142856,
+          "body_size": 8.853000000000065,
+          "break_type": "close",
+          "broken_swing_index": 198,
+          "broken_swing_price": 4322.777,
+          "close_price": 4315.94,
+          "confirmed_swing_at": 200,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 202,
+          "mode": "internal",
+          "structure_leg_id": "internal:bearish:198",
+          "time": "2026-09-02T00:00:00+00:00"
+        },
+        {
+          "atr_value": 18.5310714285712,
+          "body_size": 22.782999999999447,
+          "break_type": "close",
+          "broken_swing_index": 210,
+          "broken_swing_price": 4331.838,
+          "close_price": 4332.23,
+          "confirmed_swing_at": 212,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 213,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:210",
+          "time": "2026-09-02T11:00:00+00:00"
+        },
+        {
+          "atr_value": 18.64049999999991,
+          "body_size": 15.153000000000247,
+          "break_type": "close",
+          "broken_swing_index": 216,
+          "broken_swing_price": 4397.872,
+          "close_price": 4410.613,
+          "confirmed_swing_at": 218,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 226,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:216",
+          "time": "2026-09-03T01:00:00+00:00"
+        },
+        {
+          "atr_value": 15.081714285714238,
+          "body_size": 16.697000000000116,
+          "break_type": "close",
+          "broken_swing_index": 233,
+          "broken_swing_price": 4443.805,
+          "close_price": 4444.109,
+          "confirmed_swing_at": 235,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 236,
+          "mode": "internal",
+          "structure_leg_id": "internal:bullish:233",
+          "time": "2026-09-03T11:00:00+00:00"
+        }
+      ],
+      "internal_pivots": [
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "UNCLASSIFIED",
+          "confirmed_at": 5,
+          "confirmed_time": "2026-08-20T10:00:00+00:00",
+          "index": 3,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4498.85,
+          "strength": 2,
+          "time": "2026-08-20T08:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "UNCLASSIFIED",
+          "confirmed_at": 9,
+          "confirmed_time": "2026-08-20T14:00:00+00:00",
+          "index": 7,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4450.495,
+          "strength": 2,
+          "time": "2026-08-20T12:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 12,
+          "confirmed_time": "2026-08-20T17:00:00+00:00",
+          "index": 10,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4541.127,
+          "strength": 2,
+          "time": "2026-08-20T15:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 16,
+          "confirmed_time": "2026-08-20T22:00:00+00:00",
+          "index": 14,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4532.344,
+          "strength": 2,
+          "time": "2026-08-20T19:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 21,
+          "confirmed_time": "2026-08-21T03:00:00+00:00",
+          "index": 19,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4544.061,
+          "strength": 2,
+          "time": "2026-08-21T01:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 21,
+          "confirmed_time": "2026-08-21T03:00:00+00:00",
+          "index": 19,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4508.719,
+          "strength": 2,
+          "time": "2026-08-21T01:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 31,
+          "confirmed_time": "2026-08-21T13:00:00+00:00",
+          "index": 29,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4604.698,
+          "strength": 2,
+          "time": "2026-08-21T11:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 32,
+          "confirmed_time": "2026-08-21T14:00:00+00:00",
+          "index": 30,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4563.426,
+          "strength": 2,
+          "time": "2026-08-21T12:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 37,
+          "confirmed_time": "2026-08-21T19:00:00+00:00",
+          "index": 35,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4632.235,
+          "strength": 2,
+          "time": "2026-08-21T17:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 40,
+          "confirmed_time": "2026-08-23T23:00:00+00:00",
+          "index": 38,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4602.55,
+          "strength": 2,
+          "time": "2026-08-21T20:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 43,
+          "confirmed_time": "2026-08-24T02:00:00+00:00",
+          "index": 41,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4594.459,
+          "strength": 2,
+          "time": "2026-08-24T00:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 45,
+          "confirmed_time": "2026-08-24T04:00:00+00:00",
+          "index": 43,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4657.059,
+          "strength": 2,
+          "time": "2026-08-24T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 48,
+          "confirmed_time": "2026-08-24T07:00:00+00:00",
+          "index": 46,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4629.691,
+          "strength": 2,
+          "time": "2026-08-24T05:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 49,
+          "confirmed_time": "2026-08-24T08:00:00+00:00",
+          "index": 47,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4660.132,
+          "strength": 2,
+          "time": "2026-08-24T06:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 51,
+          "confirmed_time": "2026-08-24T10:00:00+00:00",
+          "index": 49,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4628.76,
+          "strength": 2,
+          "time": "2026-08-24T08:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 56,
+          "confirmed_time": "2026-08-24T15:00:00+00:00",
+          "index": 54,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4681.078,
+          "strength": 2,
+          "time": "2026-08-24T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 61,
+          "confirmed_time": "2026-08-24T20:00:00+00:00",
+          "index": 59,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4624.896,
+          "strength": 2,
+          "time": "2026-08-24T18:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 66,
+          "confirmed_time": "2026-08-25T02:00:00+00:00",
+          "index": 64,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4697.172,
+          "strength": 2,
+          "time": "2026-08-25T00:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 68,
+          "confirmed_time": "2026-08-25T04:00:00+00:00",
+          "index": 66,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4617.89,
+          "strength": 2,
+          "time": "2026-08-25T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 72,
+          "confirmed_time": "2026-08-25T08:00:00+00:00",
+          "index": 70,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4653.645,
+          "strength": 2,
+          "time": "2026-08-25T06:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 74,
+          "confirmed_time": "2026-08-25T10:00:00+00:00",
+          "index": 72,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4620.195,
+          "strength": 2,
+          "time": "2026-08-25T08:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 77,
+          "confirmed_time": "2026-08-25T13:00:00+00:00",
+          "index": 75,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4647.641,
+          "strength": 2,
+          "time": "2026-08-25T11:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 79,
+          "confirmed_time": "2026-08-25T15:00:00+00:00",
+          "index": 77,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4605.33,
+          "strength": 2,
+          "time": "2026-08-25T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 81,
+          "confirmed_time": "2026-08-25T17:00:00+00:00",
+          "index": 79,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4659.707,
+          "strength": 2,
+          "time": "2026-08-25T15:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 87,
+          "confirmed_time": "2026-08-26T00:00:00+00:00",
+          "index": 85,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4673.729,
+          "strength": 2,
+          "time": "2026-08-25T22:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 90,
+          "confirmed_time": "2026-08-26T03:00:00+00:00",
+          "index": 88,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4629.755,
+          "strength": 2,
+          "time": "2026-08-26T01:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 91,
+          "confirmed_time": "2026-08-26T04:00:00+00:00",
+          "index": 89,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4670.739,
+          "strength": 2,
+          "time": "2026-08-26T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 103,
+          "confirmed_time": "2026-08-26T16:00:00+00:00",
+          "index": 101,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4633.671,
+          "strength": 2,
+          "time": "2026-08-26T14:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 104,
+          "confirmed_time": "2026-08-26T17:00:00+00:00",
+          "index": 102,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4583.022,
+          "strength": 2,
+          "time": "2026-08-26T15:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 107,
+          "confirmed_time": "2026-08-26T20:00:00+00:00",
+          "index": 105,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4604.702,
+          "strength": 2,
+          "time": "2026-08-26T18:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 109,
+          "confirmed_time": "2026-08-26T23:00:00+00:00",
+          "index": 107,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4584.111,
+          "strength": 2,
+          "time": "2026-08-26T20:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 114,
+          "confirmed_time": "2026-08-27T04:00:00+00:00",
+          "index": 112,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4643.286,
+          "strength": 2,
+          "time": "2026-08-27T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 122,
+          "confirmed_time": "2026-08-27T12:00:00+00:00",
+          "index": 120,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4568.954,
+          "strength": 2,
+          "time": "2026-08-27T10:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 124,
+          "confirmed_time": "2026-08-27T14:00:00+00:00",
+          "index": 122,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4601.378,
+          "strength": 2,
+          "time": "2026-08-27T12:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 125,
+          "confirmed_time": "2026-08-27T15:00:00+00:00",
+          "index": 123,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4564.92,
+          "strength": 2,
+          "time": "2026-08-27T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 128,
+          "confirmed_time": "2026-08-27T18:00:00+00:00",
+          "index": 126,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4616.912,
+          "strength": 2,
+          "time": "2026-08-27T16:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 131,
+          "confirmed_time": "2026-08-27T22:00:00+00:00",
+          "index": 129,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4618.228,
+          "strength": 2,
+          "time": "2026-08-27T19:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 134,
+          "confirmed_time": "2026-08-28T01:00:00+00:00",
+          "index": 132,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4611.646,
+          "strength": 2,
+          "time": "2026-08-27T23:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 137,
+          "confirmed_time": "2026-08-28T04:00:00+00:00",
+          "index": 135,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4575.11,
+          "strength": 2,
+          "time": "2026-08-28T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 140,
+          "confirmed_time": "2026-08-28T07:00:00+00:00",
+          "index": 138,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4571.475,
+          "strength": 2,
+          "time": "2026-08-28T05:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 143,
+          "confirmed_time": "2026-08-28T10:00:00+00:00",
+          "index": 141,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4614.769,
+          "strength": 2,
+          "time": "2026-08-28T08:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 149,
+          "confirmed_time": "2026-08-28T16:00:00+00:00",
+          "index": 147,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4632.4,
+          "strength": 2,
+          "time": "2026-08-28T14:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 153,
+          "confirmed_time": "2026-08-28T20:00:00+00:00",
+          "index": 151,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4445.448,
+          "strength": 2,
+          "time": "2026-08-28T18:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 157,
+          "confirmed_time": "2026-08-31T01:00:00+00:00",
+          "index": 155,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4435.725,
+          "strength": 2,
+          "time": "2026-08-30T23:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 158,
+          "confirmed_time": "2026-08-31T02:00:00+00:00",
+          "index": 156,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4472.528,
+          "strength": 2,
+          "time": "2026-08-31T00:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 160,
+          "confirmed_time": "2026-08-31T04:00:00+00:00",
+          "index": 158,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4396.466,
+          "strength": 2,
+          "time": "2026-08-31T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 169,
+          "confirmed_time": "2026-08-31T13:00:00+00:00",
+          "index": 167,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4464.167,
+          "strength": 2,
+          "time": "2026-08-31T11:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 171,
+          "confirmed_time": "2026-08-31T15:00:00+00:00",
+          "index": 169,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4415.626,
+          "strength": 2,
+          "time": "2026-08-31T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 174,
+          "confirmed_time": "2026-08-31T18:00:00+00:00",
+          "index": 172,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4440.445,
+          "strength": 2,
+          "time": "2026-08-31T16:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 178,
+          "confirmed_time": "2026-08-31T23:00:00+00:00",
+          "index": 176,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4456.124,
+          "strength": 2,
+          "time": "2026-08-31T20:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 181,
+          "confirmed_time": "2026-09-01T02:00:00+00:00",
+          "index": 179,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4461.607,
+          "strength": 2,
+          "time": "2026-09-01T00:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 186,
+          "confirmed_time": "2026-09-01T07:00:00+00:00",
+          "index": 184,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4446.171,
+          "strength": 2,
+          "time": "2026-09-01T05:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 192,
+          "confirmed_time": "2026-09-01T13:00:00+00:00",
+          "index": 190,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4387.351,
+          "strength": 2,
+          "time": "2026-09-01T11:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 194,
+          "confirmed_time": "2026-09-01T15:00:00+00:00",
+          "index": 192,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4326.184,
+          "strength": 2,
+          "time": "2026-09-01T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 200,
+          "confirmed_time": "2026-09-01T22:00:00+00:00",
+          "index": 198,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4322.777,
+          "strength": 2,
+          "time": "2026-09-01T19:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 203,
+          "confirmed_time": "2026-09-02T01:00:00+00:00",
+          "index": 201,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4335.891,
+          "strength": 2,
+          "time": "2026-09-01T23:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 207,
+          "confirmed_time": "2026-09-02T05:00:00+00:00",
+          "index": 205,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4282.332,
+          "strength": 2,
+          "time": "2026-09-02T03:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 212,
+          "confirmed_time": "2026-09-02T10:00:00+00:00",
+          "index": 210,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4331.838,
+          "strength": 2,
+          "time": "2026-09-02T08:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 214,
+          "confirmed_time": "2026-09-02T12:00:00+00:00",
+          "index": 212,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4301.853,
+          "strength": 2,
+          "time": "2026-09-02T10:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 218,
+          "confirmed_time": "2026-09-02T16:00:00+00:00",
+          "index": 216,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4397.872,
+          "strength": 2,
+          "time": "2026-09-02T14:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 220,
+          "confirmed_time": "2026-09-02T18:00:00+00:00",
+          "index": 218,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4364.41,
+          "strength": 2,
+          "time": "2026-09-02T16:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 226,
+          "confirmed_time": "2026-09-03T01:00:00+00:00",
+          "index": 224,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4381.042,
+          "strength": 2,
+          "time": "2026-09-02T23:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 232,
+          "confirmed_time": "2026-09-03T07:00:00+00:00",
+          "index": 230,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4440.475,
+          "strength": 2,
+          "time": "2026-09-03T05:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 233,
+          "confirmed_time": "2026-09-03T08:00:00+00:00",
+          "index": 231,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4418.9,
+          "strength": 2,
+          "time": "2026-09-03T06:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 235,
+          "confirmed_time": "2026-09-03T10:00:00+00:00",
+          "index": 233,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4443.805,
+          "strength": 2,
+          "time": "2026-09-03T08:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 237,
+          "confirmed_time": "2026-09-03T12:00:00+00:00",
+          "index": 235,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4418.949,
+          "strength": 2,
+          "time": "2026-09-03T10:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 242,
+          "confirmed_time": "2026-09-03T17:00:00+00:00",
+          "index": 240,
+          "kind": "high",
+          "mode": "internal",
+          "price": 4511.058,
+          "strength": 2,
+          "time": "2026-09-03T15:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 247,
+          "confirmed_time": "2026-09-03T23:00:00+00:00",
+          "index": 245,
+          "kind": "low",
+          "mode": "internal",
+          "price": 4470.394,
+          "strength": 2,
+          "time": "2026-09-03T20:00:00+00:00"
+        }
+      ],
+      "order_blocks": [
+        {
+          "close": 4467.186,
+          "created_at": 9,
+          "direction": "bullish",
+          "high": 4491.408,
+          "index": 6,
+          "invalidated_at": 151,
+          "invalidation_reason": "close_break",
+          "low": 4465.389,
+          "mitigated": true,
+          "mitigated_at": 149,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4490.343,
+          "origin_type": "BOS",
+          "quality": "strong",
+          "retest_count": 1,
+          "source_event_index": 9,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": 4477.262,
+          "source_fvg_index": 8,
+          "source_fvg_top": 4480.786,
+          "source_swing_index": 3,
+          "structure_leg_id": "internal:bullish:3",
+          "time": "2026-08-20T11:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4510.618,
+          "created_at": 20,
+          "direction": "bullish",
+          "high": 4527.574,
+          "index": 18,
+          "invalidated_at": 149,
+          "invalidation_reason": "close_break",
+          "low": 4509.74,
+          "mitigated": true,
+          "mitigated_at": 21,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4526.445,
+          "origin_type": "BOS",
+          "quality": "base",
+          "retest_count": 2,
+          "source_event_index": 20,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 14,
+          "structure_leg_id": null,
+          "time": "2026-08-21T00:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4510.618,
+          "created_at": 23,
+          "direction": "bullish",
+          "high": 4527.574,
+          "index": 18,
+          "invalidated_at": 149,
+          "invalidation_reason": "close_break",
+          "low": 4509.74,
+          "mitigated": true,
+          "mitigated_at": 148,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4526.445,
+          "origin_type": "BOS",
+          "quality": "base",
+          "retest_count": 1,
+          "source_event_index": 23,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 19,
+          "structure_leg_id": null,
+          "time": "2026-08-21T00:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4578.231,
+          "created_at": 33,
+          "direction": "bullish",
+          "high": 4601.884,
+          "index": 30,
+          "invalidated_at": 148,
+          "invalidation_reason": "close_break",
+          "low": 4563.426,
+          "mitigated": true,
+          "mitigated_at": 41,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4597.252,
+          "origin_type": "BOS",
+          "quality": "base",
+          "retest_count": 7,
+          "source_event_index": 33,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 29,
+          "structure_leg_id": null,
+          "time": "2026-08-21T12:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4621.695,
+          "created_at": 42,
+          "direction": "bullish",
+          "high": 4641.136,
+          "index": 41,
+          "invalidated_at": 103,
+          "invalidation_reason": "close_break",
+          "low": 4594.459,
+          "mitigated": true,
+          "mitigated_at": 43,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4624.304,
+          "origin_type": "BOS",
+          "quality": "base",
+          "retest_count": 7,
+          "source_event_index": 42,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 35,
+          "structure_leg_id": null,
+          "time": "2026-08-24T00:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4643.338,
+          "created_at": 53,
+          "direction": "bullish",
+          "high": 4650.398,
+          "index": 51,
+          "invalidated_at": 58,
+          "invalidation_reason": "close_break",
+          "low": 4641.849,
+          "mitigated": true,
+          "mitigated_at": 56,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4645.943,
+          "origin_type": "BOS",
+          "quality": "base",
+          "retest_count": 1,
+          "source_event_index": 53,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 47,
+          "structure_leg_id": null,
+          "time": "2026-08-24T10:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4636.458,
+          "created_at": 64,
+          "direction": "bullish",
+          "high": 4642.474,
+          "index": 59,
+          "invalidated_at": 77,
+          "invalidation_reason": "close_break",
+          "low": 4624.896,
+          "mitigated": true,
+          "mitigated_at": 66,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4636.785,
+          "origin_type": "BOS",
+          "quality": "strong",
+          "retest_count": 1,
+          "source_event_index": 64,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": 4642.474,
+          "source_fvg_index": 60,
+          "source_fvg_top": 4647.157,
+          "source_swing_index": 54,
+          "structure_leg_id": "internal:bullish:54",
+          "time": "2026-08-24T18:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4642.62,
+          "created_at": 77,
+          "direction": "bearish",
+          "high": 4647.641,
+          "index": 75,
+          "invalidated_at": 79,
+          "invalidation_reason": "close_break",
+          "low": 4636.069,
+          "mitigated": true,
+          "mitigated_at": 78,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4639.079,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 1,
+          "source_event_index": 77,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 72,
+          "structure_leg_id": null,
+          "time": "2026-08-25T11:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4616.476,
+          "created_at": 79,
+          "direction": "bullish",
+          "high": 4641.344,
+          "index": 77,
+          "invalidated_at": 101,
+          "invalidation_reason": "close_break",
+          "low": 4605.33,
+          "mitigated": true,
+          "mitigated_at": 80,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4640.871,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 3,
+          "source_event_index": 79,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 75,
+          "structure_leg_id": null,
+          "time": "2026-08-25T13:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4643.664,
+          "created_at": 83,
+          "direction": "bullish",
+          "high": 4653.477,
+          "index": 80,
+          "invalidated_at": 93,
+          "invalidation_reason": "close_break",
+          "low": 4636.967,
+          "mitigated": true,
+          "mitigated_at": 86,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4652.679,
+          "origin_type": "BOS",
+          "quality": "strong",
+          "retest_count": 2,
+          "source_event_index": 83,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": 4648.594,
+          "source_fvg_index": 82,
+          "source_fvg_top": 4653.312,
+          "source_swing_index": 79,
+          "structure_leg_id": "internal:bullish:79",
+          "time": "2026-08-25T16:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4658.426,
+          "created_at": 94,
+          "direction": "bearish",
+          "high": 4670.739,
+          "index": 89,
+          "invalidated_at": null,
+          "invalidation_reason": null,
+          "low": 4655.024,
+          "mitigated": false,
+          "mitigated_at": null,
+          "mitigation_pct": 0.0,
+          "mode": "internal",
+          "open": 4657.259,
+          "origin_type": "CHoCH",
+          "quality": "strong",
+          "retest_count": 0,
+          "source_event_index": 94,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": 4644.514,
+          "source_fvg_index": 90,
+          "source_fvg_top": 4655.024,
+          "source_swing_index": 88,
+          "structure_leg_id": "internal:bearish:88",
+          "time": "2026-08-26T02:00:00+00:00",
+          "valid": true
+        },
+        {
+          "close": 4594.262,
+          "created_at": 108,
+          "direction": "bullish",
+          "high": 4596.919,
+          "index": 107,
+          "invalidated_at": 119,
+          "invalidation_reason": "close_break",
+          "low": 4584.111,
+          "mitigated": true,
+          "mitigated_at": 117,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4594.278,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 1,
+          "source_event_index": 108,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 105,
+          "structure_leg_id": null,
+          "time": "2026-08-26T20:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4600.402,
+          "created_at": 119,
+          "direction": "bearish",
+          "high": 4605.851,
+          "index": 117,
+          "invalidated_at": 125,
+          "invalidation_reason": "close_break",
+          "low": 4593.435,
+          "mitigated": true,
+          "mitigated_at": 121,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4600.32,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 1,
+          "source_event_index": 119,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 107,
+          "structure_leg_id": null,
+          "time": "2026-08-27T07:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4572.485,
+          "created_at": 125,
+          "direction": "bullish",
+          "high": 4593.514,
+          "index": 123,
+          "invalidated_at": 148,
+          "invalidation_reason": "close_break",
+          "low": 4564.92,
+          "mitigated": true,
+          "mitigated_at": 133,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4586.067,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 3,
+          "source_event_index": 125,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 122,
+          "structure_leg_id": null,
+          "time": "2026-08-27T13:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4584.293,
+          "created_at": 138,
+          "direction": "bearish",
+          "high": 4585.461,
+          "index": 137,
+          "invalidated_at": 139,
+          "invalidation_reason": "close_break",
+          "low": 4577.883,
+          "mitigated": true,
+          "mitigated_at": 139,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4579.862,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 1,
+          "source_event_index": 138,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 135,
+          "structure_leg_id": null,
+          "time": "2026-08-28T04:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4573.628,
+          "created_at": 139,
+          "direction": "bullish",
+          "high": 4586.543,
+          "index": 138,
+          "invalidated_at": 148,
+          "invalidation_reason": "close_break",
+          "low": 4571.475,
+          "mitigated": true,
+          "mitigated_at": 147,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4584.624,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 1,
+          "source_event_index": 139,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 132,
+          "structure_leg_id": null,
+          "time": "2026-08-28T05:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4605.308,
+          "created_at": 148,
+          "direction": "bearish",
+          "high": 4627.594,
+          "index": 146,
+          "invalidated_at": null,
+          "invalidation_reason": null,
+          "low": 4593.652,
+          "mitigated": false,
+          "mitigated_at": null,
+          "mitigation_pct": 0.0,
+          "mode": "internal",
+          "open": 4601.495,
+          "origin_type": "CHoCH",
+          "quality": "premium_candidate",
+          "retest_count": 0,
+          "source_event_index": 148,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": 4583.186,
+          "source_fvg_index": 147,
+          "source_fvg_top": 4593.652,
+          "source_swing_index": 138,
+          "structure_leg_id": "internal:bearish:138",
+          "time": "2026-08-28T13:00:00+00:00",
+          "valid": true
+        },
+        {
+          "close": 4461.479,
+          "created_at": 158,
+          "direction": "bearish",
+          "high": 4466.109,
+          "index": 154,
+          "invalidated_at": 237,
+          "invalidation_reason": "close_break",
+          "low": 4439.165,
+          "mitigated": true,
+          "mitigated_at": 161,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4439.165,
+          "origin_type": "BOS",
+          "quality": "strong",
+          "retest_count": 7,
+          "source_event_index": 158,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": 4441.683,
+          "source_fvg_index": 157,
+          "source_fvg_top": 4452.198,
+          "source_swing_index": 155,
+          "structure_leg_id": "internal:bearish:155",
+          "time": "2026-08-30T22:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4430.817,
+          "created_at": 175,
+          "direction": "bullish",
+          "high": 4437.041,
+          "index": 174,
+          "invalidated_at": 186,
+          "invalidation_reason": "close_break",
+          "low": 4426.237,
+          "mitigated": true,
+          "mitigated_at": 180,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4436.565,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 1,
+          "source_event_index": 175,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 172,
+          "structure_leg_id": null,
+          "time": "2026-08-31T18:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4440.412,
+          "created_at": 187,
+          "direction": "bearish",
+          "high": 4446.171,
+          "index": 184,
+          "invalidated_at": 237,
+          "invalidation_reason": "close_break",
+          "low": 4423.933,
+          "mitigated": true,
+          "mitigated_at": 228,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4426.928,
+          "origin_type": "CHoCH",
+          "quality": "premium_candidate",
+          "retest_count": 1,
+          "source_event_index": 187,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": 4420.334,
+          "source_fvg_index": 186,
+          "source_fvg_top": 4427.827,
+          "source_swing_index": 169,
+          "structure_leg_id": "internal:bearish:169",
+          "time": "2026-09-01T05:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4328.991,
+          "created_at": 202,
+          "direction": "bearish",
+          "high": 4330.875,
+          "index": 199,
+          "invalidated_at": 213,
+          "invalidation_reason": "close_break",
+          "low": 4323.887,
+          "mitigated": true,
+          "mitigated_at": 203,
+          "mitigation_pct": 1.0,
+          "mode": "internal",
+          "open": 4326.78,
+          "origin_type": "BOS",
+          "quality": "base",
+          "retest_count": 3,
+          "source_event_index": 202,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 198,
+          "structure_leg_id": null,
+          "time": "2026-09-01T20:00:00+00:00",
+          "valid": false
+        },
+        {
+          "close": 4308.782,
+          "created_at": 213,
+          "direction": "bullish",
+          "high": 4322.545,
+          "index": 211,
+          "invalidated_at": null,
+          "invalidation_reason": null,
+          "low": 4304.993,
+          "mitigated": false,
+          "mitigated_at": null,
+          "mitigation_pct": 0.0,
+          "mode": "internal",
+          "open": 4313.05,
+          "origin_type": "CHoCH",
+          "quality": "base",
+          "retest_count": 0,
+          "source_event_index": 213,
+          "source_event_type": "CHoCH",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 210,
+          "structure_leg_id": null,
+          "time": "2026-09-02T09:00:00+00:00",
+          "valid": true
+        },
+        {
+          "close": 4384.669,
+          "created_at": 226,
+          "direction": "bullish",
+          "high": 4393.321,
+          "index": 223,
+          "invalidated_at": null,
+          "invalidation_reason": null,
+          "low": 4383.446,
+          "mitigated": false,
+          "mitigated_at": null,
+          "mitigation_pct": 0.0,
+          "mode": "internal",
+          "open": 4391.737,
+          "origin_type": "BOS",
+          "quality": "base",
+          "retest_count": 0,
+          "source_event_index": 226,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 216,
+          "structure_leg_id": null,
+          "time": "2026-09-02T22:00:00+00:00",
+          "valid": true
+        },
+        {
+          "close": 4427.473,
+          "created_at": 236,
+          "direction": "bullish",
+          "high": 4429.92,
+          "index": 235,
+          "invalidated_at": null,
+          "invalidation_reason": null,
+          "low": 4418.949,
+          "mitigated": false,
+          "mitigated_at": null,
+          "mitigation_pct": 0.0,
+          "mode": "internal",
+          "open": 4427.738,
+          "origin_type": "BOS",
+          "quality": "base",
+          "retest_count": 0,
+          "source_event_index": 236,
+          "source_event_type": "BOS",
+          "source_fvg_bottom": null,
+          "source_fvg_index": null,
+          "source_fvg_top": null,
+          "source_swing_index": 233,
+          "structure_leg_id": null,
+          "time": "2026-09-03T10:00:00+00:00",
+          "valid": true
+        }
+      ],
+      "swing_events": [
+        {
+          "atr_value": 18.574428571428534,
+          "body_size": 12.91399999999976,
+          "break_type": "close",
+          "broken_swing_index": 10,
+          "broken_swing_price": 4541.127,
+          "close_price": 4553.451,
+          "confirmed_swing_at": 15,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 23,
+          "mode": "swing",
+          "structure_leg_id": "swing:bullish:10",
+          "time": "2026-08-21T05:00:00+00:00"
+        },
+        {
+          "atr_value": 22.304500000000058,
+          "body_size": 10.58600000000024,
+          "break_type": "close",
+          "broken_swing_index": 35,
+          "broken_swing_price": 4632.235,
+          "close_price": 4632.337,
+          "confirmed_swing_at": 40,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 42,
+          "mode": "swing",
+          "structure_leg_id": "swing:bullish:35",
+          "time": "2026-08-24T01:00:00+00:00"
+        },
+        {
+          "atr_value": 21.272428571428527,
+          "body_size": 4.532000000000153,
+          "break_type": "close",
+          "broken_swing_index": 54,
+          "broken_swing_price": 4681.078,
+          "close_price": 4684.439,
+          "confirmed_swing_at": 59,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 64,
+          "mode": "swing",
+          "structure_leg_id": "swing:bullish:54",
+          "time": "2026-08-25T00:00:00+00:00"
+        },
+        {
+          "atr_value": 21.424999999999986,
+          "body_size": 24.395000000000437,
+          "break_type": "close",
+          "broken_swing_index": 66,
+          "broken_swing_price": 4617.89,
+          "close_price": 4616.476,
+          "confirmed_swing_at": 71,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 77,
+          "mode": "swing",
+          "structure_leg_id": "swing:bearish:66",
+          "time": "2026-08-25T13:00:00+00:00"
+        },
+        {
+          "atr_value": 17.49042857142857,
+          "body_size": 28.427999999999884,
+          "break_type": "close",
+          "broken_swing_index": 77,
+          "broken_swing_price": 4605.33,
+          "close_price": 4603.17,
+          "confirmed_swing_at": 82,
+          "direction": "bearish",
+          "displacement": true,
+          "event_type": "BOS",
+          "index": 101,
+          "mode": "swing",
+          "structure_leg_id": "swing:bearish:77",
+          "time": "2026-08-26T14:00:00+00:00"
+        },
+        {
+          "atr_value": 20.701142857142845,
+          "body_size": 34.77899999999954,
+          "break_type": "close",
+          "broken_swing_index": 101,
+          "broken_swing_price": 4633.671,
+          "close_price": 4639.986,
+          "confirmed_swing_at": 106,
+          "direction": "bullish",
+          "displacement": true,
+          "event_type": "CHoCH",
+          "index": 111,
+          "mode": "swing",
+          "structure_leg_id": "swing:bullish:101",
+          "time": "2026-08-27T01:00:00+00:00"
+        },
+        {
+          "atr_value": 18.09257142857145,
+          "body_size": 18.46900000000005,
+          "break_type": "close",
+          "broken_swing_index": 102,
+          "broken_swing_price": 4583.022,
+          "close_price": 4580.51,
+          "confirmed_swing_at": 107,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 119,
+          "mode": "swing",
+          "structure_leg_id": "swing:bearish:102",
+          "time": "2026-08-27T09:00:00+00:00"
+        },
+        {
+          "atr_value": 25.900142857142914,
+          "body_size": 51.96399999999994,
+          "break_type": "close",
+          "broken_swing_index": 138,
+          "broken_swing_price": 4571.475,
+          "close_price": 4524.734,
+          "confirmed_swing_at": 143,
+          "direction": "bearish",
+          "displacement": true,
+          "event_type": "BOS",
+          "index": 148,
+          "mode": "swing",
+          "structure_leg_id": "swing:bearish:138",
+          "time": "2026-08-28T15:00:00+00:00"
+        },
+        {
+          "atr_value": 18.472499999999854,
+          "body_size": 49.42199999999957,
+          "break_type": "close",
+          "broken_swing_index": 169,
+          "broken_swing_price": 4415.626,
+          "close_price": 4370.912,
+          "confirmed_swing_at": 174,
+          "direction": "bearish",
+          "displacement": true,
+          "event_type": "BOS",
+          "index": 187,
+          "mode": "swing",
+          "structure_leg_id": "swing:bearish:169",
+          "time": "2026-09-01T08:00:00+00:00"
+        },
+        {
+          "atr_value": 18.391857142857134,
+          "body_size": 4.82300000000032,
+          "break_type": "close",
+          "broken_swing_index": 192,
+          "broken_swing_price": 4326.184,
+          "close_price": 4324.74,
+          "confirmed_swing_at": 197,
+          "direction": "bearish",
+          "displacement": false,
+          "event_type": "BOS",
+          "index": 201,
+          "mode": "swing",
+          "structure_leg_id": "swing:bearish:192",
+          "time": "2026-09-01T23:00:00+00:00"
+        },
+        {
+          "atr_value": 18.64049999999991,
+          "body_size": 15.153000000000247,
+          "break_type": "close",
+          "broken_swing_index": 216,
+          "broken_swing_price": 4397.872,
+          "close_price": 4410.613,
+          "confirmed_swing_at": 221,
+          "direction": "bullish",
+          "displacement": false,
+          "event_type": "CHoCH",
+          "index": 226,
+          "mode": "swing",
+          "structure_leg_id": "swing:bullish:216",
+          "time": "2026-09-03T01:00:00+00:00"
+        }
+      ],
+      "swing_pivots": [
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "UNCLASSIFIED",
+          "confirmed_at": 12,
+          "confirmed_time": "2026-08-20T17:00:00+00:00",
+          "index": 7,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4450.495,
+          "strength": 5,
+          "time": "2026-08-20T12:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "UNCLASSIFIED",
+          "confirmed_at": 15,
+          "confirmed_time": "2026-08-20T20:00:00+00:00",
+          "index": 10,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4541.127,
+          "strength": 5,
+          "time": "2026-08-20T15:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 24,
+          "confirmed_time": "2026-08-21T06:00:00+00:00",
+          "index": 19,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4508.719,
+          "strength": 5,
+          "time": "2026-08-21T01:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 40,
+          "confirmed_time": "2026-08-23T23:00:00+00:00",
+          "index": 35,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4632.235,
+          "strength": 5,
+          "time": "2026-08-21T17:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 46,
+          "confirmed_time": "2026-08-24T05:00:00+00:00",
+          "index": 41,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4594.459,
+          "strength": 5,
+          "time": "2026-08-24T00:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 54,
+          "confirmed_time": "2026-08-24T13:00:00+00:00",
+          "index": 49,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4628.76,
+          "strength": 5,
+          "time": "2026-08-24T08:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 59,
+          "confirmed_time": "2026-08-24T18:00:00+00:00",
+          "index": 54,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4681.078,
+          "strength": 5,
+          "time": "2026-08-24T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 64,
+          "confirmed_time": "2026-08-25T00:00:00+00:00",
+          "index": 59,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4624.896,
+          "strength": 5,
+          "time": "2026-08-24T18:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 69,
+          "confirmed_time": "2026-08-25T05:00:00+00:00",
+          "index": 64,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4697.172,
+          "strength": 5,
+          "time": "2026-08-25T00:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 71,
+          "confirmed_time": "2026-08-25T07:00:00+00:00",
+          "index": 66,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4617.89,
+          "strength": 5,
+          "time": "2026-08-25T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 82,
+          "confirmed_time": "2026-08-25T18:00:00+00:00",
+          "index": 77,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4605.33,
+          "strength": 5,
+          "time": "2026-08-25T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 90,
+          "confirmed_time": "2026-08-26T03:00:00+00:00",
+          "index": 85,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4673.729,
+          "strength": 5,
+          "time": "2026-08-25T22:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 106,
+          "confirmed_time": "2026-08-26T19:00:00+00:00",
+          "index": 101,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4633.671,
+          "strength": 5,
+          "time": "2026-08-26T14:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 107,
+          "confirmed_time": "2026-08-26T20:00:00+00:00",
+          "index": 102,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4583.022,
+          "strength": 5,
+          "time": "2026-08-26T15:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 117,
+          "confirmed_time": "2026-08-27T07:00:00+00:00",
+          "index": 112,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4643.286,
+          "strength": 5,
+          "time": "2026-08-27T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 128,
+          "confirmed_time": "2026-08-27T18:00:00+00:00",
+          "index": 123,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4564.92,
+          "strength": 5,
+          "time": "2026-08-27T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 134,
+          "confirmed_time": "2026-08-28T01:00:00+00:00",
+          "index": 129,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4618.228,
+          "strength": 5,
+          "time": "2026-08-27T19:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 143,
+          "confirmed_time": "2026-08-28T10:00:00+00:00",
+          "index": 138,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4571.475,
+          "strength": 5,
+          "time": "2026-08-28T05:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 152,
+          "confirmed_time": "2026-08-28T19:00:00+00:00",
+          "index": 147,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4632.4,
+          "strength": 5,
+          "time": "2026-08-28T14:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 161,
+          "confirmed_time": "2026-08-31T05:00:00+00:00",
+          "index": 156,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4472.528,
+          "strength": 5,
+          "time": "2026-08-31T00:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 163,
+          "confirmed_time": "2026-08-31T07:00:00+00:00",
+          "index": 158,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4396.466,
+          "strength": 5,
+          "time": "2026-08-31T02:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 172,
+          "confirmed_time": "2026-08-31T16:00:00+00:00",
+          "index": 167,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4464.167,
+          "strength": 5,
+          "time": "2026-08-31T11:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 174,
+          "confirmed_time": "2026-08-31T18:00:00+00:00",
+          "index": 169,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4415.626,
+          "strength": 5,
+          "time": "2026-08-31T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 184,
+          "confirmed_time": "2026-09-01T05:00:00+00:00",
+          "index": 179,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4461.607,
+          "strength": 5,
+          "time": "2026-09-01T00:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 197,
+          "confirmed_time": "2026-09-01T18:00:00+00:00",
+          "index": 192,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4326.184,
+          "strength": 5,
+          "time": "2026-09-01T13:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LL",
+          "confirmed_at": 210,
+          "confirmed_time": "2026-09-02T08:00:00+00:00",
+          "index": 205,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4282.332,
+          "strength": 5,
+          "time": "2026-09-02T03:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HL",
+          "confirmed_at": 217,
+          "confirmed_time": "2026-09-02T15:00:00+00:00",
+          "index": 212,
+          "kind": "low",
+          "mode": "swing",
+          "price": 4301.853,
+          "strength": 5,
+          "time": "2026-09-02T10:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "LH",
+          "confirmed_at": 221,
+          "confirmed_time": "2026-09-02T19:00:00+00:00",
+          "index": 216,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4397.872,
+          "strength": 5,
+          "time": "2026-09-02T14:00:00+00:00"
+        },
+        {
+          "broken": false,
+          "broken_at": null,
+          "classification": "HH",
+          "confirmed_at": 245,
+          "confirmed_time": "2026-09-03T20:00:00+00:00",
+          "index": 240,
+          "kind": "high",
+          "mode": "swing",
+          "price": 4511.058,
+          "strength": 5,
+          "time": "2026-09-03T15:00:00+00:00"
+        }
+      ],
+      "trades": [
+        {
+          "direction": "bearish",
+          "entry_bar": 189,
+          "entry_price": 4378.163,
+          "entry_time": "2026-09-01 10:00:00+00:00",
+          "exit_bar": 237,
+          "exit_price": 4446.671,
+          "exit_time": "2026-09-03 12:00:00+00:00",
+          "placed_bar": 188,
+          "pnl": -68.50800000000072,
+          "source_choch_index": 187,
+          "source_fvg_index": 187,
+          "source_ob_index": 184,
+          "status": "loss",
+          "stop_loss": 4446.671,
+          "take_profit": 4241.147
+        }
+      ]
+    },
+    "trades": [
+      {
+        "actual_entry_price": 4378.385,
+        "entry_price": 4378.385,
+        "entry_time": 1788260400,
+        "entry_timestamp": 1,
+        "exit_price": 4446.671,
+        "exit_reason": "Stop Loss",
+        "exit_time": 1788436800,
+        "exit_timestamp": 1,
+        "planned_entry_price": 4378.163,
+        "planned_rr": 2.0,
+        "planned_stop_loss": 4446.671,
+        "planned_take_profit": 4241.147,
+        "pnl": -683.86,
+        "return_pct": -6.84,
+        "sl_tp_source": "strategy_planned",
+        "trade_id": 1,
+        "type": "SELL"
+      }
+    ]
+  }
+}

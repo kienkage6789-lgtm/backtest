@@ -1,0 +1,156 @@
+{
+  "profiler": "machine_1_data_runner",
+  "generated_at": "2026-09-12T04:27:25.966147+00:00",
+  "integrity_checks": {
+    "duplicate_timestamps": 0,
+    "non_monotonic_timestamps": 0,
+    "invalid_high_low": 0,
+    "invalid_high_open": 0,
+    "invalid_high_close": 0,
+    "invalid_low_open": 0,
+    "invalid_low_close": 0,
+    "non_positive_prices": 0,
+    "nan_or_null_values": 0,
+    "negative_volumes": 0,
+    "zero_volumes": 0,
+    "status": "PASS"
+  },
+  "volume_statistics": {
+    "mean": 144.09,
+    "std": 181.62,
+    "median": 91.0,
+    "p95": 420.0,
+    "p99": 871.0,
+    "max": 8300,
+    "spikes_above_10x_mean": 4544
+  },
+  "spread_column_survey": {
+    "min": 0,
+    "max": 1917,
+    "mean": 8.38,
+    "zero_count": 1418600,
+    "zero_pct": 86.13,
+    "non_zero_count": 228363,
+    "note": "Spread column in DB contains zeros for legacy broker history; protocol locks synthetic spread model (20 points / $0.20/oz)."
+  },
+  "gap_analysis": {
+    "total_gaps_gt_1min": 1352,
+    "weekend_gaps": {
+      "count": 238,
+      "total_minutes": 708696.0,
+      "description": "Standard market weekend closures (Friday evening to Sunday night)"
+    },
+    "daily_rollover_gaps": {
+      "count": 926,
+      "total_minutes": 59518.0,
+      "description": "Daily 1-hour broker settlement/maintenance downtime"
+    },
+    "holiday_gaps": {
+      "count": 39,
+      "total_minutes": 35978.0,
+      "samples": [
+        {
+          "from": "2022-01-17 19:12:00",
+          "to": "2022-01-17 23:01:00",
+          "duration_minutes": 229.0,
+          "from_weekday": "Monday",
+          "to_weekday": "Monday"
+        },
+        {
+          "from": "2022-02-21 19:14:00",
+          "to": "2022-02-21 23:01:00",
+          "duration_minutes": 227.0,
+          "from_weekday": "Monday",
+          "to_weekday": "Monday"
+        },
+        {
+          "from": "2022-04-14 20:57:00",
+          "to": "2022-04-17 22:05:00",
+          "duration_minutes": 4388.0,
+          "from_weekday": "Thursday",
+          "to_weekday": "Sunday"
+        },
+        {
+          "from": "2022-05-30 17:15:00",
+          "to": "2022-05-30 22:01:00",
+          "duration_minutes": 286.0,
+          "from_weekday": "Monday",
+          "to_weekday": "Monday"
+        },
+        {
+          "from": "2022-06-20 17:14:00",
+          "to": "2022-06-20 22:01:00",
+          "duration_minutes": 287.0,
+          "from_weekday": "Monday",
+          "to_weekday": "Monday"
+        }
+      ]
+    },
+    "intraday_gaps": {
+      "count": 149,
+      "total_minutes": 1132.0,
+      "median_duration_minutes": 2.0,
+      "samples": [
+        {
+          "from": "2022-02-08 23:43:00",
+          "to": "2022-02-08 23:45:00",
+          "duration_minutes": 2.0,
+          "from_weekday": "Tuesday",
+          "to_weekday": "Tuesday"
+        },
+        {
+          "from": "2022-02-08 23:46:00",
+          "to": "2022-02-09 01:22:00",
+          "duration_minutes": 96.0,
+          "from_weekday": "Tuesday",
+          "to_weekday": "Wednesday"
+        },
+        {
+          "from": "2022-02-11 02:57:00",
+          "to": "2022-02-11 03:50:00",
+          "duration_minutes": 53.0,
+          "from_weekday": "Friday",
+          "to_weekday": "Friday"
+        },
+        {
+          "from": "2022-02-21 03:14:00",
+          "to": "2022-02-21 03:50:00",
+          "duration_minutes": 36.0,
+          "from_weekday": "Monday",
+          "to_weekday": "Monday"
+        },
+        {
+          "from": "2022-02-22 03:41:00",
+          "to": "2022-02-22 03:51:00",
+          "duration_minutes": 10.0,
+          "from_weekday": "Tuesday",
+          "to_weekday": "Tuesday"
+        }
+      ]
+    }
+  },
+  "resampling_verification": {
+    "M5_ohlc_check": {
+      "invalid_hl": 0,
+      "invalid_ho": 0,
+      "invalid_hc": 0,
+      "invalid_lo": 0,
+      "invalid_lc": 0
+    },
+    "M15_ohlc_check": {
+      "invalid_hl": 0,
+      "invalid_ho": 0,
+      "invalid_hc": 0,
+      "invalid_lo": 0,
+      "invalid_lc": 0
+    },
+    "H1_ohlc_check": {
+      "invalid_hl": 0,
+      "invalid_ho": 0,
+      "invalid_hc": 0,
+      "invalid_lo": 0,
+      "invalid_lc": 0
+    },
+    "volume_preserved": true
+  }
+}

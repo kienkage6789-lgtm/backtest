@@ -55,7 +55,23 @@ def _parse_float(val, name):
         raise ValueError(f"Tham số '{name}' không hợp lệ: {val}") from e
 
 class StrategyRegistry:
-    SUPPORTED_STRATEGIES = {"sma_crossover", "rsi_reversal", "macd_crossover", "donchian_breakout", "smc_confluence"}
+    LEGACY_STRATEGIES: frozenset[str] = frozenset({
+        "sma_crossover",
+        "rsi_reversal",
+        "macd_crossover",
+        "donchian_breakout",
+        "smc_confluence",
+    })
+
+    WAVE1_STRATEGIES: frozenset[str] = frozenset({
+        "smc_wave1",
+        "smc_s01",
+        "smc_s05",
+        "smc_s09",
+        "smc_st_fvg_mss",
+    })
+
+    SUPPORTED_STRATEGIES: frozenset[str] = LEGACY_STRATEGIES | WAVE1_STRATEGIES
 
     @staticmethod
     def get_available_strategies():
@@ -108,11 +124,83 @@ class StrategyRegistry:
                     {"name": "choch_fvg_window", "label": "CHoCH FVG Search Window", "type": "int", "default": 5, "min": 1, "max": 20},
                     {"name": "max_ranked_fvgs", "label": "Max Ranked FVGs (m_maxRanked)", "type": "int", "default": 3, "min": 1, "max": 10},
                     {"name": "min_fvg_score", "label": "Min FVG Score", "type": "float", "default": 0.0, "min": 0.0, "max": 100.0},
+                    {"name": "require_ob", "label": "Require Valid Order Block", "type": "bool", "default": False},
+                    {"name": "ob_lookback", "label": "Order Block Lookback", "type": "int", "default": 20, "min": 1, "max": 200},
+                    {"name": "sl_anchor", "label": "Stop Loss Anchor", "type": "string", "default": "ob", "options": ["ob", "fvg"]},
                     {"name": "order_type", "label": "Order Type", "type": "string", "default": "limit", "options": ["limit", "market"]},
                     {"name": "limit_expiry_bars", "label": "Limit Expiry Bars", "type": "int", "default": 15, "min": 1, "max": 50},
                     {"name": "rr_ratio", "label": "Risk / Reward Ratio", "type": "float", "default": 2.0, "min": 0.5, "max": 10.0},
                 ]
             }
+        ]
+
+    @staticmethod
+    def get_wave1_strategies():
+        """Trả về metadata cho 4 Wave 1 strategies."""
+        return [
+            {
+                "id": "smc_wave1",
+                "name": "SMC Wave 1 — Multi-Strategy Portfolio (S01 + S05 + S09)",
+                "description": "Danh mục đa chiến lược SMC Wave 1: chạy đồng thời S01 (ICT 2022), S05 (BOS + OB Retest) và S09 (Silver Bullet). Coordinator phân loại theo regime và bộ chọn xác định.",
+                "wave1": True,
+                "allowed_timeframes": ["M1", "M5", "M15"],
+                "params": [
+                    {"name": "min_rr", "label": "Min Risk/Reward", "type": "float", "default": 1.5, "min": 0.5, "max": 10.0},
+                    {"name": "cooldown_bars", "label": "Cooldown Bars (post-fill)", "type": "int", "default": 3, "min": 0, "max": 50},
+                ],
+            },
+            {
+                "id": "smc_s01",
+                "name": "SMC S01 — ICT 2022 Mentorship Model",
+                "description": "Chiến lược ICT 2022 Mentorship: cấu trúc CHoCH/BOS đa khung + FVG + Order Block, vào lệnh theo định hướng HTF.",
+                "wave1": True,
+                "allowed_timeframes": ["M1", "M5", "M15"],
+                "params": [
+                    {"name": "min_rr", "label": "Min Risk/Reward", "type": "float", "default": 1.5, "min": 0.5, "max": 10.0},
+                    {"name": "cooldown_bars", "label": "Cooldown Bars (post-fill)", "type": "int", "default": 3, "min": 0, "max": 50},
+                ],
+            },
+            {
+                "id": "smc_s05",
+                "name": "SMC S05 — BOS + Order Block First Retest",
+                "description": "Chiến lược BOS + Order Block: vào lệnh tại lần kiểm tra đầu tiên của Order Block sau khi phá cấu trúc BOS xác nhận.",
+                "wave1": True,
+                "allowed_timeframes": ["M1", "M5", "M15"],
+                "params": [
+                    {"name": "min_rr", "label": "Min Risk/Reward", "type": "float", "default": 1.5, "min": 0.5, "max": 10.0},
+                    {"name": "cooldown_bars", "label": "Cooldown Bars (post-fill)", "type": "int", "default": 3, "min": 0, "max": 50},
+                ],
+            },
+            {
+                "id": "smc_s09",
+                "name": "SMC S09 — ICT Silver Bullet Window",
+                "description": "Chiến lược Silver Bullet của ICT: vào lệnh trong cửa sổ thời gian 3-4h London/New York với tín hiệu FVG sau CHoCH nội bộ.",
+                "wave1": True,
+                "allowed_timeframes": ["M1", "M5", "M15"],
+                "params": [
+                    {"name": "min_rr", "label": "Min Risk/Reward", "type": "float", "default": 1.5, "min": 0.5, "max": 10.0},
+                    {"name": "cooldown_bars", "label": "Cooldown Bars (post-fill)", "type": "int", "default": 3, "min": 0, "max": 50},
+                ],
+            },
+            {
+                "id": "smc_st_fvg_mss",
+                "name": "SMC — HTF Supertrend + FVG + LTF MSS",
+                "description": "Chiến lược đa khung thời gian: HTF Supertrend (H1) -> HTF FVG -> LTF Sweep (M5) -> LTF MSS -> LTF FVG Entry 50% -> TP 3R cố định.",
+                "wave1": True,
+                "allowed_timeframes": ["M1", "M5", "M15"],
+                "params": [
+                    {"name": "supertrend_atr_length", "label": "Supertrend ATR Length", "type": "int", "default": 10, "min": 2, "max": 50},
+                    {"name": "supertrend_multiplier", "label": "Supertrend Multiplier", "type": "float", "default": 3.0, "min": 0.5, "max": 10.0},
+                    {"name": "supertrend_min_bars", "label": "Supertrend Min Bars Held", "type": "int", "default": 2, "min": 1, "max": 10},
+                    {"name": "sweep_to_mss_max_bars", "label": "Sweep to MSS Timeout (bars)", "type": "int", "default": 8, "min": 2, "max": 50},
+                    {"name": "mss_to_entry_max_bars", "label": "MSS to Entry Timeout (bars)", "type": "int", "default": 15, "min": 2, "max": 50},
+                    {"name": "sl_buffer_atr", "label": "SL Buffer (x ATR)", "type": "float", "default": 0.2, "min": 0.0, "max": 5.0},
+                    {"name": "fixed_rr", "label": "Fixed Take Profit (RR)", "type": "float", "default": 3.0, "min": 1.0, "max": 10.0},
+                    {"name": "require_displacement", "label": "Require Displacement", "type": "bool", "default": False},
+                    {"name": "min_rr", "label": "Min Risk/Reward", "type": "float", "default": 3.0, "min": 0.5, "max": 10.0},
+                    {"name": "cooldown_bars", "label": "Cooldown Bars (post-fill)", "type": "int", "default": 3, "min": 0, "max": 50},
+                ],
+            },
         ]
 
     @staticmethod
@@ -123,10 +211,10 @@ class StrategyRegistry:
         -1 = Sell (Short entry / Long exit)
         0 = Hold (No change)
         """
-        if strategy_id not in StrategyRegistry.SUPPORTED_STRATEGIES:
+        if strategy_id not in StrategyRegistry.LEGACY_STRATEGIES:
             raise ValueError(
-                f"Chiến lược không hợp lệ: '{strategy_id}'. "
-                f"Hỗ trợ: {sorted(list(StrategyRegistry.SUPPORTED_STRATEGIES))}"
+                f"Chiến lược không hợp lệ cho generate_signals: '{strategy_id}'. "
+                f"Hỗ trợ (legacy): {sorted(list(StrategyRegistry.LEGACY_STRATEGIES))}"
             )
 
         if params is None:
@@ -249,6 +337,14 @@ class StrategyRegistry:
             signals = res.signals.to_numpy()
             df.attrs['smc_chart_objects'] = res.chart_objects
             df.attrs['smc_funnel_stats'] = res.funnel_stats.to_dict()
+            if res.planned_entry_prices is not None:
+                df['planned_entry_price'] = res.planned_entry_prices.to_numpy(dtype=float)
+            if res.planned_stop_losses is not None:
+                df['planned_stop_loss'] = res.planned_stop_losses.to_numpy(dtype=float)
+            if res.planned_take_profits is not None:
+                df['planned_take_profit'] = res.planned_take_profits.to_numpy(dtype=float)
+            if res.planned_rrs is not None:
+                df['planned_rr'] = res.planned_rrs.to_numpy(dtype=float)
 
         df['signal'] = signals
         return df

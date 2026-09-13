@@ -186,6 +186,61 @@ class DataFeed:
         finally:
             conn.close()
 
+    def get_candles_with_warmup(
+        self,
+        timeframe='M15',
+        start_time=None,
+        end_time=None,
+        limit=10000,
+        warmup_bars=200,
+    ):
+        """
+        Lấy dữ liệu nến kết hợp vùng nến đệm quá khứ (warmup_bars) trước start_time.
+        - warmup_candles: nến trước start_time dùng để khởi tạo ContextBuilder/HTFBias.
+        - analysis_candles: nến trong vùng [start_time, end_time] dùng để chạy backtest & thống kê.
+        """
+        warmup_bars = max(0, int(warmup_bars))
+        analysis_candles = self.get_candles(
+            timeframe=timeframe,
+            start_time=start_time,
+            end_time=end_time,
+            limit=limit,
+        )
+
+        if not analysis_candles:
+            return {
+                "all_candles": [],
+                "warmup_candles": [],
+                "analysis_candles": [],
+                "warmup_count": 0,
+                "analysis_count": 0,
+                "warmup_start_time": None,
+                "analysis_start_time": None,
+                "analysis_end_time": None,
+            }
+
+        warmup_candles = []
+        if warmup_bars > 0 and start_time:
+            first_analysis_time = analysis_candles[0].get("datetime_str", analysis_candles[0]["time"])
+            warmup_candles = self.get_candles(
+                timeframe=timeframe,
+                before_time=first_analysis_time,
+                limit=warmup_bars,
+            )
+
+        all_candles = warmup_candles + analysis_candles
+        return {
+            "all_candles": all_candles,
+            "warmup_candles": warmup_candles,
+            "analysis_candles": analysis_candles,
+            "warmup_count": len(warmup_candles),
+            "analysis_count": len(analysis_candles),
+            "warmup_start_time": warmup_candles[0].get("datetime_str", warmup_candles[0]["time"]) if warmup_candles else (analysis_candles[0].get("datetime_str", analysis_candles[0]["time"]) if analysis_candles else None),
+            "analysis_start_time": analysis_candles[0].get("datetime_str", analysis_candles[0]["time"]) if analysis_candles else None,
+            "analysis_end_time": analysis_candles[-1].get("datetime_str", analysis_candles[-1]["time"]) if analysis_candles else None,
+        }
+
+
     def _query_to_df(self, conn, table, start_time, end_time, limit, before_time):
         """
         Truy vấn dữ liệu từ SQLite ra pandas DataFrame tuân thủ precedence rõ ràng:
@@ -267,7 +322,7 @@ class DataFeed:
 
         # Cắt đúng limit theo ngữ cảnh truy vấn
         if len(resampled) > limit:
-            if before_time or end_time or (not start_time and not end_time):
+            if before_time or (end_time and not start_time) or (not start_time and not end_time):
                 resampled = resampled.tail(limit)
             else:
                 resampled = resampled.head(limit)

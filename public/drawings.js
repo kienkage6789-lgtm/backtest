@@ -441,35 +441,35 @@ const DrawingGeometry = {
  */
 const DrawingToolRegistry = {
     CATEGORIES: {
-        cursor: { id: 'cursor', name: 'Con trỏ', icon: '↖️' },
+        cursor: { id: 'cursor', name: 'Con trỏ', icon: '↖' },
         trend: { id: 'trend', name: 'Đường xu hướng', icon: '╱' },
         channels: { id: 'channels', name: 'Kênh & Pitchfork', icon: '⫽' },
         fib: { id: 'fib', name: 'Fibonacci & Gann', icon: '≋' },
         shapes: { id: 'shapes', name: 'Hình học & Cọ vẽ', icon: '▭' },
-        patterns: { id: 'patterns', name: 'Mẫu hình kỹ thuật', icon: '📐' },
-        forecast: { id: 'forecast', name: 'Dự báo & Đo lường', icon: '📊' },
-        annotations: { id: 'annotations', name: 'Ghi chú & Nhãn', icon: '📝' }
+        patterns: { id: 'patterns', name: 'Mẫu hình kỹ thuật', icon: '◬' },
+        forecast: { id: 'forecast', name: 'Dự báo & Đo lường', icon: '⇋' },
+        annotations: { id: 'annotations', name: 'Ghi chú & Nhãn', icon: '✎' }
     },
 
     TOOLS: {
         // Cursor
-        cursor: { id: 'cursor', name: 'Chọn & Di chuyển', category: 'cursor', icon: '↖️', points: 0 },
-        eraser: { id: 'eraser', name: 'Tẩy nét vẽ', category: 'cursor', icon: '🧹', points: 0 },
+        cursor: { id: 'cursor', name: 'Chọn & Di chuyển', category: 'cursor', icon: '↖', points: 0 },
+        eraser: { id: 'eraser', name: 'Tẩy nét vẽ', category: 'cursor', icon: '✕', points: 0 },
 
         // Trend tools
         trendline: { id: 'trendline', name: 'Đường xu hướng', category: 'trend', icon: '╱', points: 2 },
-        ray: { id: 'ray', name: 'Tia kéo dài', category: 'trend', icon: '↗️', points: 2 },
-        extended: { id: 'extended', name: 'Đường kéo dài 2 phía', category: 'trend', icon: '↔️', points: 2 },
+        ray: { id: 'ray', name: 'Tia kéo dài', category: 'trend', icon: '↗', points: 2 },
+        extended: { id: 'extended', name: 'Đường kéo dài 2 phía', category: 'trend', icon: '↔', points: 2 },
         horizontal: { id: 'horizontal', name: 'Đường ngang', category: 'trend', icon: '─', points: 1 },
         horizontal_ray: { id: 'horizontal_ray', name: 'Tia ngang', category: 'trend', icon: '⟶', points: 1 },
         vertical: { id: 'vertical', name: 'Đường dọc', category: 'trend', icon: '│', points: 1 },
         crossline: { id: 'crossline', name: 'Chữ thập', category: 'trend', icon: '┼', points: 1 },
-        info_line: { id: 'info_line', name: 'Đường thông số', category: 'trend', icon: 'ℹ️', points: 2, hasStats: true },
+        info_line: { id: 'info_line', name: 'Đường thông số', category: 'trend', icon: 'ℹ', points: 2, hasStats: true },
         trend_angle: { id: 'trend_angle', name: 'Góc xu hướng', category: 'trend', icon: '∠', points: 2, hasStats: true },
 
         // Channels & Pitchfork
         channel: { id: 'channel', name: 'Kênh song song', category: 'channels', icon: '⫽', points: 3 },
-        regression_trend: { id: 'regression_trend', name: 'Kênh hồi quy (OLS)', category: 'channels', icon: '📈', points: 2 },
+        regression_trend: { id: 'regression_trend', name: 'Kênh hồi quy (OLS)', category: 'channels', icon: '∿', points: 2 },
         pitchfork: { id: 'pitchfork', name: 'Andrews Pitchfork', category: 'channels', icon: 'ψ', points: 3 },
         schiff_pitchfork: { id: 'schiff_pitchfork', name: 'Schiff Pitchfork', category: 'channels', icon: '⑂', points: 3 },
         mod_schiff_pitchfork: { id: 'mod_schiff_pitchfork', name: 'Modified Schiff', category: 'channels', icon: '⑃', points: 3 },
@@ -478,35 +478,35 @@ const DrawingToolRegistry = {
         // Fib & Gann
         fib_retracement: { id: 'fib_retracement', name: 'Fibonacci Thoái lui', category: 'fib', icon: '≋', points: 2 },
         fib_extension: { id: 'fib_extension', name: 'Fibonacci Mở rộng', category: 'fib', icon: '⤨', points: 3 },
-        fib_timezone: { id: 'fib_timezone', name: 'Fibonacci Time Zone', category: 'fib', icon: '⏱️', points: 2 },
+        fib_timezone: { id: 'fib_timezone', name: 'Fibonacci Time Zone', category: 'fib', icon: '⏱', points: 2 },
         gann_box: { id: 'gann_box', name: 'Hộp Gann (Gann Box)', category: 'fib', icon: '⊞', points: 2 },
-        gann_fan: { id: 'gann_fan', name: 'Quạt Gann (Gann Fan)', category: 'fib', icon: '🪭', points: 2 },
+        gann_fan: { id: 'gann_fan', name: 'Quạt Gann (Gann Fan)', category: 'fib', icon: '⋇', points: 2 },
 
         // Shapes & Brush
         rectangle: { id: 'rectangle', name: 'Hình chữ nhật', category: 'shapes', icon: '▭', points: 2 },
-        circle: { id: 'circle', name: 'Hình tròn', category: 'shapes', icon: '⭕', points: 2 },
+        circle: { id: 'circle', name: 'Hình tròn', category: 'shapes', icon: '○', points: 2 },
         triangle: { id: 'triangle', name: 'Hình tam giác', category: 'shapes', icon: '△', points: 3 },
-        polyline: { id: 'polyline', name: 'Đường gấp khúc (Polyline)', category: 'shapes', icon: '〰️', points: -1 },
-        brush: { id: 'brush', name: 'Cọ vẽ tự do (Brush)', category: 'shapes', icon: '🖌️', points: -1 },
-        highlighter: { id: 'highlighter', name: 'Bút dạ quang (Highlighter)', category: 'shapes', icon: '🖍️', points: -1 },
+        polyline: { id: 'polyline', name: 'Đường gấp khúc (Polyline)', category: 'shapes', icon: '⌇', points: -1 },
+        brush: { id: 'brush', name: 'Cọ vẽ tự do (Brush)', category: 'shapes', icon: '✎', points: -1 },
+        highlighter: { id: 'highlighter', name: 'Bút dạ quang (Highlighter)', category: 'shapes', icon: '✐', points: -1 },
 
         // Patterns
-        abcd: { id: 'abcd', name: 'Mẫu hình ABCD', category: 'patterns', icon: '🔤', points: 4 },
-        head_shoulders: { id: 'head_shoulders', name: 'Vai Đầu Vai (Head & Shoulders)', category: 'patterns', icon: '👤', points: 7 },
-        elliott_wave_15: { id: 'elliott_wave_15', name: 'Sóng Elliott Đẩy (1-5)', category: 'patterns', icon: '5️⃣', points: 5 },
-        elliott_wave_abc: { id: 'elliott_wave_abc', name: 'Sóng Elliott Chỉnh (A-B-C)', category: 'patterns', icon: '🔠', points: 4 },
+        abcd: { id: 'abcd', name: 'Mẫu hình ABCD', category: 'patterns', icon: 'ABCD', points: 4 },
+        head_shoulders: { id: 'head_shoulders', name: 'Vai Đầu Vai (Head & Shoulders)', category: 'patterns', icon: 'H&S', points: 7 },
+        elliott_wave_15: { id: 'elliott_wave_15', name: 'Sóng Elliott Đẩy (1-5)', category: 'patterns', icon: '1-5', points: 5 },
+        elliott_wave_abc: { id: 'elliott_wave_abc', name: 'Sóng Elliott Chỉnh (A-B-C)', category: 'patterns', icon: 'ABC', points: 4 },
 
         // Forecast & Position
-        long_position: { id: 'long_position', name: 'Vị thế Mua (Long Position)', category: 'forecast', icon: '🟢', points: 3, hasStats: true },
-        short_position: { id: 'short_position', name: 'Vị thế Bán (Short Position)', category: 'forecast', icon: '🔴', points: 3, hasStats: true },
+        long_position: { id: 'long_position', name: 'Vị thế Mua (Long Position)', category: 'forecast', icon: '▲', points: 3, hasStats: true },
+        short_position: { id: 'short_position', name: 'Vị thế Bán (Short Position)', category: 'forecast', icon: '▼', points: 3, hasStats: true },
         date_price_range: { id: 'date_price_range', name: 'Vùng Giá & Thời gian', category: 'forecast', icon: '⤧', points: 2, hasStats: true },
-        ruler: { id: 'ruler', name: 'Thước đo (Ruler)', category: 'forecast', icon: '📏', points: 2, hasStats: true },
-        price_range: { id: 'price_range', name: 'Khoảng giá', category: 'forecast', icon: '↕️', points: 2, hasStats: true },
+        ruler: { id: 'ruler', name: 'Thước đo (Ruler)', category: 'forecast', icon: '⇹', points: 2, hasStats: true },
+        price_range: { id: 'price_range', name: 'Khoảng giá', category: 'forecast', icon: '↕', points: 2, hasStats: true },
         date_range: { id: 'date_range', name: 'Khoảng thời gian', category: 'forecast', icon: '↔', points: 2, hasStats: true },
 
         // Annotations
-        text: { id: 'text', name: 'Ghi chú văn bản', category: 'annotations', icon: '📝', points: 1, hasText: true },
-        callout: { id: 'callout', name: 'Bong bóng chú thích', category: 'annotations', icon: '💬', points: 2, hasText: true },
+        text: { id: 'text', name: 'Ghi chú văn bản', category: 'annotations', icon: 'T', points: 1, hasText: true },
+        callout: { id: 'callout', name: 'Bong bóng chú thích', category: 'annotations', icon: '🗨', points: 2, hasText: true },
         arrow: { id: 'arrow', name: 'Mũi tên', category: 'annotations', icon: '➔', points: 2 }
     },
 

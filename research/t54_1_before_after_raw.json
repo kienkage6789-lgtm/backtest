@@ -1,0 +1,44 @@
+{
+  "Metric": [
+    "Raw Signals",
+    "Planned Instructions Created",
+    "Rejected Invalid Geometry (Gap)",
+    "Same Direction Skipped (No Pyramiding)",
+    "Executed Trades",
+    "Win Rate (%)",
+    "Net Profit ($)",
+    "Profit Factor",
+    "Max Drawdown ($)",
+    "Max Drawdown (% of Peak Equity)",
+    "Final Balance ($)",
+    "Fallback Levels Used"
+  ],
+  "Before Fix (Dummy Fallback 200/400 pts)": [
+    36,
+    0,
+    0,
+    0,
+    36,
+    30.56,
+    -9.6,
+    0.82,
+    30.0,
+    0.3,
+    9990.4,
+    36
+  ],
+  "After Fix (Wired Planned SL/TP, RR 2.0)": [
+    36,
+    33,
+    3,
+    2,
+    31,
+    45.16,
+    145.66,
+    1.43,
+    164.39,
+    1.62,
+    10145.66,
+    0
+  ]
+}

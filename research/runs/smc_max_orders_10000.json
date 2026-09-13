@@ -1,0 +1,180 @@
+{
+  "dataset": {
+    "bars": 10000,
+    "timeframe": "M15"
+  },
+  "runs": [
+    {
+      "strategy_id": "smc_s01",
+      "conditions": {
+        "cooldown_bars": 0,
+        "s01_require_displacement": false,
+        "s01_sweep_to_mss_max_bars": 50,
+        "s01_fvg_to_mss_max_bars": 30,
+        "s01_entry_expiry_bars": 50,
+        "s01_min_rr": 1.0
+      },
+      "total_trades": 7,
+      "winning_trades": 1,
+      "losing_trades": 6,
+      "win_rate": 14.29,
+      "profit_factor": 0.27,
+      "net_profit": -23.02,
+      "return_pct": -0.23,
+      "max_drawdown": 36.36,
+      "max_drawdown_pct": 0.36,
+      "final_balance": 9976.98,
+      "average_win": 8.71,
+      "average_loss": 5.29,
+      "average_holding_bars": 35.43,
+      "long_trades": 3,
+      "short_trades": 4,
+      "funnel": {
+        "m15_bars_scanned": 10000,
+        "htf_events_accepted": 113,
+        "htf_bias_available": 9941,
+        "ltf_structure_events": "available",
+        "fvgs_detected": "available",
+        "obs_detected": "available",
+        "candidate_setups": 31,
+        "eligible_setups": 8,
+        "selector_selections": 8,
+        "execution_instructions": 8,
+        "successful_fills": 7,
+        "completed_trades": 7
+      },
+      "coordinator_metrics": {
+        "raw_decisions": 10000,
+        "selected_decisions": 8,
+        "no_trade_decisions": 9992,
+        "evaluated_candidates": 31,
+        "eligible_candidates": 8,
+        "rejected_candidates": 23,
+        "strategy_selection_count": 8,
+        "execution_events": 23,
+        "successful_fills": 7,
+        "cancelled_orders": 0,
+        "skipped_orders": 0,
+        "candidate_rejection_reasons": {
+          "stale_liquidity_sweep": 22,
+          "insufficient_rr": 4
+        }
+      },
+      "first_zero_layer": null,
+      "root_cause_classification": "TRADES_EXECUTED"
+    },
+    {
+      "strategy_id": "smc_s05",
+      "conditions": {
+        "cooldown_bars": 0,
+        "s05_require_displacement": false,
+        "s05_max_ob_age_bars": 75,
+        "s05_min_rr": 1.0
+      },
+      "total_trades": 72,
+      "winning_trades": 18,
+      "losing_trades": 54,
+      "win_rate": 25.0,
+      "profit_factor": 1.28,
+      "net_profit": 45.61,
+      "return_pct": 0.46,
+      "max_drawdown": 42.86,
+      "max_drawdown_pct": 0.43,
+      "final_balance": 10045.61,
+      "average_win": 11.61,
+      "average_loss": 3.03,
+      "average_holding_bars": 11.99,
+      "long_trades": 34,
+      "short_trades": 38,
+      "funnel": {
+        "m15_bars_scanned": 10000,
+        "htf_events_accepted": 113,
+        "htf_bias_available": 9941,
+        "ltf_structure_events": "available",
+        "fvgs_detected": "available",
+        "obs_detected": "available",
+        "candidate_setups": 108,
+        "eligible_setups": 99,
+        "selector_selections": 86,
+        "execution_instructions": 86,
+        "successful_fills": 72,
+        "completed_trades": 72
+      },
+      "coordinator_metrics": {
+        "raw_decisions": 10000,
+        "selected_decisions": 86,
+        "no_trade_decisions": 9914,
+        "evaluated_candidates": 108,
+        "eligible_candidates": 99,
+        "rejected_candidates": 9,
+        "strategy_selection_count": 86,
+        "execution_events": 244,
+        "successful_fills": 72,
+        "cancelled_orders": 0,
+        "skipped_orders": 7,
+        "candidate_rejection_reasons": {
+          "insufficient_rr": 9
+        }
+      },
+      "first_zero_layer": null,
+      "root_cause_classification": "TRADES_EXECUTED"
+    },
+    {
+      "strategy_id": "smc_s09",
+      "conditions": {
+        "cooldown_bars": 0,
+        "s09_require_displacement": false,
+        "s09_fvg_to_mss_max_bars": 50,
+        "s09_min_rr": 1.0,
+        "s09_use_time_filter": false
+      },
+      "total_trades": 7,
+      "winning_trades": 2,
+      "losing_trades": 5,
+      "win_rate": 28.57,
+      "profit_factor": 0.81,
+      "net_profit": -8.89,
+      "return_pct": -0.09,
+      "max_drawdown": 52.85,
+      "max_drawdown_pct": 0.53,
+      "final_balance": 9991.11,
+      "average_win": 19.5,
+      "average_loss": 9.58,
+      "average_holding_bars": 107.71,
+      "long_trades": 5,
+      "short_trades": 2,
+      "funnel": {
+        "m15_bars_scanned": 10000,
+        "htf_events_accepted": 113,
+        "htf_bias_available": 9941,
+        "ltf_structure_events": "available",
+        "fvgs_detected": "available",
+        "obs_detected": "available",
+        "candidate_setups": 9,
+        "eligible_setups": 7,
+        "selector_selections": 7,
+        "execution_instructions": 7,
+        "successful_fills": 7,
+        "completed_trades": 7
+      },
+      "coordinator_metrics": {
+        "raw_decisions": 10000,
+        "selected_decisions": 7,
+        "no_trade_decisions": 9993,
+        "evaluated_candidates": 9,
+        "eligible_candidates": 7,
+        "rejected_candidates": 2,
+        "strategy_selection_count": 7,
+        "execution_events": 21,
+        "successful_fills": 7,
+        "cancelled_orders": 0,
+        "skipped_orders": 0,
+        "candidate_rejection_reasons": {
+          "insufficient_rr": 2
+        }
+      },
+      "first_zero_layer": null,
+      "root_cause_classification": "TRADES_EXECUTED"
+    }
+  ]
+}
